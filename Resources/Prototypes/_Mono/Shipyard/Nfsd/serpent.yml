@@ -1,10 +1,10 @@
 - type: vessel
   id: Serpent
   parent: BaseVesselAntag
-  name: Serpent
+  name: Серпент
   description: Большой боевой фрегат с впечатляющей броней и мощными артиллерийскими орудиями
   limit: 1
-  price: 440104 # 332000 x 1.15
+  price: 475330 # Lua
   mass: 1364
   category: Large
   group: Security
@@ -17,11 +17,11 @@
   - Chemistry # Lua
   - Capital
   engine:
-  - AME
+  - Bluespace # Lua
 
 - type: gameMap
   id: Serpent
-  mapName: 'Serpent'
+  mapName: 'Серпент'
   mapPath: /Maps/_Mono/Shuttles/Nfsd/serpent.yml
   minPlayers: 0
   stations:
@@ -29,7 +29,7 @@
       stationProto: StandardFrontierSecurityVessel
       components:
       - type: StationNameSetup
-        mapNameTemplate: 'Serpent {1}'
+        mapNameTemplate: 'Серпент {1}'
         nameGenerator:
           !type:NanotrasenNameGenerator
           prefixCreator: '14'
