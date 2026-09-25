@@ -2,12 +2,13 @@
 # Copyright (c) 2025 LuaWorld Contributors
 # See AGPLv3.txt for details.
 # Author: germanreutt (discord)
+# Remap: c_quarian (discord)
 
 - type: vessel
   parent: BaseVessel
   id: BMFish
   name: BM-Fish
-  description: "Когда-то бывший невероятно популярным десантный шаттл Синдиката. Переоборудован под спасательное судно."
+  description: "Списанная или украденная модель популярного десантного шаттла Синдиката. Переоборудован под спасательное судно. Из-за длительного простоя сильно проржавел."
   price: 139741 #test
   mass: 153
   category: Medium
@@ -17,19 +18,19 @@
   - Chemistry # Lua
   engine:
   - Uranium
-  shuttlePath: /Maps/_Lua/Shuttles/BlackMarket/fish.yml
+  shuttlePath: /Maps/_Lua/Shuttles/BlackMarket/BMFish.yml
 
 - type: gameMap
   id: BMFish
   mapName: 'BM-Fish'
-  mapPath: /Maps/_Lua/Shuttles/BlackMarket/fish.yml
+  mapPath: /Maps/_Lua/Shuttles/BlackMarket/BMFish.yml
   minPlayers: 0
   stations:
     BMFish:
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'BM-Fish {1}'
+          mapNameTemplate: 'Fish {1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'
