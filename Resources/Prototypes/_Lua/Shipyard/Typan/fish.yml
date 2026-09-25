@@ -8,7 +8,7 @@
   parent: BaseVessel
   name: Fish
   description: Гордость старого флота Синдиката. Предназначен для перехвата шаттлов, экспедиций и эффективной добычи руды двумя автопульсерами.
-  price: 127009
+  price: 135454
   mass: 506
   category: Small
   group: Typan
