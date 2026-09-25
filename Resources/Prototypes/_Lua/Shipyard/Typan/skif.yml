@@ -5,11 +5,11 @@
 
 - type: vessel
   parent: BaseVessel
-  id: GFSkif
+  id: Skif
   name: Skif
   description: Резкий, как удар серпом по пальцам и сильный, как удар молотом, этот шаттл обладает убойной огневой мощью и исчерпывающей броней.
   limit: 3
-  price: 207220
+  price: 165220
   mass: 768
   category: Medium
   group: Typan
@@ -22,12 +22,12 @@
   shuttlePath: /Maps/_Lua/Shuttles/Typan/skif.yml
 
 - type: gameMap
-  id: GFSkif
+  id: Skif
   mapName: 'Skif'
   mapPath: /Maps/_Lua/Shuttles/Typan/skif.yml
   minPlayers: 0
   stations:
-    GFSkif:
+    Skif:
       stationProto: StandardFrontierVessel
       components:
       - type: StationNameSetup
