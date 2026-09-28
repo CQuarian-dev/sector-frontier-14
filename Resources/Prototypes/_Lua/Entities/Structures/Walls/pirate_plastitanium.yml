@@ -1,7 +1,8 @@
 - type: entity
   parent: WallPlastitanium
-  id: WallPlastitaniumRusty
-  name: rusty plastitanium wall
+  id: WallPlastitaniumRust
+  name: plastitanium wall
+  suffix: rusted
   description: A plastitanium wall eaten through by rust. Good enough for pirates.
   components:
   - type: Sprite
@@ -13,7 +14,7 @@
     base: pirateplastitanium
   - type: Damageable
     damageContainer: StructuralInorganic
-    damageModifierSet: StructuralMetallicStrongRusty
+    damageModifierSet: StructuralMetallicStrongRust
   - type: Destructible
     thresholds:
     - trigger:
@@ -39,9 +40,9 @@
 
 - type: entity
   parent: WallPlastitaniumDiagonal
-  id: WallPlastitaniumDiagonalRusty
-  name: rusty plastitanium wall
-  suffix: diagonal
+  id: WallPlastitaniumDiagonalRust
+  name: plastitanium wall
+  suffix: diagonal, rusted
   description: A plastitanium wall eaten through by rust. Good enough for pirates.
   components:
   - type: Sprite
@@ -52,7 +53,7 @@
     state: state0
   - type: Damageable
     damageContainer: StructuralInorganic
-    damageModifierSet: StructuralMetallicStrongRusty
+    damageModifierSet: StructuralMetallicStrongRust
   - type: Destructible
     thresholds:
     - trigger:
@@ -78,8 +79,9 @@
 
 - type: entity
   parent: PlastitaniumWindow
-  id: PlastitaniumWindowRusty
-  name: rusty plastitanium window
+  id: PlastitaniumWindowRust
+  name: plastitanium window
+  suffix: rusted
   description: The frame is rusted through, but the glass still holds. Mostly.
   components:
   - type: Sprite
@@ -91,7 +93,7 @@
     base: pirateplastitaniumwindow
   - type: Damageable
     damageContainer: StructuralInorganic
-    damageModifierSet: RGlassRusty
+    damageModifierSet: RGlassRust
   - type: Destructible
     thresholds:
     - trigger:
@@ -120,9 +122,9 @@
 
 - type: entity
   parent: PlastitaniumWindowDiagonal
-  id: PlastitaniumWindowDiagonalRusty
-  name: rusty plastitanium window
-  suffix: diagonal
+  id: PlastitaniumWindowDiagonalRust
+  name: plastitanium window
+  suffix: diagonal, rusted
   description: The frame is rusted through, but the glass still holds. Mostly.
   components:
   - type: Sprite
@@ -133,7 +135,7 @@
     state: state0
   - type: Damageable
     damageContainer: StructuralInorganic
-    damageModifierSet: RGlassRusty
+    damageModifierSet: RGlassRust
   - type: Destructible
     thresholds:
     - trigger:

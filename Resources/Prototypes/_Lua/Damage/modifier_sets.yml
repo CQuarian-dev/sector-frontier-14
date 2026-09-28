@@ -137,7 +137,7 @@
     Caustic: 2
 
 - type: damageModifierSet
-  id: StructuralMetallicStrongRusty
+  id: StructuralMetallicStrongRust
   coefficients:
     Blunt: 0.7
     Slash: 0.7
@@ -152,7 +152,7 @@
     Structural: 15
 
 - type: damageModifierSet
-  id: RGlassRusty
+  id: RGlassRust
   coefficients:
     Blunt: 0.6
     Slash: 0.44
