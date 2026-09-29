@@ -369,6 +369,9 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         if (!CombatMode.IsInCombatMode(user))
             return false;
 
+        if (!GetCoordinates(attack.Coordinates).IsValid(EntityManager)) // Lua
+            return false;
+
         EntityUid? target = null;
         switch (attack)
         {
@@ -417,6 +420,14 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             swings++;
         }
 
+        // Lua start
+        if (weapon.SwingBeverage)
+        {
+            weapon.SwingLeft = !weapon.SwingLeft;
+            DirtyField(weaponUid, weapon, nameof(MeleeWeaponComponent.SwingLeft));
+        }
+        // Lua end
+
         DirtyField(weaponUid, weapon, nameof(MeleeWeaponComponent.NextAttack));
 
         // Do this AFTER attack so it doesn't spam every tick
@@ -442,13 +453,13 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             {
                 case LightAttackEvent light:
                     DoLightAttack(user, light, weaponUid, weapon, session);
-                    animation = weapon.Animation;
+                    animation = GetLightAnimation(user, weaponUid, weapon); // Lua
                     break;
                 case DisarmAttackEvent disarm:
                     if (!DoDisarm(user, disarm, weaponUid, weapon, session))
                         return false;
 
-                    animation = weapon.Animation;
+                    animation = GetLightAnimation(user, weaponUid, weapon); // Lua
                     break;
                 case HeavyAttackEvent heavy:
                     if (!DoHeavyAttack(user, heavy, weaponUid, weapon, session))
@@ -571,6 +582,16 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
     }
 
     protected abstract void DoDamageEffect(List<EntityUid> targets, EntityUid? user,  TransformComponent targetXform);
+
+    // Lua start
+    private static EntProtoId GetLightAnimation(EntityUid user, EntityUid weaponUid, MeleeWeaponComponent weapon)
+    {
+        if (weapon.Animation == MeleeWeaponComponent.ItemLightAnimation && weaponUid == user)
+            return MeleeWeaponComponent.UnarmedLightAnimation;
+
+        return weapon.Animation;
+    }
+    // Lua end
 
     private bool DoHeavyAttack(EntityUid user, HeavyAttackEvent ev, EntityUid meleeUid, MeleeWeaponComponent component, ICommonSession? session)
     {
