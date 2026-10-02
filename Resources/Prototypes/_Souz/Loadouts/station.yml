@@ -417,6 +417,45 @@
   equipment:
     outerClothing: USSPSFClothingOuterCoatHoSTrench
 
+#Lua outer start
+
+- type: loadout
+  id: UsspLoadoutOuterClothingHardsuitSecurity
+  equipment:
+    outerClothing: USSPSFClothingOuterHardsuitSecurity
+
+- type: loadout
+  id: UsspLoadoutOuterClothingSecurityRed
+  equipment:
+    outerClothing: USSPSFClothingOuterHardsuitSecurityRed
+
+- type: loadout
+  id: UsspLoadoutOuterClothingHardsuitCap
+  equipment:
+    outerClothing: USSPSFClothingOuterHardsuitCap
+
+- type: loadout
+  id: UsspLoadoutOuterClothingHardsuitBrigmedic
+  equipment:
+    outerClothing: USSPSFClothingOuterHardsuitBrigmedic
+
+- type: loadout
+  id: UsspLoadoutOuterClothingHardsuitBlueShield
+  equipment:
+    outerClothing: USSPSFClothingOuterHardsuitBlueShield
+
+- type: loadout
+  id: UsspLoadoutOuterClothingOuterHardsuitSecurityPilot
+  equipment:
+    outerClothing: USSPSFClothingOuterHardsuitSecurityPilot
+
+- type: loadout
+  id: UsspLoadoutOuterClothingHardsuitL27
+  equipment:
+    outerClothing: ClothingOuterHardsuitUsspL27
+
+#Lua outer end
+
 - type: loadoutGroup
   id: UsspBrigmedicOuterClothing
   name: loadout-group-contractor-outerclothing
@@ -426,6 +465,7 @@
   - UsspLoadoutOuterCoatAMG
   - UsspLoadoutOuterVestSecurityMedic
   - UsspLoadoutOuterCoatLabBrigOpened
+  - UsspLoadoutOuterClothingHardsuitBrigmedic
 
 - type: loadoutGroup
   id: UsspHoPOuterClothing
@@ -433,6 +473,7 @@
   loadouts:
   - UsspLoadoutOuterWinterHoP
   - UsspLoadoutOuterCoatHoP
+  - UsspLoadoutOuterClothingHardsuitL27
 
 - type: loadoutGroup
   id: UsspBlueShieldOuterClothing
@@ -441,6 +482,7 @@
   - UsspLoadoutOuterArmorBasicBlueShield
   - UsspLoadoutOuterCoatOKGB
   - UsspLoadoutOuterBlackCoatOKGB
+  - UsspLoadoutOuterClothingHardsuitBlueShield
 
 - type: loadoutGroup
   id: UsspCaptainOuterClothing
@@ -453,6 +495,7 @@
   - UsspLoadoutOuterCarapaceBlack
   - UsspLoadoutOuterWinterCapWhite
   - UsspLoadoutOuterWinterCapBlack
+  - UsspLoadoutOuterClothingHardsuitCap
 
 - type: loadoutGroup
   id: UsspHoSOuterClothing
@@ -462,6 +505,7 @@
   - UsspLoadoutOuterWinterSec
   - UsspLoadoutOuterCoatHoSGreatcoat
   - UsspLoadoutOuterWinterHoSArmored
+  - UsspLoadoutOuterClothingSecurityRed
 
 # Belts / gloves / eyes / neck
 - type: loadout

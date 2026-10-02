@@ -36,6 +36,7 @@
   name: AIPsychoTeleportSpawner
   id: AIPsychoTeleportSpawner
   parent: MarkerBase
+  categories: [ HideSpawnMenu ]
   components:
   - type: EntityTableSpawner
     deleteSpawnerAfterSpawn: true
@@ -522,6 +523,7 @@
   id: AIPsychoBreakerBase
   name: AI Псих
   suffix: ломатель
+  categories: [ HideSpawnMenu ]
   components:
   - type: Loadout
     prototypes:
@@ -701,6 +703,7 @@
   id: AIPsychoStunBase
   name: AI Псих
   suffix: Станнер
+  categories: [ HideSpawnMenu ]
   components:
   - type: Loadout
     prototypes:
@@ -768,7 +771,7 @@
     shoes: ClothingShoesBootsMag
     id: PilotPDA
     pocket1: AmmoBox357_magnumRubber
-    pocket2: WeaponRevolverArgentiNonlethal
+    pocket2: WeaponRevolverArgenti
     belt: ClothingBeltUtilityEngineering
   storage:
     back:

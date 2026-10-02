@@ -1,0 +1,768 @@
+#region Спавнер
+- type: entity
+  parent: [ BaseItem ]
+  id: AiTeleportPsychoNeutralAdmin
+  name: телепорт подкреплений ГРЕЙТАЙД
+  suffix: "адмем, нейтральные"
+  description: Унивенсальный телепорт для призыва ГРЕЙТАЙДЕРОВ на сервер. "проклятие стало клоунадой и посмешищем" - комментарий 25Hydra08
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/door_remote.rsi
+    layers:
+    - state: door_remotebase
+    - state: door_remotelightscolour
+      color: "#e088fd"
+    - state: door_remotescreencolour
+      color: "#9c9c9c"
+  - type: Item
+    storedRotation: -90
+  - type: RechargeBasicEntityAmmo
+    rechargeCooldown: 1
+    rechargeSound: /Audio/Machines/phasein.ogg
+  - type: BasicEntityAmmoProvider
+    proto: AIPsychoNeutralTeleportSpawner
+    capacity: 100
+    count: 100
+  - type: Gun
+    fireRate: 1
+    useKey: false
+    selectedMode: FullAuto
+    availableModes:
+      - FullAuto
+    soundGunshot: /Audio/Machines/phasein.ogg
+    soundEmpty: /Audio/_NF/Effects/silence.ogg
+
+- type: entity
+  name: AIPsychoNeutralTeleportSpawner
+  id: AIPsychoNeutralTeleportSpawner
+  parent: MarkerBase
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: EntityTableSpawner
+    deleteSpawnerAfterSpawn: true
+    offset: 1
+    table: !type:AllSelector
+      children:
+      - !type:EntSelector
+        id: AIPsychoNeutralBeacon
+      - !type:EntSelector
+        id: AIPsychoNeutralPoorSpawner
+      - !type:EntSelector
+        id: AIPsychoNeutralWelderSpawner
+      - !type:EntSelector
+        id: AIPsychoNeutralBreakerSpawner
+      - !type:EntSelector
+        id: AIPsychoNeutralStunSpawner
+
+#region БАЗЫ
+
+- type: entity
+  parent: BaseMobHuman
+  id: AIPsychoNeutralBase
+  name: AI Псих
+  abstract: true
+  components:
+  - type: RandomHumanoidAppearance
+    randomizeName: true
+  - type: AutoImplant
+    implants:
+    - MedicalTrackingImplant
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Common
+  - type: ActiveRadio
+    channels:
+    - Common
+  - type: TTS
+    enabled: true
+  - type: HTN
+    rootTask:
+       task: AIPsychoNeutralCompound
+    blackboard:
+      NavClimb: !type:Bool
+        true
+      NavInteract: !type:Bool
+        true
+      NavPry: !type:Bool
+        true
+      NavSmash: !type:Bool
+        true
+  - type: NpcFactionMember
+    factions:
+      - Passive
+      - Monkey
+  - type: NPCRetaliation
+    attackMemoryLength: 60
+  - type: NPCImprintingOnSpawnBehaviour
+    whitelist:
+      tags:
+      - AIPsychoNeutralBeacon
+    follow: true
+    spawnFriendsSearchRadius: 5
+  - type: Vocalizer
+    minVocalizeInterval: 30
+    maxVocalizeInterval: 120
+  - type: DatasetVocalizer
+    dataset: spacepunkhumanoidchatter
+  - type: AutoWakeUp
+  - type: TimedDespawn
+    lifetime: 7200
+
+- type: htnCompound
+  id: AIPsychoNeutralCompound
+  branches:
+    - tasks:
+        - !type:HTNCompoundTask
+          task: RangedCombatCompound
+    - tasks:
+        - !type:HTNCompoundTask
+          task: MeleeCombatCompound
+    - tasks:
+        - !type:HTNCompoundTask
+          task: FoodCompound
+    - tasks:
+        - !type:HTNCompoundTask
+          task: FollowCompound
+    - tasks:
+        - !type:HTNCompoundTask
+          task: IdleCompound
+
+#region Маяк
+- type: entity
+  parent: BaseItem
+  id: AIPsychoNeutralBeacon
+  name: маяк ГРЕЙТАЙДЕРОВ
+  description: Маленький маяк, призванный помочь вам управлять отрядами ГРЕЙТАЙДЕРОВ.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/station_beacon.rsi
+    drawdepth: BelowFloor
+    layers:
+    - state: blink
+      map: ["base"]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.NavMapBeaconVisuals.Enabled:
+        base:
+          True: {state: blink}
+          False: {state: icon}
+  - type: Item
+    size: Small
+  - type: Visibility
+    layer: 1
+  - type: Anchorable
+  - type: Tag
+    tags:
+    - AIPsychoNeutralBeacon
+  - type: TimedDespawn
+    lifetime: 7200
+
+- type: Tag
+  id: AIPsychoNeutralBeacon
+
+#region Бедность
+- type: entity
+  parent: AIPsychoNeutralBase
+  id: AIPsychoNeutralPoorBase
+  name: AI Псих
+  suffix: Бедный
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Loadout
+    prototypes:
+    - AIPsychoPoorGear
+
+#region Вариации ттс
+#1
+- type: entity
+  parent: AIPsychoNeutralPoorBase
+  id: AIPsychoNeutralPoor1
+  name: AI Псих
+  suffix: Бедный 1
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TTS
+    voice: Alchemist
+
+#2
+- type: entity
+  parent: AIPsychoNeutralPoorBase
+  id: AIPsychoNeutralPoor2
+  name: AI Псих
+  suffix: Бедный 2
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TTS
+    voice: Aragorn
+
+#3
+- type: entity
+  parent: AIPsychoNeutralPoorBase
+  id: AIPsychoNeutralPoor3
+  name: AI Псих
+  suffix: Бедный 3
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TTS
+    voice: Ahri
+
+#4
+- type: entity
+  parent: AIPsychoNeutralPoorBase
+  id: AIPsychoNeutralPoor4
+  name: AI Псих
+  suffix: Бедный 4
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TTS
+    voice: Arthas
+
+#5
+- type: entity
+  parent: AIPsychoNeutralPoorBase
+  id: AIPsychoNeutralPoor5
+  name: AI Псих
+  suffix: Бедный 5
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TTS
+    voice: Archmage
+
+#6
+- type: entity
+  parent: AIPsychoNeutralPoorBase
+  id: AIPsychoNeutralPoor6
+  name: AI Псих
+  suffix: Бедный 6
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TTS
+    voice: Akazamzarak
+
+#7
+- type: entity
+  parent: AIPsychoNeutralPoorBase
+  id: AIPsychoNeutralPoor7
+  name: AI Псих
+  suffix: Бедный 7
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TTS
+    voice: Grandmother
+
+#8
+- type: entity
+  parent: AIPsychoNeutralPoorBase
+  id: AIPsychoNeutralPoor8
+  name: AI Псих
+  suffix: Бедный 8
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TTS
+    voice: Baechao
+
+#9
+- type: entity
+  parent: AIPsychoNeutralPoorBase
+  id: AIPsychoNeutralPoor9
+  name: AI Псих
+  suffix: Бедный 9
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TTS
+    voice: Bolan
+
+#10
+- type: entity
+  parent: AIPsychoNeutralPoorBase
+  id: AIPsychoNeutralPoor10
+  name: AI Псих
+  suffix: Бедный 10
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TTS
+    voice: Vanndara
+
+#region Спавнер
+- type: entity
+  parent: MarkerBase
+  id: AIPsychoNeutralPoorSpawner
+  name: AIPsychoNeutralPoorSpawner
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Objects/Materials/materials.rsi
+      state: diamond
+  - type: RandomSpawner
+    prototypes:
+    - AIPsychoNeutralPoor1
+    - AIPsychoNeutralPoor2
+    - AIPsychoNeutralPoor3
+    - AIPsychoNeutralPoor4
+    - AIPsychoNeutralPoor5
+    - AIPsychoNeutralPoor6
+    - AIPsychoNeutralPoor7
+    - AIPsychoNeutralPoor8
+    - AIPsychoNeutralPoor9
+    - AIPsychoNeutralPoor10
+    chance: 1
+    offset: 0.2
+
+#region Сварщик
+- type: entity
+  parent: AIPsychoNeutralBase
+  id: AIPsychoNeutralWelderBase
+  name: AI Псих
+  suffix: Сварщик
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Loadout
+    prototypes:
+    - AIPsychoWelderGear
+
+#region Вариации ттс
+#1
+- type: entity
+  parent: AIPsychoNeutralWelderBase
+  id: AIPsychoNeutralWelder1
+  name: AI Псих
+  suffix: Сварщик 1
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TTS
+    voice: Ycf
+
+#2
+- type: entity
+  parent: AIPsychoNeutralWelderBase
+  id: AIPsychoNeutralWelder2
+  name: AI Псих
+  suffix: Сварщик 2
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TTS
+    voice: Thrud
+
+#3
+- type: entity
+  parent: AIPsychoNeutralWelderBase
+  id: AIPsychoNeutralWelder3
+  name: AI Псих
+  suffix: Сварщик 3
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TTS
+    voice: Reaper
+
+#4
+- type: entity
+  parent: AIPsychoNeutralWelderBase
+  id: AIPsychoNeutralWelder4
+  name: AI Псих
+  suffix: Сварщик 4
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TTS
+    voice: Dremora
+
+#5
+- type: entity
+  parent: AIPsychoNeutralWelderBase
+  id: AIPsychoNeutralWelder5
+  name: AI Псих
+  suffix: Сварщик 5
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TTS
+    voice: Dolg1
+
+#6
+- type: entity
+  parent: AIPsychoNeutralWelderBase
+  id: AIPsychoNeutralWelder6
+  name: AI Псих
+  suffix: Сварщик 6
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TTS
+    voice: Jackie
+
+#7
+- type: entity
+  parent: AIPsychoNeutralWelderBase
+  id: AIPsychoNeutralWelder7
+  name: AI Псих
+  suffix: Сварщик 7
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TTS
+    voice: Decker
+
+#8
+- type: entity
+  parent: AIPsychoNeutralWelderBase
+  id: AIPsychoNeutralWelder8
+  name: AI Псих
+  suffix: Сварщик 8
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TTS
+    voice: Graves
+
+#9
+- type: entity
+  parent: AIPsychoNeutralWelderBase
+  id: AIPsychoNeutralWelder9
+  name: AI Псих
+  suffix: Сварщик 9
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TTS
+    voice: Gnomenapper
+
+#10
+- type: entity
+  parent: AIPsychoNeutralWelderBase
+  id: AIPsychoNeutralWelder10
+  name: AI Псих
+  suffix: Сварщик 10
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TTS
+    voice: Vree
+
+#region Спавнер
+- type: entity
+  parent: MarkerBase
+  id: AIPsychoNeutralWelderSpawner
+  name: AIPsychoNeutralWelderSpawner
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Objects/Materials/materials.rsi
+      state: diamond
+  - type: RandomSpawner
+    prototypes:
+    - AIPsychoNeutralWelder1
+    - AIPsychoNeutralWelder2
+    - AIPsychoNeutralWelder3
+    - AIPsychoNeutralWelder4
+    - AIPsychoNeutralWelder5
+    - AIPsychoNeutralWelder6
+    - AIPsychoNeutralWelder7
+    - AIPsychoNeutralWelder8
+    - AIPsychoNeutralWelder9
+    - AIPsychoNeutralWelder10
+    chance: 1
+    offset: 0.2
+
+#region Ломатель
+- type: entity
+  parent: AIPsychoNeutralBase
+  id: AIPsychoNeutralBreakerBase
+  name: AI Псих
+  suffix: ломатель
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Loadout
+    prototypes:
+    - AIPsychoBreakerGear
+
+#region Вариации ттс
+#1
+- type: entity
+  parent: AIPsychoNeutralBreakerBase
+  id: AIPsychoNeutralBreaker1
+  name: AI Псих
+  suffix: Ломатель 1
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TTS
+    voice: Admiral
+
+#2
+- type: entity
+  parent: AIPsychoNeutralBreakerBase
+  id: AIPsychoNeutralBreaker2
+  name: AI Псих
+  suffix: Ломатель 2
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TTS
+    voice: Barbossa
+
+#3
+- type: entity
+  parent: AIPsychoNeutralBreakerBase
+  id: AIPsychoNeutralBreaker3
+  name: AI Псих
+  suffix: Ломатель 3
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TTS
+    voice: Brann
+
+#4
+- type: entity
+  parent: AIPsychoNeutralBreakerBase
+  id: AIPsychoNeutralBreaker4
+  name: AI Псих
+  suffix: Ломатель 4
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TTS
+    voice: Vort
+
+#5
+- type: entity
+  parent: AIPsychoNeutralBreakerBase
+  id: AIPsychoNeutralBreaker5
+  name: AI Псих
+  suffix: Ломатель 5
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TTS
+    voice: Vree
+
+#6
+- type: entity
+  parent: AIPsychoNeutralBreakerBase
+  id: AIPsychoNeutralBreaker6
+  name: AI Псих
+  suffix: Ломатель 6
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TTS
+    voice: Gnomenapper
+
+#7
+- type: entity
+  parent: AIPsychoNeutralBreakerBase
+  id: AIPsychoNeutralBreaker7
+  name: AI Псих
+  suffix: Ломатель 7
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TTS
+    voice: Graves
+#8
+- type: entity
+  parent: AIPsychoNeutralBreakerBase
+  id: AIPsychoNeutralBreaker8
+  name: AI Псих
+  suffix: Ломатель 8
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TTS
+    voice: Decker
+
+#9
+- type: entity
+  parent: AIPsychoNeutralBreakerBase
+  id: AIPsychoNeutralBreaker9
+  name: AI Псих
+  suffix: Ломатель 9
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TTS
+    voice: Jackie
+
+#10
+- type: entity
+  parent: AIPsychoNeutralBreakerBase
+  id: AIPsychoNeutralBreaker10
+  name: AI Псих
+  suffix: Ломатель 10
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TTS
+    voice: Dolg1
+
+#region Спавнер
+- type: entity
+  parent: MarkerBase
+  id: AIPsychoNeutralBreakerSpawner
+  name: AIPsychoNeutralBreakerSpawner
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Objects/Materials/materials.rsi
+      state: diamond
+  - type: RandomSpawner
+    prototypes:
+    - AIPsychoNeutralBreaker1
+    - AIPsychoNeutralBreaker2
+    - AIPsychoNeutralBreaker3
+    - AIPsychoNeutralBreaker4
+    - AIPsychoNeutralBreaker5
+    - AIPsychoNeutralBreaker6
+    - AIPsychoNeutralBreaker7
+    - AIPsychoNeutralBreaker8
+    - AIPsychoNeutralBreaker9
+    - AIPsychoNeutralBreaker10
+    chance: 1
+    offset: 0.2
+
+
+#region Станнер
+- type: entity
+  parent: AIPsychoNeutralBase
+  id: AIPsychoNeutralStunBase
+  name: AI Псих
+  suffix: Станнер
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Loadout
+    prototypes:
+    - AIPsychoStunGear
+  - type: ActionGun
+    action: AIPsychoStunSoapThrowAction
+    gunProto: AIPsychoStunSoapThrow
+  - type: NPCUseActionOnTarget
+    actionId: AIPsychoStunSoapThrowAction
+
+#region Вариации ттс
+#1
+- type: entity
+  parent: AIPsychoNeutralStunBase
+  id: AIPsychoNeutralStun1
+  name: AI Псих
+  suffix: Станнер 1
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TTS
+    voice: Donkey
+
+#2
+- type: entity
+  parent: AIPsychoNeutralStunBase
+  id: AIPsychoNeutralStun2
+  name: AI Псих
+  suffix: Станнер 2
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TTS
+    voice: Father
+
+#3
+- type: entity
+  parent: AIPsychoNeutralStunBase
+  id: AIPsychoNeutralStun3
+  name: AI Псих
+  suffix: Станнер 3
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TTS
+    voice: Patrick
+
+#4
+- type: entity
+  parent: AIPsychoNeutralStunBase
+  id: AIPsychoNeutralStun4
+  name: AI Псих
+  suffix: Станнер 4
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TTS
+    voice: Robold
+
+#5
+- type: entity
+  parent: AIPsychoNeutralStunBase
+  id: AIPsychoNeutralStun5
+  name: AI Псих
+  suffix: Станнер 5
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TTS
+    voice: Sidorovich
+
+#6
+- type: entity
+  parent: AIPsychoNeutralStunBase
+  id: AIPsychoNeutralStun6
+  name: AI Псих
+  suffix: Станнер 6
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TTS
+    voice: Squidward
+
+#7
+- type: entity
+  parent: AIPsychoNeutralStunBase
+  id: AIPsychoNeutralStun7
+  name: AI Псих
+  suffix: Станнер 7
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TTS
+    voice: Sobchak
+
+#8
+- type: entity
+  parent: AIPsychoNeutralStunBase
+  id: AIPsychoNeutralStun8
+  name: AI Псих
+  suffix: Станнер 8
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TTS
+    voice: Takemura
+
+#9
+- type: entity
+  parent: AIPsychoNeutralStunBase
+  id: AIPsychoNeutralStun9
+  name: AI Псих
+  suffix: Станнер 9
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TTS
+    voice: Tiadalma
+
+#10
+- type: entity
+  parent: AIPsychoNeutralStunBase
+  id: AIPsychoNeutralStun10
+  name: AI Псих
+  suffix: Станнер 10
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TTS
+    voice: Wheatley
+
+#region Спавнер
+- type: entity
+  parent: MarkerBase
+  id: AIPsychoNeutralStunSpawner
+  name: AIPsychoNeutralStunSpawner
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Objects/Materials/materials.rsi
+      state: diamond
+  - type: RandomSpawner
+    prototypes:
+    - AIPsychoNeutralStun1
+    - AIPsychoNeutralStun2
+    - AIPsychoNeutralStun3
+    - AIPsychoNeutralStun4
+    - AIPsychoNeutralStun5
+    - AIPsychoNeutralStun6
+    - AIPsychoNeutralStun7
+    - AIPsychoNeutralStun8
+    - AIPsychoNeutralStun9
+    - AIPsychoNeutralStun10
+    chance: 1
+    offset: 0.2

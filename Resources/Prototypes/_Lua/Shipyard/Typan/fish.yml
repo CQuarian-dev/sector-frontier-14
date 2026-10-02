@@ -1,13 +1,14 @@
 # LuaWorld - This file is licensed under AGPLv3
 # Copyright (c) 2025 LuaWorld Contributors
 # See AGPLv3.txt for details.
+# Author: c_quarian (discord)
 
 - type: vessel
   id: Fish
   parent: BaseVessel
   name: Fish
   description: Гордость старого флота Синдиката. Предназначен для перехвата шаттлов, экспедиций и эффективной добычи руды двумя автопульсерами.
-  price: 127009
+  price: 139454
   mass: 506
   category: Small
   group: Typan

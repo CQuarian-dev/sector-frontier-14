@@ -1,15 +1,15 @@
 # LuaWorld - This file is licensed under AGPLv3
 # Copyright (c) 2025 LuaWorld Contributors
 # See AGPLv3.txt for details.
-# Author: germanreutt (discord)
+# Author: c_quarian (discord)
 
 - type: vessel
   parent: BaseVessel
-  id: GFStrizh
+  id: Strizh
   name: Strizh
   description: Гибрид, способный одинаково хорошо уничтожать врага на любом расстоянии. Бронирован средне.
   limit: 2
-  price: 247853
+  price: 379540
   mass: 511.5
   category: Medium
   group: Typan
@@ -22,12 +22,12 @@
   shuttlePath: /Maps/_Lua/Shuttles/Typan/strizh.yml
 
 - type: gameMap
-  id: GFStrizh
+  id: Strizh
   mapName: 'Strizh'
   mapPath: /Maps/_Lua/Shuttles/Typan/strizh.yml
   minPlayers: 0
   stations:
-    GFStrizh:
+    Strizh:
       stationProto: StandardFrontierVessel
       components:
       - type: StationNameSetup

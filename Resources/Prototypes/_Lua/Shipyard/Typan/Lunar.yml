@@ -6,8 +6,8 @@
   parent: BaseVessel
   id: Lunar
   name: Lunar
-  description: Небольшой штурмовик обладающий отличной мобильностью.
-  price: 109945
+  description: Небольшой штурмовик, обладающий отличной мобильностью, и идеально подходящий для одного человека.
+  price: 101200
   mass: 510
   category: Small
   group: Typan

@@ -1,0 +1,38 @@
+# LuaWorld - This file is licensed under AGPLv3
+# Copyright (c) 2025 LuaWorld Contributors
+# See AGPLv3.txt for details.
+# Author: c_quarian (discord)
+
+- type: vessel
+  parent: BaseVessel
+  id: Azure
+  name: Azure
+  description: Штурмовой корабль поддержки. Имеет эффективное среднекалиберное оружие для интенсивного ближнего боя.
+  limit: 2
+  price: 237482 # Lua
+  mass: 231
+  category: Medium
+  group: Typan
+  class:
+  - Syndicate
+  - Medical # Lua
+  - Chemistry # Lua
+  - Pursuit # Lua
+  engine:
+  - AME # Lua
+  shuttlePath: /Maps/_Lua/Shuttles/Typan/Azure.yml
+
+- type: gameMap
+  id: Azure
+  mapName: 'Azure'
+  mapPath: /Maps/_Lua/Shuttles/Typan/Azure.yml
+  minPlayers: 0
+  stations:
+    Azure:
+      stationProto: StandardFrontierVessel
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: 'Azure {1}'
+        nameGenerator:
+          !type:NanotrasenNameGenerator
+            prefixCreator: '14'

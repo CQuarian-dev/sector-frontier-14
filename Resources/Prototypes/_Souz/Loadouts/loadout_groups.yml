@@ -350,3 +350,6 @@
   - UsspLoadoutOuterWinterSec
   - UsspLoadoutOuterVestArmorSec
   - UsspLoadoutOuterCoatSecurityOvercoat
+  - UsspLoadoutOuterClothingHardsuitSecurity #Lua
+  - UsspLoadoutOuterClothingOuterHardsuitSecurityPilot #Lua
+

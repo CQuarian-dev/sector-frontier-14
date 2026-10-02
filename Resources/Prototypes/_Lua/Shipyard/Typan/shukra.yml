@@ -1,15 +1,15 @@
 # LuaWorld - This file is licensed under AGPLv3
 # Copyright (c) 2025 LuaWorld Contributors
 # See AGPLv3.txt for details.
-# Author: germanreutt (discord)
+# Author: c_quarian (discord)
 
 - type: vessel
   parent: BaseVessel
-  id: GFShukra
+  id: Shukra
   name: Shukra
-  description: Этот корабль оборудован радаром и несет мощные дальнобойные орудия, однако за огневую мощь расплачивается слабой броней.
+  description: Артиллерийский корабль, оборудованный мощными рельсотронными орудиями и ракетной пусковой установкой, однако за огневую мощь расплачивается тонкой броней.
   limit: 2
-  price: 261341
+  price: 284721 # Lua
   mass: 708
   category: Medium
   group: Typan
@@ -20,15 +20,15 @@
   - Fighter # Lua
   engine:
   - AME # Lua
-  shuttlePath: /Maps/_Lua/Shuttles/Typan/shukra-2.yml
+  shuttlePath: /Maps/_Lua/Shuttles/Typan/Shukra.yml
 
 - type: gameMap
-  id: GFShukra
+  id: Shukra
   mapName: 'Shukra'
-  mapPath: /Maps/_Lua/Shuttles/Typan/shukra-2.yml
+  mapPath: /Maps/_Lua/Shuttles/Typan/Shukra.yml
   minPlayers: 0
   stations:
-    GFShukra:
+    Shukra:
       stationProto: StandardFrontierVessel
       components:
       - type: StationNameSetup
