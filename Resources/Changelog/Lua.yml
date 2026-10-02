@@ -5519,3 +5519,35 @@ Entries:
   id: 354
   time: '2026-09-25T18:15:06.0000000+00:00'
   url: https://github.com/Lua-Frontier/sector-frontier-14/pull/670
+- author: Rendin0
+  changes:
+    - type: Fix
+      message: Исправлена уязвимость копировального аппарата
+  id: 355
+  time: '2026-10-02T13:25:33.0000000+00:00'
+  url: https://github.com/Lua-Frontier/sector-frontier-14/pull/683
+- author: Maksimvini
+  changes:
+    - type: Tweak
+      message: Частота СССП более не на англ ":p", а на русской ":в"
+  id: 356
+  time: '2026-10-02T13:26:38.0000000+00:00'
+  url: https://github.com/Lua-Frontier/sector-frontier-14/pull/684
+- author: CQuarian-dev
+  changes:
+    - type: Add
+      message: Ржавые пластитановые стены (только для маппинга)
+  id: 357
+  time: '2026-10-02T13:29:21.0000000+00:00'
+  url: https://github.com/Lua-Frontier/sector-frontier-14/pull/678
+- author: CQuarian-dev
+  changes:
+    - type: Tweak
+      message: >-
+        Пластитановые и шахтёрские диагональные окна теперь имеют верное
+        название (не "окно шаттла")
+    - type: Fix
+      message: Текстура диагонального пластитанового окна была исправлена
+  id: 358
+  time: '2026-10-02T13:30:35.0000000+00:00'
+  url: https://github.com/Lua-Frontier/sector-frontier-14/pull/679
