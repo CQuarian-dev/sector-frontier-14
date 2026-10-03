@@ -10,7 +10,7 @@
     sprite: ADT/Objects/Weapons/Melee/white_bouquet.rsi
     state: icon
   - type: MeleeWeapon
-    wideAnimationRotation: 180
+    wideAnimationRotation: 180 # Lua
     attackRate: 1.0
     damage:
       types:
@@ -31,7 +31,7 @@
     sprite: ADT/Objects/Weapons/Melee/rose_bouquet.rsi
     state: icon
   - type: MeleeWeapon
-    wideAnimationRotation: 180
+    wideAnimationRotation: 180 # Lua
     attackRate: 1.0
     damage:
       types:
@@ -52,7 +52,7 @@
     sprite: ADT/Objects/Weapons/Melee/yellow_bouquet.rsi
     state: icon
   - type: MeleeWeapon
-    wideAnimationRotation: 180
+    wideAnimationRotation: 180 # Lua
     attackRate: 1.0
     damage:
       types:
@@ -73,7 +73,7 @@
     sprite: ADT/Objects/Weapons/Melee/bouquet_with_beer.rsi
     state: icon
   - type: MeleeWeapon
-    wideAnimationRotation: 180
+    wideAnimationRotation: 180 # Lua
     attackRate: 1.0
     damage:
       types:
@@ -94,7 +94,7 @@
     sprite: ADT/Objects/Weapons/Melee/black_bouquet.rsi
     state: icon
   - type: MeleeWeapon
-    wideAnimationRotation: 180
+    wideAnimationRotation: 180 # Lua
     attackRate: 1.0
     damage:
       types:
@@ -115,7 +115,7 @@
     sprite: ADT/Objects/Weapons/Melee/liliac_bouquet.rsi
     state: icon
   - type: MeleeWeapon
-    wideAnimationRotation: 180
+    wideAnimationRotation: 180 # Lua
     attackRate: 1.0
     damage:
       types:
