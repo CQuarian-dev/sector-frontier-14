@@ -49,7 +49,7 @@ public sealed partial class MeleeWeaponSystem
         if (arcComponent.Animation != WeaponArcAnimation.None
             && TryComp(weapon, out MeleeWeaponComponent? meleeWeaponComponent))
         {
-            if (user != weapon
+            if (!IsUnarmedWeapon(user, weapon) // Lua
                 && TryComp(weapon, out SpriteComponent? weaponSpriteComponent))
                 _sprite.CopySprite((weapon, weaponSpriteComponent), (animationUid, sprite));
 

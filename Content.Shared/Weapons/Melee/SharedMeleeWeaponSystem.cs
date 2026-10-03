@@ -18,6 +18,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Item.ItemToggle.Components;
+using Content.Shared.Mech.Components; // Lua
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Physics;
@@ -584,12 +585,18 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
     protected abstract void DoDamageEffect(List<EntityUid> targets, EntityUid? user,  TransformComponent targetXform);
 
     // Lua start
-    private static EntProtoId GetLightAnimation(EntityUid user, EntityUid weaponUid, MeleeWeaponComponent weapon)
+    private EntProtoId GetLightAnimation(EntityUid user, EntityUid weaponUid, MeleeWeaponComponent weapon)
     {
-        if (weapon.Animation == MeleeWeaponComponent.ItemLightAnimation && weaponUid == user)
+        if (weapon.Animation == MeleeWeaponComponent.ItemLightAnimation && IsUnarmedWeapon(user, weaponUid))
             return MeleeWeaponComponent.UnarmedLightAnimation;
 
         return weapon.Animation;
+    }
+
+    protected bool IsUnarmedWeapon(EntityUid user, EntityUid weaponUid)
+    {
+        return weaponUid == user
+            || (TryComp<MechPilotComponent>(user, out var pilot) && pilot.Mech == weaponUid);
     }
     // Lua end
 
