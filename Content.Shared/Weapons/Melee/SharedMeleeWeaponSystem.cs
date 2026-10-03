@@ -595,8 +595,13 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 
     protected bool IsUnarmedWeapon(EntityUid user, EntityUid weaponUid)
     {
-        return weaponUid == user
-            || (TryComp<MechPilotComponent>(user, out var pilot) && pilot.Mech == weaponUid);
+        if (weaponUid == user)
+            return true;
+
+        if (TryComp<MechPilotComponent>(user, out var pilot) && pilot.Mech == weaponUid)
+            return true;
+
+        return _inventory.TryGetSlotEntity(user, "gloves", out var gloves) && gloves == weaponUid;
     }
     // Lua end
 
