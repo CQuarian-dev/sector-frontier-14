@@ -1,7 +1,7 @@
 using Content.Server.Preferences.Managers;
 using Content.Shared._Arcane.ERP;
 using Content.Shared.GameTicking;
-using Content.Shared._Lua.ERP;
+using Content.Shared.ERP;
 using Content.Shared.Humanoid;
 using Content.Shared.Preferences;
 using Robust.Shared.Player;

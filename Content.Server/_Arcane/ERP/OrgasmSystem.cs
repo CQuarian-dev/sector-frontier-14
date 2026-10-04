@@ -1,6 +1,6 @@
 using Content.Server.Chat.Systems;
 using Content.Shared._Arcane.ERP;
-using Content.Shared._Lua.Chat.Systems;
+using Content.Shared.Chat.Systems;
 using Content.Shared.Dataset;
 using Content.Shared.Humanoid;
 using Content.Shared.Popups;

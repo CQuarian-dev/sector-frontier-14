@@ -1,5 +1,5 @@
 using Content.Shared.Alert;
-using Content.Shared._Lua.ERP;
+using Content.Shared.ERP;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;

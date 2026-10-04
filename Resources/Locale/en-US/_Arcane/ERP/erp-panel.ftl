@@ -86,6 +86,7 @@ erp-panel-interaction-boobs-suck-name = Suck nipple
 erp-panel-interaction-fondle-boobs-name = Fondle chest
 erp-panel-interaction-rubbing-nipples-name = Rub nipples
 erp-panel-interaction-strike-cool-pose-name = Strike a cool pose
+erp-panel-interaction-hug-wings-name = Hug with wings
 
 # Interaction butt
 erp-panel-interaction-butt-near-cock-name = Rub with cock
@@ -112,17 +113,18 @@ erp-panel-interaction-face-dick-slap-name = Slap face with cock
 erp-panel-interaction-cheeks-kiss-name = Kiss cheek
 erp-panel-interaction-cheeks-kiss-both-name = Kiss both cheeks
 erp-panel-interaction-cheeks-pat-name = Pat cheeks
-erp-panel-interaction-cheeks-press-name = Press cheeks
+erp-panel-interaction-cheeks-press-name = Press cheeks together
 erp-panel-interaction-gentle-kiss-name = Kiss gently
 erp-panel-interaction-kiss-lips-name = Make out
 erp-panel-interaction-legs-squeezeface-name = Squeeze face with thighs
-erp-panel-interaction-mewing-name = Meow in face
+erp-panel-interaction-mewing-name = Make a mewing
 erp-panel-interaction-kitty-name = Rub muzzle
 erp-panel-interaction-blow-slap-name = Slap face
 erp-panel-interaction-blow-slap-users-name = Hit cheek with palm
 erp-panel-interaction-hitting-face-name = Hit face with palm
 erp-panel-interaction-shed-tear-name = Shed a tear
 erp-panel-interaction-kiss-forehead-name = Kiss forehead
+erp-panel-interaction-suspicious-look-name = Suspicious look
 
 # Interaction feet
 erp-panel-interaction-feet-mouth-name = Suck feet
@@ -140,11 +142,12 @@ erp-panel-interaction-pin-to-wall-name = Pin against wall
 # Interaction head
 erp-panel-interaction-pet-head-name = Pet head
 erp-panel-interaction-horns-pat-name = Pat horns
-erp-panel-interaction-horns-blowjob-f-name = Lick horn
+erp-panel-interaction-horns-blowjob-f-name = Fuck mouth holding horns
 erp-panel-interaction-give-slap-head-name = Give a smack on the head
 erp-panel-interaction-ruffle-hair-name = Ruffle hair
 erp-panel-interaction-tap-crown-name = Tap crown
 erp-panel-interaction-kiss-back-of-head-name = Kiss back of head
+erp-panel-interaction-lick-horns-name = Lick horns
 
 # Interaction mouth
 erp-panel-interaction-hair-face-fuck-name = Fuck mouth holding hair

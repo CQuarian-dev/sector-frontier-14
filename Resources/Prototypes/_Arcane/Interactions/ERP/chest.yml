@@ -269,3 +269,25 @@
   - театрально застывает в крутой позе.
   icon: _Arcane/Interface/ErpPanel/cool_pose.png
 
+- type: panelInteraction
+  id: HugWings
+  category: Chest
+  range: 1.5
+  sounds:
+  - /Audio/_Arcane/Interactions/pat1.ogg
+  - /Audio/_Arcane/Interactions/pat2.ogg
+  messages:
+  - укутывает $target своими крыльями.
+  - нежно прижимает $target к себе, накрывая крыльями.
+  - заботливо прячет $target под своими крыльями.
+  - обнимает $target, смыкая вокруг крылья.
+  - крепко обхватывает $target крыльями.
+  - ласково укрывает $target своими большими крыльями.
+  icon: _Arcane/Interface/ErpPanel/hug-wings.png
+  tags:
+  - RequiresERP
+  userRequirements:
+  - !type:SpeciesRequirement
+    species:
+    - Harpy
+    - Moth

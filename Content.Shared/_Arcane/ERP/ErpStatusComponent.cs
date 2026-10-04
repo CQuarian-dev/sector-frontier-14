@@ -1,4 +1,4 @@
-using Content.Shared._Lua.ERP;
+using Content.Shared.ERP;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared._Arcane.ERP;
