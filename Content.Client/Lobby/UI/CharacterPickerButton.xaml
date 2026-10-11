@@ -20,9 +20,12 @@
             <RichTextLabel Name="DescriptionLabel"
                            HorizontalExpand="True"/>
             <BoxContainer Orientation="Horizontal" SeparationOverride="4">
+                <!-- Lua start -->
                 <Button Name="DeleteButton"
                         HorizontalExpand="True"
+                        StyleClasses="ButtonColorRed"
                         Text="{Loc 'character-setup-gui-character-picker-button-delete-button'}"/>
+                <!-- Lua end -->
                 <Button Name="ConfirmDeleteButton"
                         HorizontalExpand="True"
                         Text="{Loc 'character-setup-gui-character-picker-button-confirm-delete-button'}"
