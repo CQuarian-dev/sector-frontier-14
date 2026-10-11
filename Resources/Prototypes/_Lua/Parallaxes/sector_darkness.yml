@@ -1,0 +1,29 @@
+- type: parallax
+  id: SectorDarkness
+  parent: BaseTelescope
+  seed: 61
+  scrollSpeed: 0.0008, 0.0004
+  starDensity: 0.3
+  baseColor: "#04020A"
+  nebulaColor: "#3A1030"
+  accentColor: "#5A1420"
+  horizonColor: "#1A0A2E"
+  nebulaIntensity: 0.7
+  lowQualityStarLayers: [0, 1]
+  starLayers:
+  - slowness: 0.9996
+    worldScale: 3.2
+    cutoff: 0.93
+    power: 14
+    intensity: 0.8
+    sizeMinPx: 0.7
+    sizeMaxPx: 1.2
+    seedBias: 7.3, 2.9
+  - slowness: 0.9991
+    worldScale: 1.6
+    cutoff: 0.955
+    power: 11
+    intensity: 1.1
+    sizeMinPx: 1.2
+    sizeMaxPx: 2.2
+    seedBias: 37.1, 15.4

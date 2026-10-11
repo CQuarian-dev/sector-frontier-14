@@ -1,5 +1,3 @@
-using System.Numerics;
-using Content.Client.Parallax;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
@@ -16,11 +14,11 @@ public sealed class SectorDarknessOverlay : Overlay
     public float Strength;
     public MapId Map = MapId.Nullspace;
 
-    public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowWorld | OverlaySpace.WorldSpace;
+    public override OverlaySpace Space => OverlaySpace.WorldSpace;
+    public override bool RequestScreenTexture => true;
 
     public SectorDarknessOverlay(IPrototypeManager prototype)
     {
-        ZIndex = ParallaxSystem.ParallaxZIndex + 2;
         _shader = prototype.Index(Shader).InstanceUnique();
     }
 
@@ -31,18 +29,15 @@ public sealed class SectorDarknessOverlay : Overlay
 
     protected override void Draw(in OverlayDrawArgs args)
     {
-        var handle = args.WorldHandle;
-        handle.SetTransform(Matrix3x2.Identity);
-
-        if (args.Space == OverlaySpace.WorldSpaceBelowWorld)
-        {
-            handle.DrawRect(args.WorldAABB, Color.Black.WithAlpha(Strength));
+        if (ScreenTexture == null)
             return;
-        }
 
+        _shader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
         _shader.SetParameter("strength", Strength);
+
+        var handle = args.WorldHandle;
         handle.UseShader(_shader);
-        handle.DrawRect(args.WorldAABB, Color.White);
+        handle.DrawRect(args.WorldBounds, Color.White);
         handle.UseShader(null);
     }
 }

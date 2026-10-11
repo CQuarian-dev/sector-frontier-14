@@ -16,6 +16,7 @@ public sealed class SectorDarknessSystem : EntitySystem
     private const float FadeTime = 8f;
 
     private SectorDarknessOverlay _overlay = default!;
+    private SectorDarknessBackdropOverlay _backdrop = default!;
     private int _sources;
     private float _strength;
 
@@ -24,6 +25,7 @@ public sealed class SectorDarknessSystem : EntitySystem
         base.Initialize();
 
         _overlay = new SectorDarknessOverlay(_prototype);
+        _backdrop = new SectorDarknessBackdropOverlay();
         SubscribeLocalEvent<SectorDarknessComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<SectorDarknessComponent, ComponentShutdown>(OnShutdown);
     }
@@ -60,7 +62,10 @@ public sealed class SectorDarknessSystem : EntitySystem
         }
 
         if (dark)
+        {
             _overlay.Map = mapId;
+            _backdrop.Map = mapId;
+        }
 
         var target = dark ? 1f : 0f;
         if (_strength == target)
@@ -79,13 +84,20 @@ public sealed class SectorDarknessSystem : EntitySystem
     private void Apply()
     {
         _overlay.Strength = _strength;
+        _backdrop.Strength = _strength;
 
         if (_overlays.TryGetOverlay<AmbientSpaceEffectOverlay>(out var nebula))
             nebula.Visibility = 1f - _strength;
 
         if (_strength <= 0f)
+        {
             _overlays.RemoveOverlay(_overlay);
+            _overlays.RemoveOverlay(_backdrop);
+        }
         else if (!_overlays.HasOverlay<SectorDarknessOverlay>())
+        {
             _overlays.AddOverlay(_overlay);
+            _overlays.AddOverlay(_backdrop);
+        }
     }
 }
