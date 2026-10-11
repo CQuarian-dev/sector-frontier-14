@@ -1,0 +1,9 @@
+uniform highp float strength;
+uniform highp float darkness;
+uniform highp float vignette;
+
+void fragment() {
+    highp vec2 offset = FRAGCOORD.xy * SCREEN_PIXEL_SIZE.xy - vec2(0.5);
+    highp float edge = smoothstep(0.2, 0.75, length(offset));
+    COLOR = vec4(0.0, 0.0, 0.0, strength * mix(darkness, 1.0, edge * vignette));
+}
