@@ -7,9 +7,9 @@
     endAnnouncement: station-event-sector-darkness-end-announcement
     announcementScope: Map
     startAudio:
-      path: /Audio/_Lua/Announcements/attention.ogg
+      path: /Audio/_Lua/Adminbuse/Ionstorm_sound.ogg
     endAudio:
-      path: /Audio/_Lua/Announcements/attention.ogg
+      path: /Audio/_NF/Announcements/PocketSizedAndy/andy2_solar_flare_end.ogg
     weight: 0.05
     earliestStart: 45
     maxOccurrences: 1
@@ -17,3 +17,9 @@
     maxDuration: 660
   - type: SectorDarknessRule
     sector: AsteroidSectorDefault
+    lightBreakChancePerSecond: 0.0001
+    doorToggleChancePerSecond: 0.001
+    music:
+      path: /Audio/_Lua/Events/sectordarkness.ogg
+      params:
+        volume: -4

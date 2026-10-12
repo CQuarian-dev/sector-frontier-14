@@ -3,13 +3,8 @@
   parent: BaseTelescope
   seed: 61
   starDensity: 0.55
-  baseColor: "#04020A"
-  nebulaColor: "#7B2CBF"
+  baseColor: "#070000"
+  nebulaColor: "#4b1977"
   accentColor: "#C1305A"
-  horizonColor: "#3C096C"
-  nebulaIntensity: 2.0
-  imageLayers:
-  - path: /Textures/_Lua/Effects/parallax_noise_opacity.png
-    slowness: 0.998046875
-    scale: 1.3, 1.3
-    scrolling: 0.05, 0.02
+  horizonColor: "#25093f"
+  nebulaIntensity: 0

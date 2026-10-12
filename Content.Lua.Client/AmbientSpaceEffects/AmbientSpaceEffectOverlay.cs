@@ -74,8 +74,6 @@ public sealed class AmbientSpaceEffectOverlay : Overlay
     private Vector2 _stencilCacheTopRight;
     private IRenderTexture? _stencilTarget;
 
-    public float Visibility = 1f;
-
     public AmbientSpaceEffectOverlay(
         IEntityManager entManager,
         IPrototypeManager prototypes,
@@ -98,9 +96,6 @@ public sealed class AmbientSpaceEffectOverlay : Overlay
     protected override void Draw(in OverlayDrawArgs args)
     {
         if (args.MapId == MapId.Nullspace)
-            return;
-
-        if (Visibility <= 0f)
             return;
 
         var quality = _cfg.GetCVar(CLVars.AmbientSpaceEffectsQuality);
@@ -276,7 +271,7 @@ public sealed class AmbientSpaceEffectOverlay : Overlay
             else if (quality >= 3)
                 opacity = MathF.Min(opacity * 1.08f, 1f);
 
-            opacity *= densityMul * Visibility;
+            opacity *= densityMul;
 
             if (opacity <= 0f)
                 continue;

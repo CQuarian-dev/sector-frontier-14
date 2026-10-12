@@ -1,16 +1,35 @@
 using Content.Lua.Server.Sectors;
 using Content.Lua.Shared.SectorDarkness;
+using Content.Server.Light.Components;
+using Content.Server.Light.EntitySystems;
+using Content.Server.Radio;
 using Content.Server.StationEvents.Events;
+using Content.Shared.Doors.Components;
+using Content.Shared.Doors.Systems;
 using Content.Shared.GameTicking.Components;
 using Robust.Shared.Map;
+using Robust.Shared.Random;
 
 namespace Content.Lua.Server.SectorDarkness;
 
 public sealed class SectorDarknessRule : StationEventSystem<SectorDarknessRuleComponent>
 {
     [Dependency] private readonly SectorSystem _sectors = default!;
+    [Dependency] private readonly PoweredLightSystem _poweredLight = default!;
+    [Dependency] private readonly SharedDoorSystem _door = default!;
+
+    private const float EffectInterval = 10f;
 
     private MapId _relevantMapId = MapId.Nullspace;
+    private MapId _jammedMapId = MapId.Nullspace;
+    private float _effectTimer;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<RadioReceiveAttemptEvent>(OnRadioReceiveAttempt);
+    }
 
     protected override MapId GetRelevantMapId()
     {
@@ -37,7 +56,12 @@ public sealed class SectorDarknessRule : StationEventSystem<SectorDarknessRuleCo
 
         var map = MapSystem.GetMap(component.MapId);
         component.Map = map;
-        EnsureComp<SectorDarknessComponent>(map);
+        _jammedMapId = component.MapId;
+        _effectTimer = EffectInterval;
+
+        var darkness = EnsureComp<SectorDarknessComponent>(map);
+        darkness.Music = component.Music;
+        Dirty(map, darkness);
     }
 
     protected override void Ended(EntityUid uid, SectorDarknessRuleComponent component, GameRuleComponent gameRule, GameRuleEndedEvent args)
@@ -45,7 +69,43 @@ public sealed class SectorDarknessRule : StationEventSystem<SectorDarknessRuleCo
         _relevantMapId = component.MapId;
         base.Ended(uid, component, gameRule, args);
 
-        if (component.Map is { } map)
-            RemComp<SectorDarknessComponent>(map);
+        if (component.Map is not { } map)
+            return;
+
+        _jammedMapId = MapId.Nullspace;
+        RemComp<SectorDarknessComponent>(map);
+    }
+
+    protected override void ActiveTick(EntityUid uid, SectorDarknessRuleComponent component, GameRuleComponent gameRule, float frameTime)
+    {
+        base.ActiveTick(uid, component, gameRule, frameTime);
+
+        _effectTimer -= frameTime;
+        if (_effectTimer > 0f)
+            return;
+
+        _effectTimer += EffectInterval;
+        var lightChance = component.LightBreakChancePerSecond * EffectInterval;
+        var doorChance = component.DoorToggleChancePerSecond * EffectInterval;
+
+        var lights = EntityQueryEnumerator<PoweredLightComponent, TransformComponent>();
+        while (lights.MoveNext(out var lightUid, out var light, out var xform))
+        {
+            if (xform.MapID == component.MapId && RobustRandom.Prob(lightChance * light.SolarFlareShieldingCoefficient))
+                _poweredLight.TryDestroyBulb(lightUid, light);
+        }
+
+        var airlocks = EntityQueryEnumerator<AirlockComponent, DoorComponent, TransformComponent>();
+        while (airlocks.MoveNext(out var airlockUid, out var airlock, out var door, out var xform))
+        {
+            if (xform.MapID == component.MapId && airlock.AutoClose && RobustRandom.Prob(doorChance))
+                _door.TryToggleDoor(airlockUid, door);
+        }
+    }
+
+    private void OnRadioReceiveAttempt(ref RadioReceiveAttemptEvent args)
+    {
+        if (_jammedMapId != MapId.Nullspace && Transform(args.RadioReceiver).MapID == _jammedMapId)
+            args.Cancelled = true;
     }
 }

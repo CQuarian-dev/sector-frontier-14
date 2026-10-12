@@ -6,7 +6,6 @@
     - id: NFIonStorm
     - id: NFPowerGridCheck
     # - id: NFRandomSentience Lua Disable
-    # - id: NFSolarFlare # Lua Disable
     - id: NFVentClog
     - id: NFBluespaceCargoCrate
     - id: NFBluespaceMcCargoCrate
@@ -50,26 +49,6 @@
     duration: 60
     maxDuration: 120
   - type: PowerGridCheckRule
-
-- type: entity
-  parent: BaseGameRule
-  id: NFSolarFlare
-  components:
-  - type: StationEvent
-    startAudio:
-      path: /Audio/_Lua/Announcements/attention.ogg # Lua
-    weight: 4
-    earliestStart: 15
-    reoccurrenceDelay: 45
-    startAnnouncement: station-event-solar-flare-nf-start-announcement
-    endAnnouncement: station-event-solar-flare-nf-end-announcement
-    announcementScope: Map
-    duration: 120
-    maxDuration: 240
-  - type: SolarFlareRule
-    allChannels: true
-    lightBreakChancePerSecond: 0.0003
-    doorToggleChancePerSecond: 0.001
 
 - type: entity
   id: NFVentClog

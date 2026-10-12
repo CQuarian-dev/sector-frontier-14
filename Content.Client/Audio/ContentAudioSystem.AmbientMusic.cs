@@ -483,6 +483,9 @@ public sealed partial class ContentAudioSystem
             _replayAmbientMusicBool = true;
         }
 
+        if (_musicSuppressed) // Lua
+            return; // Lua
+
         var strim = _audio.PlayGlobal(
             path,
             Filter.Local(),
@@ -636,5 +639,28 @@ public sealed partial class ContentAudioSystem
         FadeOut(_ambientMusicStream);
         _ambientMusicStream = null;
     }
+
+    // Lua start
+    private bool _musicSuppressed;
+
+    public void SetMusicSuppressed(bool suppressed)
+    {
+        if (_musicSuppressed == suppressed)
+            return;
+
+        _musicSuppressed = suppressed;
+        if (suppressed)
+        {
+            DisableAmbientMusic();
+            return;
+        }
+
+        if (_state.CurrentState is not GameplayState)
+            return;
+
+        ReplayAmbientMusic();
+        _replayAmbientMusicTimer = 0;
+    }
+    // Lua end
 
 }

@@ -67,7 +67,7 @@
   path: "/Textures/_Lua/Shaders/sector_darkness.swsl"
   params:
     strength: 0
-    darkness: 0.55
+    darkness: 0.6
     vignette: 0.9
-    contrast: 2
+    contrast: 1.09
     sharpness: 0.5

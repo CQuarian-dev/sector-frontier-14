@@ -14,6 +14,8 @@ namespace Content.Lua.Client.SectorDarkness;
 
 public sealed class SectorDarknessBackdropOverlay : Overlay
 {
+    public const int BackdropZIndex = ParallaxSystem.ParallaxZIndex + 2;
+
     private static readonly ProtoId<ParallaxPrototype> Parallax = "SectorDarkness";
 
     [Dependency] private readonly IConfigurationManager _cfg = default!;
@@ -28,7 +30,7 @@ public sealed class SectorDarknessBackdropOverlay : Overlay
     public SectorDarknessBackdropOverlay()
     {
         IoCManager.InjectDependencies(this);
-        ZIndex = ParallaxSystem.ParallaxZIndex + 2;
+        ZIndex = BackdropZIndex;
     }
 
     protected override bool BeforeDraw(in OverlayDrawArgs args)
