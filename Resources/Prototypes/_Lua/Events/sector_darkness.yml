@@ -12,7 +12,8 @@
       path: /Audio/_NF/Announcements/PocketSizedAndy/andy2_solar_flare_end.ogg
     weight: 0.05
     earliestStart: 45
-    maxOccurrences: 1
+    maxOccurrences: 5
+    reoccurrenceDelay: 600
     duration: 540
     maxDuration: 660
   - type: SectorDarknessRule
@@ -22,4 +23,4 @@
     music:
       path: /Audio/_Lua/Events/sectordarkness.ogg
       params:
-        volume: -4
+        volume: -2
