@@ -45,6 +45,7 @@ public abstract class SharedKitchenSpikeSystem : EntitySystem
     private void OnInit(Entity<KitchenSpikeComponent> ent, ref ComponentInit args)
     {
         ent.Comp.BodyContainer = ContainerSystem.EnsureContainer<ContainerSlot>(ent, ent.Comp.ContainerId);
+        ent.Comp.BodyContainer.ShowContents = true; // Lua
     }
 
     private void OnCanDrop(Entity<KitchenSpikeComponent> ent, ref CanDropTargetEvent args)

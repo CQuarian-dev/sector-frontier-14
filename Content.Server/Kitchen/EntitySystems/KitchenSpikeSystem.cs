@@ -43,7 +43,6 @@ namespace Content.Server.Kitchen.EntitySystems
         [Dependency] private readonly BodySystem _bodySystem = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
-        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedMindSystem _mind = default!;
         [Dependency] private readonly MetaDataSystem _metaData = default!;
@@ -124,8 +123,6 @@ namespace Content.Server.Kitchen.EntitySystems
             _damageableSystem.TryChangeDamage(args.Entity, ent.Comp.SpikeDamage, true);
 
             ent.Comp.NextDamage = _gameTiming.CurTime + ent.Comp.DamageInterval;
-
-            _appearance.SetData(ent.Owner, KitchenSpikeVisuals.Status, KitchenSpikeStatus.Bloody);
         }
 
         private void OnEntRemovedFromContainer(Entity<KitchenSpikeComponent> ent, ref EntRemovedFromContainerMessage args)
@@ -138,9 +135,6 @@ namespace Content.Server.Kitchen.EntitySystems
                 RemComp<KitchenSpikeHookedComponent>(args.Entity);
                 _damageableSystem.TryChangeDamage(args.Entity, ent.Comp.SpikeDamage, true);
             }
-
-            if (!TerminatingOrDeleted(ent.Owner))
-                _appearance.SetData(ent.Owner, KitchenSpikeVisuals.Status, KitchenSpikeStatus.Empty);
         }
 
         private void OnInteractHand(Entity<KitchenSpikeComponent> ent, ref InteractHandEvent args)
