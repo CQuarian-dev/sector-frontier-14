@@ -18,7 +18,7 @@ public sealed class OpenIncisionSystem : EntitySystem
     [Dependency] private readonly SharedBodySystem _body = default!;
 
     private static readonly TimeSpan Interval = TimeSpan.FromSeconds(1);
-    private static readonly FixedPoint2 Damage = 0.2;
+    private static readonly FixedPoint2 Damage = 0.1;
     private const string DamageType = "Slash";
     private const float MinBleed = 1.5f;
 
