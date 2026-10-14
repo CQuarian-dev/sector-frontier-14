@@ -25,9 +25,7 @@
                                 <Button Name="RandomizeEverythingButton" Text="{Loc 'humanoid-profile-editor-randomize-everything-button'}" HorizontalExpand="True" />
                             </BoxContainer>
                             <BoxContainer Orientation="Horizontal" SeparationOverride="4" HorizontalExpand="True">
-                                <!-- Lua start -->
-                                <Button Name="SaveButton" Text="{Loc 'humanoid-profile-editor-save-button'}" HorizontalExpand="True" StyleClasses="ButtonAccept" />
-                                <!-- Lua end -->
+                                <Button Name="SaveButton" Text="{Loc 'humanoid-profile-editor-save-button'}" HorizontalExpand="True" />
                                 <Button Name="ResetButton" Disabled="True" Text="{Loc 'humanoid-profile-editor-reset-button'}" HorizontalExpand="True" />
                             </BoxContainer>
                             <BoxContainer Orientation="Horizontal" SeparationOverride="4" HorizontalExpand="True">
