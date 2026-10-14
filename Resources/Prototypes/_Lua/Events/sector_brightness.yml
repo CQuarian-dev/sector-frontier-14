@@ -9,7 +9,7 @@
     startAudio:
       path: /Audio/Ambience/ambiholy.ogg
     endAudio:
-      path: /Audio/_Lua/Announcements/attention.ogg
+      path: /Audio/Ambience/ambiholy.ogg
     weight: 0.5
     earliestStart: 45
     minimumPlayers: 15
