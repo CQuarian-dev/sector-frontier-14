@@ -641,14 +641,20 @@ public sealed partial class ContentAudioSystem
     }
 
     // Lua start
-    private bool _musicSuppressed;
+    private readonly HashSet<string> _musicSuppressors = new();
+    private bool _musicSuppressed => _musicSuppressors.Count > 0;
 
-    public void SetMusicSuppressed(bool suppressed)
+    public void SetMusicSuppressed(string source, bool suppressed)
     {
-        if (_musicSuppressed == suppressed)
+        var wasSuppressed = _musicSuppressed;
+        if (suppressed)
+            _musicSuppressors.Add(source);
+        else
+            _musicSuppressors.Remove(source);
+
+        if (_musicSuppressed == wasSuppressed)
             return;
 
-        _musicSuppressed = suppressed;
         if (suppressed)
         {
             DisableAmbientMusic();

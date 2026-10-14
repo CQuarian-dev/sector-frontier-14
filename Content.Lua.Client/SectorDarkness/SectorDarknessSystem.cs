@@ -112,7 +112,7 @@ public sealed class SectorDarknessSystem : EntitySystem
     private void SetDark(bool dark, SoundSpecifier? music)
     {
         _dark = dark;
-        _contentAudio.SetMusicSuppressed(dark);
+        _contentAudio.SetMusicSuppressed(nameof(SectorDarknessSystem), dark);
 
         if (!dark)
         {

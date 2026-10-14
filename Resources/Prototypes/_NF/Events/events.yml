@@ -13,6 +13,7 @@
     - id: NFBluespaceBrokenMcDelivery
     - id: NFSmugglingFax
     - id: SectorDarkness # Lua
+    - id: SectorBrightness # Lua
 
 - type: entity
   id: NFBreakerFlip
@@ -70,10 +71,13 @@
   id: NFIonStorm
   components:
   - type: StationEvent
-    earliestStart: 15 # Frontier
+    earliestStart: 45 # Lua: 15<45
     startAnnouncement: station-event-ion-storm-nf-start-announcement
     announcementScope: Map
-    weight: 8
-    reoccurrenceDelay: 120 # Frontier: 20<120
+    weight: 2 # Lua: 8<2
+    reoccurrenceDelay: 300 # Lua: 120<300
     duration: 1
   - type: IonStormRule
+    sectors: # Lua
+    - AsteroidSectorDefault
+    - FrontierSector

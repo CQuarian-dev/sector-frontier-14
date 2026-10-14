@@ -86,6 +86,12 @@ public sealed partial class StationEventComponent : Component
     public int ReoccurrenceDelay = 30;
 
     /// <summary>
+    ///     Lua: the event can't be added while any of these game rules is added.
+    /// </summary>
+    [DataField]
+    public List<EntProtoId> BlockingEvents = new();
+
+    /// <summary>
     ///     How long the event lasts.
     /// </summary>
     [DataField]
