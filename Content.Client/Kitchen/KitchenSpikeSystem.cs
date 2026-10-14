@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Shared.Kitchen;
 using Content.Shared.Kitchen.Components;
 using Content.Shared.Rotation;
@@ -12,7 +11,6 @@ public sealed class KitchenSpikeSystem : SharedKitchenSpikeSystem
     [Dependency] private readonly SpriteSystem _sprite = default!;
 
     private static readonly Angle HookedRotation = Angle.FromDegrees(180);
-    private static readonly Vector2 HookedOffset = new(-1 / 32f, 0);
 
     public override void Initialize()
     {
@@ -29,7 +27,6 @@ public sealed class KitchenSpikeSystem : SharedKitchenSpikeSystem
 
         sprite.EnableDirectionOverride = true;
         sprite.DirectionOverride = Direction.South;
-        _sprite.SetOffset((ent, sprite), sprite.Offset + HookedOffset);
     }
 
     private void OnHookedShutdown(Entity<KitchenSpikeHookedComponent> ent, ref ComponentShutdown args)
@@ -38,10 +35,7 @@ public sealed class KitchenSpikeSystem : SharedKitchenSpikeSystem
             return;
 
         if (TryComp<SpriteComponent>(ent, out var sprite))
-        {
             sprite.EnableDirectionOverride = false;
-            _sprite.SetOffset((ent, sprite), sprite.Offset - HookedOffset);
-        }
 
         if (TryComp<RotationVisualsComponent>(ent, out var rotation))
             rotation.HorizontalRotation = rotation.DefaultRotation;
