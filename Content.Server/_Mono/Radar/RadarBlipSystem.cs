@@ -68,7 +68,7 @@ public sealed partial class RadarBlipSystem : EntitySystem
                     rb.RadarColor = Color.Red;
                     rb.Scale = 0f;
                     rb.Enabled = true;
-                    rb.MaxDistance = 100f; // Lua 512 > 100
+                    rb.MaxDistance = 512f;
                     var icon = EnsureComp<RadarBlipIconComponent>(blipUid);
                     icon.Icon = new Robust.Shared.Utility.ResPath("/Textures/_Lua/Interface/Radar/dead_cross.png");
                     icon.Scale = 0.6f;
