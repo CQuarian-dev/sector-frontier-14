@@ -9,7 +9,6 @@
     - id: NFVentClog
     - id: NFBluespaceCargoCrate
     - id: NFBluespaceMcCargoCrate
-    - id: NFBluespaceSyndicateCrate
     - id: NFBluespaceBrokenMcDelivery
     - id: NFSmugglingFax
     - id: SectorDarkness # Lua
