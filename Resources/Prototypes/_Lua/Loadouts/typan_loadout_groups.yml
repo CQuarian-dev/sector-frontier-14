@@ -16,6 +16,7 @@
 - type: loadout
   id: OutpostTypanBackpackSyndicate
   dummyEntity: ClothingBackpackSyndicate
+  previewEntity: ClothingBackpackSyndicate
   equipment:
     back: ClothingBackpackSyndicate
   storage:
@@ -28,6 +29,7 @@
 - type: loadout
   id: OutpostTypanBackpackDuffelSyndicate
   dummyEntity: ClothingBackpackDuffelSyndicate
+  previewEntity: ClothingBackpackDuffelSyndicate
   equipment:
     back: ClothingBackpackDuffelSyndicate
   storage:
@@ -40,6 +42,7 @@
 - type: loadout
   id: OutpostTypanBackpackMessengerSyndicate
   dummyEntity: ClothingBackpackMessengerSyndicate
+  previewEntity: ClothingBackpackMessengerSyndicate
   equipment:
     back: ClothingBackpackMessengerSyndicate
   storage:
@@ -52,6 +55,7 @@
 - type: loadout
   id: OutpostTypanBackpackSatchel
   dummyEntity: ClothingBackpackSatchelOutpostTypan
+  previewEntity: ClothingBackpackSatchelOutpostTypan
   equipment:
     back: ClothingBackpackSatchelOutpostTypan
   storage:
