@@ -7,7 +7,7 @@
     endAnnouncement: station-event-sector-darkness-end-announcement
     announcementScope: Map
     startAudio:
-      path: /Audio/_Lua/Adminbuse/Ionstorm_sound.ogg
+      path: /Audio/_Lua/Events/sectordarkness_start.ogg
     endAudio:
       path: /Audio/_Lua/Adminbuse/Ionstorm_sound.ogg
     weight: 0.5
