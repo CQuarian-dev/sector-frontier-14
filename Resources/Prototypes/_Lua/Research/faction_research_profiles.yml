@@ -160,10 +160,6 @@
   startingKits:
   - UsspRndServer
   - UsspRndConsole
-  - ArmorPlateBlunt_Slash
-  - ArmorPlateHeat
-  - ArmorPlatePierce
-  - ArmorPlateSpeed
   - ClothingModsuitUSSPVaryagUSSP
   - ClothingModsuitUSSPZastavnikUSSP
   - ClothingOuterHardsuitUSSPCombat

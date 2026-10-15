@@ -30,6 +30,9 @@
     size: Normal
     sprite: _Lua/Objects/Weapons/Melee/chainsword.rsi
   - type: DisarmMalus
+  - type: Reflect
+    reflectProb: 0.10
+    spread: 90
   - type: RefillableSolution
     solution: Welder
   - type: SolutionContainerManager

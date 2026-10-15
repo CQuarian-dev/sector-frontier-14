@@ -121,46 +121,41 @@
   categories:
   - ArmorNF
   result: ArmorPlateBlunt_Slash
-  completetime: 15
-  materials:
-    Plasteel: 2000
-    Durathread: 500
-    Plastic: 1000
-    RedSpaceCoupons: 3
+  completetime: 20 # Lua 15 > 20
+  materials: # Lua
+    Plasteel: 1500
+    Durathread: 900
+    Plastic: 900
 
 - type: latheRecipe
   id: ArmorPlatePierce
   categories:
   - ArmorNF
   result: ArmorPlatePierce
-  completetime: 15
-  materials:
-    Durathread: 500
-    Plastic: 500
+  completetime: 20 # Lua 15 > 20
+  materials: # Lua
     Plastitanium: 1500
-    RedSpaceCoupons: 3
+    Durathread: 900
+    Plastic: 600
 
 - type: latheRecipe
   id: ArmorPlateHeat
   categories:
   - ArmorNF
   result: ArmorPlateHeat
-  completetime: 15
-  materials:
-    Steel: 600
-    Durathread: 500
-    PlasmaGlass: 1500
-    UraniumGlass: 1500
-    RedSpaceCoupons: 4
+  completetime: 20 # Lua 15 > 20
+  materials: # Lua
+    PlasmaGlass: 1200
+    UraniumGlass: 1200
+    Durathread: 900
 
 - type: latheRecipe
   id: ArmorPlateSpeed
   categories:
   - ArmorNF
   result: ArmorPlateSpeed
-  completetime: 15
-  materials:
-    Durathread: 1000
-    Brass: 3000
-    Plastitanium: 1000
-    RedSpaceCoupons: 4
+  completetime: 20 # Lua 15 > 20
+  materials: # Lua
+    Brass: 2400
+    Plastitanium: 600
+    Durathread: 900

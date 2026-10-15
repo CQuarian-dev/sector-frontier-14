@@ -21,7 +21,7 @@
      - Belt
      - suitStorage
    - type: Reflect
-     reflectProb: 0.06
+     reflectProb: 0.20 # Lua 0.06 > 0.20
    - type: DisarmMalus
      malus: 0.9
    - type: StaticPrice
@@ -50,7 +50,7 @@
     - Belt
     - suitStorage
   - type: Reflect
-    reflectProb: 0.06
+    reflectProb: 0.20 # Lua 0.06 > 0.20
   - type: DisarmMalus
     malus: 0.9
   - type: StaticPrice

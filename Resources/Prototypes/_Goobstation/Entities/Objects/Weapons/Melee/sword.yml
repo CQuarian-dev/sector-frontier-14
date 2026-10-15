@@ -14,7 +14,7 @@
     soundHit:
       path: /Audio/Weapons/bladeslice.ogg
   - type: Reflect
-    reflectProb: .06
+    reflectProb: .10 # Lua .06 > .10
     spread: 90
   - type: Item
     sprite: _Goobstation/Objects/Weapons/Melee/ccsabre.rsi

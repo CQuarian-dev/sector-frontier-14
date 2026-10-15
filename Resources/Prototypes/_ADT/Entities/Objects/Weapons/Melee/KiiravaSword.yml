@@ -20,3 +20,6 @@
     size: Normal
     sprite: ADT/Objects/Weapons/Melee/kiirava-sword.rsi
   - type: DisarmMalus
+  - type: Reflect # Lua
+    reflectProb: 0.10
+    spread: 90

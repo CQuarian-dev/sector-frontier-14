@@ -121,6 +121,17 @@
     sprite: Objects/Weapons/Melee/e_sword-inhands.rsi
   - type: StaticPrice
     price: 2500
+  # Lua start
+  - type: ItemToggleMeleeWeapon
+    activatedDamage:
+      types:
+        Slash: 20
+        Heat: 20
+        Structural: 75
+  - type: Reflect
+    reflectProb: .20
+    spread: 10
+  # Lua end
 
 - type: entity
   name: energy dagger
@@ -279,9 +290,13 @@
   - type: ItemToggleMeleeWeapon
     activatedDamage:
         types:
-            Slash: 10
-            Heat: 12
+            Slash: 15 # Lua 10 > 15
+            Heat: 15 # Lua 12 > 15
+            Structural: 75 # Lua
     deactivatedSecret: true
+  - type: Reflect # Lua
+    reflectProb: .15
+    spread: 10
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_cutlass.rsi
     layers:
@@ -319,9 +334,9 @@
         variation: 0.250
     activatedDamage:
         types:
-            Slash: 12
-            Heat: 12
-            Structural: 15
+            Slash: 20 # Lua 12 > 20
+            Heat: 20 # Lua 12 > 20
+            Structural: 75 # Lua 15 > 75
   - type: ItemToggleActiveSound
     activeSound: null
   - type: ComponentToggler
@@ -353,7 +368,7 @@
     size: Small
     sprite: Objects/Weapons/Melee/e_sword_double-inhands.rsi
   - type: Reflect
-    reflectProb: .12
+    reflectProb: .20 # Lua .12 > .20
     spread: 10
 
 # Item will look weird in handslot. Will need to adjust handstorage visuals in a future PR

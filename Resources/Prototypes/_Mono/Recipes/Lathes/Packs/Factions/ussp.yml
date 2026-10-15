@@ -353,10 +353,6 @@
   - ClothingOuterHardsuitUsspM10USSP
   - ClothingModsuitUSSPVaryagUSSP
   - ClothingModsuitUSSPZastavnikUSSP
-  - ArmorPlateBlunt_Slash
-  - ArmorPlatePierce
-  - ArmorPlateHeat
-  - ArmorPlateSpeed
 
 - type: latheRecipePack
   id: MonoUSSPThrustersDynamic

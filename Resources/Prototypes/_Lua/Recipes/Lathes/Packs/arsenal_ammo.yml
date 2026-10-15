@@ -30,7 +30,6 @@
   - AmmoBox23x75mmSlugAP
   - AmmoBox23x75mmSlugRIP
   - AmmoBox23x75mmUranium
-  - AmmoBox357_magnumAP
   - AmmoBox357_magnumBigFMJ
   - AmmoBox357_magnumEmp
   - AmmoBox357_magnumFMJ
@@ -183,3 +182,7 @@
   - SpeedLoader762x54mmREmpty
   - MilitaryPowerCellMG
   - PulsedPlasmaLaserCanister
+  - ArmorPlateBlunt_Slash
+  - ArmorPlatePierce
+  - ArmorPlateHeat
+  - ArmorPlateSpeed

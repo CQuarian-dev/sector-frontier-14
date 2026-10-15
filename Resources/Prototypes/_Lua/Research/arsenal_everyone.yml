@@ -1976,17 +1976,6 @@
   - DurandPeripheralsElectronics
   - DurandTargetingElectronics
 - type: technology
-  id: ArmorPlateBlunt_Slash
-  name: research-technology-armorplateblunt_slash
-  entityIcon: ArmorPlateBlunt_Slash
-  discipline: NFArsenal
-  tags:
-  - ballistics
-  discoveryWeight: 1.35
-  cost: 15000
-  recipeUnlocks:
-  - ArmorPlateBlunt_Slash
-- type: technology
   id: NuclearGrenade
   name: research-technology-nucleargrenade
   entityIcon: NuclearGrenade
@@ -2019,36 +2008,3 @@
   cost: 40000
   recipeUnlocks:
   - SingularityGrenade
-- type: technology
-  id: ArmorPlateHeat
-  name: research-technology-armorplateheat
-  entityIcon: ArmorPlateHeat
-  discipline: NFArsenal
-  tags:
-  - ballistics
-  discoveryWeight: 1.35
-  cost: 15000
-  recipeUnlocks:
-  - ArmorPlateHeat
-- type: technology
-  id: ArmorPlatePierce
-  name: research-technology-armorplatepierce
-  entityIcon: ArmorPlatePierce
-  discipline: NFArsenal
-  tags:
-  - ballistics
-  discoveryWeight: 1.35
-  cost: 15000
-  recipeUnlocks:
-  - ArmorPlatePierce
-- type: technology
-  id: ArmorPlateSpeed
-  name: research-technology-armorplatespeed
-  entityIcon: ArmorPlateSpeed
-  discipline: NFArsenal
-  tags:
-  - ballistics
-  discoveryWeight: 1.35
-  cost: 15000
-  recipeUnlocks:
-  - ArmorPlateSpeed

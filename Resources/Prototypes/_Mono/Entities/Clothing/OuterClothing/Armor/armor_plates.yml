@@ -17,9 +17,9 @@
     sprintSpeedModifier: 0.95
     staminaDamageMultiplier: 1.0
     absorptionRatios:
-      Blunt: 0.7
-      Slash: 0.7
-      Burn: 1.2
+      Blunt: 0.35 # Lua 0.7 > 0.35
+      Slash: 0.35 # Lua 0.7 > 0.35
+      Heat: -0.2 # Lua Burn: 1.2 > Heat: -0.2
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
@@ -49,8 +49,8 @@
     sprintSpeedModifier: 0.95
     staminaDamageMultiplier: 1.0
     absorptionRatios:
-      Piercing: 0.7
-      Burn: 1.2
+      Piercing: 0.35 # Lua 0.7 > 0.35
+      Heat: -0.2 # Lua Burn: 1.2 > Heat: -0.2
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
@@ -80,8 +80,8 @@
     sprintSpeedModifier: 0.95
     staminaDamageMultiplier: 1.0
     absorptionRatios:
-      Heat: 0.7
-      Piercing: 1.2
+      Heat: 0.35 # Lua 0.7 > 0.35
+      Piercing: -0.2 # Lua 1.2 > -0.2
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
@@ -107,14 +107,14 @@
     size: Normal
   - type: ArmorPlateItem
     maxDurability: 25
-    walkSpeedModifier: 1.1
-    sprintSpeedModifier: 1.1
+    walkSpeedModifier: 1.0 # Lua 1.1 > 1.0
+    sprintSpeedModifier: 1.0 # Lua 1.1 > 1.0
     staminaDamageMultiplier: 2
-    absorptionRatios:
-      Burn: 1.2
-      Piercing: 1.2
-      Blunt: 1.2
-      Slash: 1.2
+    absorptionRatios: # Lua
+      Heat: 0.15
+      Piercing: 0.15
+      Blunt: 0.15
+      Slash: 0.15
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
