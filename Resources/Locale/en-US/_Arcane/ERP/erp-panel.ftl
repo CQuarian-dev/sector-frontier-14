@@ -134,7 +134,6 @@ erp-panel-interaction-shift-weight-name = Put hand on thigh
 erp-panel-interaction-handshake-name = Shake hands
 erp-panel-interaction-kiss-hand-name = Kiss hand
 erp-panel-interaction-high-five-name = High five
-erp-panel-interaction-friendly-flying-kiss-name = Blow a kiss
 erp-panel-interaction-friendly-nose-boop-name = Boop nose
 erp-panel-interaction-push-ups-floor-name = Do push-ups
 erp-panel-interaction-pin-to-wall-name = Pin against wall

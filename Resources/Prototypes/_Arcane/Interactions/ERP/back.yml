@@ -1,31 +1,18 @@
 - type: panelInteraction
   id: FingerTap
   category: Back
+  kind: Safe
   range: 1.5
-  sounds:
-  - /Audio/_Arcane/Interactions/pat1.ogg
-  - /Audio/_Arcane/Interactions/pat2.ogg
-  messages:
-  - тыкает спину $target вдоль позвоночника.
-  - мнёт лопатки $target.
-  - разминает спину $target.
-  - проминает позвоночник $target.
-  - делает $target массаж спины.
-  - легонько "рубит" спину $target.
-  - прогибает спину $target.
-  - мнёт большими пальцами между лопатками $target.
+  sound:
+    collection: ErpPat
+  messages: ErpFingerTapMessages
   icon: _Arcane/Interface/ErpPanel/friendly_finger_tap.png
 
 - type: panelInteraction
   id: StretchBody
   category: Back
-  sounds:
-  - /Audio/_Arcane/Interactions/stretch_body.ogg
-  selfMessages:
-  - лениво потягивается всем телом.
-  - потягивается всем телом.
-  - демонстративно потягивается всем телом.
-  - разминается и потягивается всем телом.
-  - утомленно потягивается всем телом.
-  - напрягает мышцы и потягивается всем телом.
+  kind: Safe
+  sound:
+    collection: ErpStretchBody
+  selfMessages: ErpStretchBodySelfMessages
   icon: _Arcane/Interface/ErpPanel/stretch_full_body.png

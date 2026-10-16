@@ -3,10 +3,12 @@ using Content.Server.Chat.Systems;
 using Content.Shared._Arcane.ERP;
 using Content.Shared._Arcane.ErpPanel;
 using Content.Shared.Chat.Systems;
+using Content.Shared.Damage;
 using Content.Shared.ERP;
 using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
+using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -30,6 +32,8 @@ public sealed class ErpPanelSystem : EntitySystem
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     private static readonly EntProtoId HeartsProto = new("EffectHearts");
 
@@ -162,6 +166,12 @@ public sealed class ErpPanelSystem : EntitySystem
         if (user == target)
             return;
 
+        if (interaction.Kind == PanelInteractionKind.Erotic)
+        {
+            ProccessContactDamage(user, target);
+            ProccessContactDamage(target, user);
+        }
+
         if (interaction.UserArouse != 0 && TryComp<ArousalComponent>(user, out var userArousalComp))
         {
             var userDelta = interaction.UserArouse * customArousal / 100;
@@ -173,6 +183,22 @@ public sealed class ErpPanelSystem : EntitySystem
             _arousal.AddArousal(user, userDelta);
             ProccessMoan(user, customMoaning);
         }
+    }
+
+    private void ProccessContactDamage(EntityUid source, EntityUid victim)
+    {
+        if (!TryComp<ErpContactDamageComponent>(source, out var contact))
+            return;
+
+        if (TryComp<HumanoidAppearanceComponent>(source, out var sourceHumanoid) &&
+            TryComp<HumanoidAppearanceComponent>(victim, out var victimHumanoid) &&
+            sourceHumanoid.Species == victimHumanoid.Species)
+            return;
+
+        _damageable.TryChangeDamage(victim, contact.Damage, origin: source);
+
+        if (_prototype.TryIndex(contact.Popups, out var popups))
+            _popup.PopupEntity(Loc.GetString(_random.Pick(popups.Values)), victim, victim, PopupType.SmallCaution);
     }
 
     public void ProccessMoan(EntityUid uid, float customMoaning)
@@ -219,10 +245,12 @@ public sealed class ErpPanelSystem : EntitySystem
 
     private void ProccessMessages(EntityUid user, EntityUid target, PanelInteractionPrototype interaction)
     {
-        var messagesCollection = user == target ? interaction.SelfMessages : interaction.Messages;
+        var messagesId = user == target ? interaction.SelfMessages : interaction.Messages;
+        if (!_prototype.TryIndex(messagesId, out var messages))
+            return;
 
-        var message = _random.Pick(messagesCollection)
-            .Replace("$target", Identity.Name(target, EntityManager, user));
+        var message = Loc.GetString(_random.Pick(messages.Values),
+            ("target", Identity.Name(target, EntityManager, user)));
 
         _chat.TrySendInGameICMessage(user, message, InGameICChatType.Emote, false);
     }
@@ -250,12 +278,7 @@ public sealed class ErpPanelSystem : EntitySystem
 
     private void ProccessSounds(EntityUid user, PanelInteractionPrototype interaction)
     {
-        if (interaction.Sounds.Count == 0)
-            return;
-
-        var resSound = _random.Pick(interaction.Sounds);
-        var sound = new SoundPathSpecifier(resSound);
-        _audio.PlayPvs(sound, user);
+        _audio.PlayPvs(interaction.Sound, user);
     }
 
     private void TryOpenPanel(EntityUid user, EntityUid target)
@@ -291,10 +314,10 @@ public sealed class ErpPanelSystem : EntitySystem
         if (!_interaction.InRangeAndAccessible(user, target, interaction.Range))
             return false;
 
-        if (user == target && interaction.SelfMessages.Count == 0)
+        if (user == target && interaction.SelfMessages == null)
             return false;
 
-        if (user != target && interaction.Messages.Count == 0)
+        if (user != target && interaction.Messages == null)
             return false;
 
         if (!TryComp<ErpPanelOwnerComponent>(user, out var userPanel))
@@ -306,18 +329,13 @@ public sealed class ErpPanelSystem : EntitySystem
         if (!HasComp<ArousalComponent>(user) || !HasComp<ArousalComponent>(target))
             return false;
 
-        if (IsErpInteraction(interaction) && !CanUseErp(user, target))
+        if (interaction.Kind == PanelInteractionKind.Erotic && !CanUseErp(user, target))
             return false;
 
         if (userPanel.Cooldowns.TryGetValue(interaction.ID, out var lastUse) && lastUse + interaction.Cooldown > _ticking.CurTime)
             return false;
 
         return true;
-    }
-
-    private static bool IsErpInteraction(PanelInteractionPrototype interaction)
-    {
-        return interaction.Tags.Contains(ErpPanelConstants.ErpInteractionTag);
     }
 
     private bool CanUseErp(EntityUid user, EntityUid target)

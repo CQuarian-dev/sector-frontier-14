@@ -1,22 +1,13 @@
 - type: panelInteraction
   id: BoobsSlap
   category: Chest
+  kind: Erotic
   userArouse: 5
   range: 1.5
-  sounds:
-  - /Audio/_Arcane/Interactions/bang1.ogg
-  - /Audio/_Arcane/Interactions/bang2.ogg
-  - /Audio/_Arcane/Interactions/bang4.ogg
-  - /Audio/_Arcane/Interactions/bang5.ogg
-  - /Audio/_Arcane/Interactions/bang6.ogg
-  messages:
-  - шлёпает по груди $target.
-  - громко ударяет по груди $target!
-  - хлопает $target по сиськам.
-  - бьёт $target по груди.
+  sound:
+    collection: ErpBang
+  messages: ErpBoobsSlapMessages
   icon: _Arcane/Interface/ErpPanel/boobs_slap.png
-  tags:
-  - RequiresERP
   targetRequirements:
   - !type:SexRequirement
     sexes:
@@ -27,19 +18,13 @@
 - type: panelInteraction
   id: BoobsPaw
   category: Chest
+  kind: Erotic
   userArouse: 5
   range: 1.5
-  sounds:
-  - /Audio/_Arcane/Interactions/friction1.ogg
-  - /Audio/_Arcane/Interactions/friction2.ogg
-  messages:
-  - гладит $target по груди.
-  - гладит грудь $target.
-  - проводит рукой по бюсту $target.
-  - игриво гладит грудь $target.
+  sound:
+    collection: ErpFriction
+  messages: ErpBoobsPawMessages
   icon: _Arcane/Interface/ErpPanel/boobs_paw.png
-  tags:
-  - RequiresERP
   targetRequirements:
   - !type:SexRequirement
     sexes:
@@ -50,24 +35,14 @@
 - type: panelInteraction
   id: BoobsFuck
   category: Chest
+  kind: Erotic
   userArouse: 10
   targetArouse: 5
   range: 1.5
-  sounds:
-  - /Audio/_Arcane/Interactions/bang1.ogg
-  - /Audio/_Arcane/Interactions/bang2.ogg
-  - /Audio/_Arcane/Interactions/bang4.ogg
-  - /Audio/_Arcane/Interactions/bang5.ogg
-  - /Audio/_Arcane/Interactions/bang6.ogg
-  messages:
-  - просовывает свой член между сиськами $target.
-  - трахает грудь $target.
-  - водит членом по груди $target.
-  - трётся пенисом о бюст $target.
-  - страстно трахает бюст $target!
+  sound:
+    collection: ErpBang
+  messages: ErpBoobsFuckMessages
   icon: _Arcane/Interface/ErpPanel/boobs_fuck.png
-  tags:
-  - RequiresERP
   targetRequirements:
   - !type:SexRequirement
     sexes:
@@ -85,20 +60,13 @@
 - type: panelInteraction
   id: BoobsSqueeze
   category: Chest
+  kind: Erotic
   userArouse: 5
   range: 1.5
-  sounds:
-  - /Audio/_Arcane/Interactions/pat1.ogg
-  - /Audio/_Arcane/Interactions/pat2.ogg
-  messages:
-  - с силой сжимает грудь $target!
-  - жамкает грудь $target.
-  - сжимает грудь $target.
-  - жмёт руками бюст $target.
-  - хватает $target за грудь!
+  sound:
+    collection: ErpPat
+  messages: ErpBoobsSqueezeMessages
   icon: _Arcane/Interface/ErpPanel/boobs_squeeze.png
-  tags:
-  - RequiresERP
   targetRequirements:
   - !type:SexRequirement
     sexes:
@@ -109,26 +77,14 @@
 - type: panelInteraction
   id: BoobsKisses
   category: Chest
+  kind: Erotic
   userArouse: 5
   targetArouse: 5
   range: 1.5
-  sounds:
-  - /Audio/_Arcane/Interactions/kiss1.ogg
-  - /Audio/_Arcane/Interactions/kiss2.ogg
-  - /Audio/_Arcane/Interactions/kiss4.ogg
-  - /Audio/_Arcane/Interactions/kiss5.ogg
-  - /Audio/_Arcane/Interactions/kiss3.ogg
-  messages:
-  - целует грудь $target.
-  - оставляет множество поцелуев на груди $target.
-  - страстно расцеловывает грудь $target!
-  - быстро оставляет поцелуи на обеих сиськах $target.
-  - касается губами груди $target.
-  - нежно целует грудь $target.
-  - целует $target в грудь.
+  sound:
+    collection: ErpKiss
+  messages: ErpBoobsKissesMessages
   icon: _Arcane/Interface/ErpPanel/boobs_many_kisses.png
-  tags:
-  - RequiresERP
   targetRequirements:
   - !type:SexRequirement
     sexes:
@@ -139,20 +95,13 @@
 - type: panelInteraction
   id: BoobsTail
   category: Chest
+  kind: Erotic
   targetArouse: 5
   range: 1.5
-  sounds:
-  - /Audio/_Arcane/Interactions/friction1.ogg
-  - /Audio/_Arcane/Interactions/friction2.ogg
-  messages:
-  - проводит хвостиком по груди $target.
-  - водит хвостом по груди $target.
-  - ласкает грудь $target своим хвостом.
-  - обвивает грудь $target хвостом.
-  - гладит грудь $target хвостиком.
+  sound:
+    collection: ErpFriction
+  messages: ErpBoobsTailMessages
   icon: _Arcane/Interface/ErpPanel/boobs_tail.png
-  tags:
-  - RequiresERP
   targetRequirements:
   - !type:SexRequirement
     sexes:
@@ -166,20 +115,14 @@
 - type: panelInteraction
   id: BoobsMassage
   category: Chest
+  kind: Erotic
   userArouse: 5
   targetArouse: 5
   range: 1.5
-  sounds:
-  - /Audio/_Arcane/Interactions/pat1.ogg
-  - /Audio/_Arcane/Interactions/pat2.ogg
-  messages:
-  - массирует грудь $target.
-  - водит пальцами по груди $target.
-  - водит вокруг сосков $target.
-  - аккуратно сжимает и разжимает грудь $target.
+  sound:
+    collection: ErpPat
+  messages: ErpBoobsMassageMessages
   icon: _Arcane/Interface/ErpPanel/boobs_massage.png
-  tags:
-  - RequiresERP
   targetRequirements:
   - !type:SexRequirement
     sexes:
@@ -190,22 +133,14 @@
 - type: panelInteraction
   id: BoobsSuck
   category: Chest
+  kind: Erotic
   userArouse: 5
   targetArouse: 10
   range: 1.5
-  sounds:
-  - /Audio/_Arcane/Interactions/pat1.ogg
-  - /Audio/_Arcane/Interactions/pat2.ogg
-  messages:
-  - захватывает губами сосок $target.
-  - нежно сосёт сосок $target.
-  - посасывает сосок $target.
-  - обхватывает губами сосок $target и тихо посасывает.
-  - медленно водит языком вокруг соска $target.
-  - ласкает сосок $target губами.
+  sound:
+    collection: ErpPat
+  messages: ErpBoobsSuckMessages
   icon: _Arcane/Interface/ErpPanel/boobs_suck.png
-  tags:
-  - RequiresERP
   targetRequirements:
   - !type:SexRequirement
     sexes:
@@ -216,20 +151,14 @@
 - type: panelInteraction
   id: FondleBoobs
   category: Chest
+  kind: Erotic
   userArouse: 5
   targetArouse: 5
   range: 1.5
-  sounds:
-  - /Audio/_Arcane/Interactions/pat1.ogg
-  - /Audio/_Arcane/Interactions/pat2.ogg
-  selfMessages:
-  - массирует свою грудь.
-  - водит пальцами по своей груди.
-  - водит вокруг своих сосков.
-  - аккуратно сжимает и разжимает свою грудь.
+  sound:
+    collection: ErpPat
+  selfMessages: ErpFondleBoobsSelfMessages
   icon: _Arcane/Interface/ErpPanel/pat_man_chest.png
-  tags:
-  - RequiresERP
   userRequirements:
   - !type:ExposedBodyPartRequirement
     part: Chest
@@ -237,20 +166,14 @@
 - type: panelInteraction
   id: RubbingNipples
   category: Chest
+  kind: Erotic
   userArouse: 5
   targetArouse: 5
   range: 1.5
-  sounds:
-  - /Audio/_Arcane/Interactions/pat1.ogg
-  - /Audio/_Arcane/Interactions/pat2.ogg
-  selfMessages:
-  - массирует свои соски.
-  - водит пальцами по соскам.
-  - слегка трёт соски.
-  - аккуратно сжимает и разжимает свои соски.
+  sound:
+    collection: ErpPat
+  selfMessages: ErpRubbingNipplesSelfMessages
   icon: _Arcane/Interface/ErpPanel/touch_man_nipples.png
-  tags:
-  - RequiresERP
   userRequirements:
   - !type:ExposedBodyPartRequirement
     part: Chest
@@ -258,34 +181,21 @@
 - type: panelInteraction
   id: StrikeCoolPose
   category: Chest
-  sounds:
-  - /Audio/_Arcane/Interactions/click.ogg
-  selfMessages:
-  - пафосно встает в крутую позу.
-  - эпично принимает крутую позу.
-  - высокомерно встает в крутую позу.
-  - шутливо встает в крутую позу.
-  - уверенно принимает крутую позу.
-  - театрально застывает в крутой позе.
+  kind: Safe
+  sound:
+    collection: ErpClick
+  selfMessages: ErpStrikeCoolPoseSelfMessages
   icon: _Arcane/Interface/ErpPanel/cool_pose.png
 
 - type: panelInteraction
   id: HugWings
   category: Chest
+  kind: Safe
   range: 1.5
-  sounds:
-  - /Audio/_Arcane/Interactions/pat1.ogg
-  - /Audio/_Arcane/Interactions/pat2.ogg
-  messages:
-  - укутывает $target своими крыльями.
-  - нежно прижимает $target к себе, накрывая крыльями.
-  - заботливо прячет $target под своими крыльями.
-  - обнимает $target, смыкая вокруг крылья.
-  - крепко обхватывает $target крыльями.
-  - ласково укрывает $target своими большими крыльями.
+  sound:
+    collection: ErpPat
+  messages: ErpHugWingsMessages
   icon: _Arcane/Interface/ErpPanel/hug-wings.png
-  tags:
-  - RequiresERP
   userRequirements:
   - !type:SpeciesRequirement
     species:

@@ -1,15 +1,10 @@
 - type: panelInteraction
   id: FlutterWings
   category: Wings
-  sounds:
-  - /Audio/_Arcane/Interactions/pat1.ogg
-  selfMessages:
-  - резко взмахивает крыльями, обдавая прохладным потоком воздуха.
-  - подрагивает крыльями
-  - хлопает крыльями.
-  - расправляет крылья.
-  - мягко шуршит крыльями.
-  - встряхивает крыльями.
+  kind: Safe
+  sound:
+    collection: ErpPat
+  selfMessages: ErpFlutterWingsSelfMessages
   icon: _Arcane/Interface/ErpPanel/shaking-moth-wings.png
   userRequirements:
   - !type:SpeciesRequirement
@@ -20,14 +15,11 @@
 - type: panelInteraction
   id: SlapFaceWithWing
   category: Wings
+  kind: Harmful
   targetArouse: -1
-  sounds:
-  - /Audio/_Arcane/Interactions/pat1.ogg
-  messages:
-  - наотмашь хлопает крылом по лицу $target.
-  - задевает крылом лицо $target при взмахе.
-  - яростно бьет крылом прямо по лицу $target.
-  - резко закрывается крылом, попадая им по лицу $target.
+  sound:
+    collection: ErpPat
+  messages: ErpSlapFaceWithWingMessages
   icon: _Arcane/Interface/ErpPanel/slap-wing-face.png
   userRequirements:
   - !type:SpeciesRequirement
@@ -38,14 +30,11 @@
 - type: panelInteraction
   id: PullWing
   category: Wings
+  kind: Harmful
   targetArouse: -5
-  sounds:
-  - /Audio/_Arcane/Interactions/pat1.ogg
-  messages:
-  - резко дергает $target за крыло.
-  - грубо тянет $target за крыло, заставляя вздрогнуть.
-  - подергивает $target за кончик крыла.
-  - неосторожно тянет $target за крыло.
+  sound:
+    collection: ErpPat
+  messages: ErpPullWingMessages
   icon: _Arcane/Interface/ErpPanel/pat-wings.png
   userRequirements:
   - !type:SpeciesRequirement
@@ -56,18 +45,11 @@
 - type: panelInteraction
   id: PetWings
   category: Wings
-  sounds:
-  - /Audio/_Arcane/Interactions/pat1.ogg
-  messages:
-  - нежно поглаживает крылья $target.
-  - ласково перебирает перья на крыльях $target.
-  - аккуратно расправляет и гладит крыло $target.
-  - трепетно проводит ладонью по изгибу крыла $target.
-  - заботливо очищает и разглаживает крылья $target.
-  - поглаживает основание его крыльев.
+  kind: Safe
+  sound:
+    collection: ErpPat
+  messages: ErpPetWingsMessages
   icon: _Arcane/Interface/ErpPanel/hug-wings.png
-  tags:
-  - RequiresERP
   targetRequirements:
   - !type:SpeciesRequirement
     species:

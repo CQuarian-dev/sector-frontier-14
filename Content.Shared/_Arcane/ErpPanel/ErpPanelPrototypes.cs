@@ -1,13 +1,16 @@
 using Content.Shared._Arcane.ErpPanel.Requirements;
+using Content.Shared.Dataset;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Shared._Arcane.ErpPanel;
 
-public static class ErpPanelConstants
+public enum PanelInteractionKind : byte
 {
-    public const string ErpInteractionTag = "RequiresERP";
+    Safe,
+    Erotic,
+    Harmful,
 }
 
 [Prototype]
@@ -19,20 +22,20 @@ public sealed partial class PanelInteractionPrototype : IPrototype
     [DataField(required: true)]
     public ProtoId<PanelInteractionCategoryPrototype> Category;
 
-    [DataField]
-    public List<string> Messages = new();
+    [DataField(required: true)]
+    public PanelInteractionKind Kind;
 
     [DataField]
-    public List<string> SelfMessages = new();
+    public ProtoId<LocalizedDatasetPrototype>? Messages;
+
+    [DataField]
+    public ProtoId<LocalizedDatasetPrototype>? SelfMessages;
 
     [DataField(required: true)]
     public SpriteSpecifier Icon = SpriteSpecifier.Invalid;
 
     [DataField]
-    public List<ResPath> Sounds = new();
-
-    [DataField]
-    public HashSet<string> Tags = new();
+    public SoundSpecifier? Sound;
 
     [DataField]
     public TimeSpan Cooldown = TimeSpan.FromSeconds(3);

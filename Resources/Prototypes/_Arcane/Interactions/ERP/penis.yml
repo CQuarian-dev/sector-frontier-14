@@ -1,23 +1,14 @@
 - type: panelInteraction
   id: SuckCock
   category: Penis
+  kind: Erotic
   userArouse: 5
   targetArouse: 15
   range: 1.5
-  sounds:
-  - /Audio/_Arcane/Interactions/oral1.ogg
-  - /Audio/_Arcane/Interactions/oral2.ogg
-  messages:
-  - проталкивает член $target в своё горло.
-  - осторожно сосет член $target.
-  - проводит языком по члену $target во рту.
-  - нежно облизывает головку члена $target.
-  - ритмично двигает головой, лаская член $target.
-  - обхватывает губами головку члена $target и нежно посасывает.
-  - захватывает член $target губами и ритмично скользит по нему.
+  sound:
+    collection: ErpOral
+  messages: ErpSuckCockMessages
   icon: _Arcane/Interface/ErpPanel/cock_tongue_fap.png
-  tags:
-  - RequiresERP
   targetRequirements:
   - !type:SexRequirement
     sexes:
@@ -28,29 +19,14 @@
 - type: panelInteraction
   id: SlimeFuckCock
   category: Penis
+  kind: Erotic
   userArouse: 10
   targetArouse: 10
   range: 1.5
-  sounds:
-  - /Audio/_Arcane/Interactions/bj1.ogg
-  - /Audio/_Arcane/Interactions/bj2.ogg
-  - /Audio/_Arcane/Interactions/bj3.ogg
-  - /Audio/_Arcane/Interactions/bj4.ogg
-  - /Audio/_Arcane/Interactions/bj5.ogg
-  - /Audio/_Arcane/Interactions/bj6.ogg
-  - /Audio/_Arcane/Interactions/bj7.ogg
-  - /Audio/_Arcane/Interactions/bj8.ogg
-  - /Audio/_Arcane/Interactions/bj9.ogg
-  - /Audio/_Arcane/Interactions/bj10.ogg
-  - /Audio/_Arcane/Interactions/bj11.ogg
-  messages:
-  - насаживает член $target в свою плазму.
-  - пробивает оболочку плазмы членом $target!
-  - ритмично передвигает плазму у члена $target.
-  - ласкает головку члена $target своей плазмой.
+  sound:
+    collection: ErpBlowjob
+  messages: ErpSlimeFuckCockMessages
   icon: _Arcane/Interface/ErpPanel/cock_slime_sex.png
-  tags:
-  - RequiresERP
   userRequirements:
   - !type:SpeciesRequirement
     species:
@@ -65,22 +41,14 @@
 - type: panelInteraction
   id: CockFap
   category: Penis
+  kind: Erotic
   userArouse: 10
   targetArouse: 10
   range: 1.5
-  sounds:
-  - /Audio/_Arcane/Interactions/champ_fingering.ogg
-  selfMessages:
-  - водит рукой по своему члену.
-  - дрочит свой пенис.
-  - ласкает свой член.
-  - надрачивает свой член.
-  - быстро водит рукой по пенису вверх-вниз.
-  - наяривает свой пенис.
-  - обхватывает член рукой и активно ласкает его.
+  sound:
+    collection: ErpChampFingering
+  selfMessages: ErpCockFapSelfMessages
   icon: _Arcane/Interface/ErpPanel/cock_fap.png
-  tags:
-  - RequiresERP
   userRequirements:
   - !type:SexRequirement
     sexes:
@@ -91,24 +59,13 @@
 - type: panelInteraction
   id: CockFootjob
   category: Penis
+  kind: Erotic
   targetArouse: 10
   range: 1.5
-  sounds:
-  - /Audio/_Arcane/Interactions/bang1.ogg
-  - /Audio/_Arcane/Interactions/bang2.ogg
-  - /Audio/_Arcane/Interactions/bang4.ogg
-  - /Audio/_Arcane/Interactions/bang5.ogg
-  - /Audio/_Arcane/Interactions/bang6.ogg
-  messages:
-  - проталкивает член $target между пальчиками.
-  - дрочит член $target ногой.
-  - водит ногой по члену $target.
-  - обхыватывает ногами член $target.
-  - плавно водит ножкой по пенису $target.
-  - гладит ступнёй пенис $target.
+  sound:
+    collection: ErpBang
+  messages: ErpCockFootjobMessages
   icon: _Arcane/Interface/ErpPanel/cock_footjob.png
-  tags:
-  - RequiresERP
   targetRequirements:
   - !type:SexRequirement
     sexes:
@@ -119,23 +76,14 @@
 - type: panelInteraction
   id: CockSwordmanship
   category: Penis
+  kind: Erotic
   userArouse: 10
   targetArouse: 10
   range: 1.5
-  sounds:
-  - /Audio/_Arcane/Interactions/bang1.ogg
-  - /Audio/_Arcane/Interactions/bang2.ogg
-  - /Audio/_Arcane/Interactions/bang4.ogg
-  - /Audio/_Arcane/Interactions/bang5.ogg
-  - /Audio/_Arcane/Interactions/bang6.ogg
-  messages:
-  - скрещивает свой член с членом $target.
-  - фехтует членами с $target.
-  - ударяет пенисом по члену $target.
-  - борется членами с $target, как на мечах.
+  sound:
+    collection: ErpBang
+  messages: ErpCockSwordmanshipMessages
   icon: _Arcane/Interface/ErpPanel/cock_swordmanship.png
-  tags:
-  - RequiresERP
   targetRequirements:
   - !type:SexRequirement
     sexes:
@@ -152,16 +100,13 @@
 - type: panelInteraction
   id: CockFapTail
   category: Penis
+  kind: Erotic
   targetArouse: 10
   range: 1.5
-  sounds:
-  - /Audio/_Arcane/Interactions/champ_fingering.ogg
-  messages:
-  - обвивает хвостиком член $target.
-  - надрачивает хвостом член $target.
+  sound:
+    collection: ErpChampFingering
+  messages: ErpCockFapTailMessages
   icon: _Arcane/Interface/ErpPanel/cock_tail_fap.png
-  tags:
-  - RequiresERP
   targetRequirements:
   - !type:SexRequirement
     sexes:
@@ -175,23 +120,14 @@
 - type: panelInteraction
   id: CockFuckLegs
   category: Penis
+  kind: Erotic
   userArouse: 5
   targetArouse: 10
   range: 1.5
-  sounds:
-  - /Audio/_Arcane/Interactions/bang1.ogg
-  - /Audio/_Arcane/Interactions/bang2.ogg
-  - /Audio/_Arcane/Interactions/bang4.ogg
-  - /Audio/_Arcane/Interactions/bang5.ogg
-  - /Audio/_Arcane/Interactions/bang6.ogg
-  messages:
-  - трахает ляжками член $target.
-  - душит пенис $target своими ляжками!
-  - проталкивает член $target между ляжками.
-  - трётся ляжками о член $target.
+  sound:
+    collection: ErpBang
+  messages: ErpCockFuckLegsMessages
   icon: _Arcane/Interface/ErpPanel/legs_cock_fuck.png
-  tags:
-  - RequiresERP
   targetRequirements:
   - !type:SexRequirement
     sexes:
@@ -202,30 +138,14 @@
 - type: panelInteraction
   id: CockBlowjob
   category: Penis
+  kind: Erotic
   userArouse: 5
   targetArouse: 20
   range: 1.5
-  sounds:
-  - /Audio/_Arcane/Interactions/bj1.ogg
-  - /Audio/_Arcane/Interactions/bj2.ogg
-  - /Audio/_Arcane/Interactions/bj3.ogg
-  - /Audio/_Arcane/Interactions/bj4.ogg
-  - /Audio/_Arcane/Interactions/bj5.ogg
-  - /Audio/_Arcane/Interactions/bj6.ogg
-  - /Audio/_Arcane/Interactions/bj7.ogg
-  - /Audio/_Arcane/Interactions/bj8.ogg
-  - /Audio/_Arcane/Interactions/bj9.ogg
-  - /Audio/_Arcane/Interactions/bj10.ogg
-  - /Audio/_Arcane/Interactions/bj11.ogg
-  messages:
-  - делает минет $target, активно работая головой.
-  - ритмично двигает головой, сосая член $target.
-  - жадно глотает член $target.
-  - страстно делает минет $target, не останавливаясь.
-  - быстро работает ртом и рукой на члене $target.
+  sound:
+    collection: ErpBlowjob
+  messages: ErpCockBlowjobMessages
   icon: _Arcane/Interface/ErpPanel/cock_blowjob.png
-  tags:
-  - RequiresERP
   targetRequirements:
   - !type:SexRequirement
     sexes:
@@ -236,19 +156,14 @@
 - type: panelInteraction
   id: LegsCockFuckTail
   category: Penis
+  kind: Erotic
   userArouse: 5
   targetArouse: 10
   range: 1.5
-  sounds:
-  - /Audio/_Arcane/Interactions/friction1.ogg
-  - /Audio/_Arcane/Interactions/friction2.ogg
-  messages:
-  - трахает ляжками член $target, обвивая хвостом.
-  - зажимает член $target между ляжками, хвостом помогая.
-  - трётся ляжками о член $target, хвостом обхватив.
+  sound:
+    collection: ErpFriction
+  messages: ErpLegsCockFuckTailMessages
   icon: _Arcane/Interface/ErpPanel/legs_cock_fuckt_tail.png
-  tags:
-  - RequiresERP
   targetRequirements:
   - !type:SexRequirement
     sexes:
@@ -262,22 +177,14 @@
 - type: panelInteraction
   id: PillowFap
   category: Penis
+  kind: Erotic
   userArouse: 10
   targetArouse: 10
   range: 1.5
-  sounds:
-  - /Audio/_Arcane/Interactions/oral1.ogg
-  - /Audio/_Arcane/Interactions/oral2.ogg
-  selfMessages:
-  - проталкивает член между подушек.
-  - дрочит член подушками.
-  - водит подушкой по члену.
-  - водит пенисом по подушке.
-  - проводит членом по подушкам
-  - трётся членом об подушку.
+  sound:
+    collection: ErpOral
+  selfMessages: ErpPillowFapSelfMessages
   icon: _Arcane/Interface/ErpPanel/fuck_pillow.png
-  tags:
-  - RequiresERP
   userRequirements:
   - !type:SexRequirement
     sexes:

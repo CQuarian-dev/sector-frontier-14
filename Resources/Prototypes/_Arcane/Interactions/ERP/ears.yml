@@ -1,75 +1,40 @@
 - type: panelInteraction
   id: BiteEars
   category: Ears
-  sounds:
-  - /Audio/_Arcane/Interactions/pat1.ogg
-  messages:
-  - кусает ухо $target!
-  - покусывает ухо $target.
-  - осторожно прикусывает ухо $target.
-  - слегка кусает $target за ухо.
-  - игриво покусывает ушко $target.
-  - прихватывает ухо $target зубами.
-  - нежно прикусывает мочку уха $target.
-  - оставляет лёгкий укус на ухе $target.
-  - внезапно кусает $target за ушко.
-  - медленно покусывает ухо $target.
+  kind: Safe
+  sound:
+    collection: ErpPat
+  messages: ErpBiteEarsMessages
   icon: _Arcane/Interface/ErpPanel/bite_ears.png
-  tags:
-  - RequiresERP
 
 - type: panelInteraction
   id: BiteEarsHuman
   category: Ears
+  kind: Erotic
   targetArouse: 3
-  sounds:
-  - /Audio/_Arcane/Interactions/pat1.ogg
-  messages:
-  - кусает ухо $target.
-  - осторожно прикусывает ухо $target.
-  - слегка кусает $target за ухо.
-  - игриво покусывает ушко $target.
-  - нежно прикусывает мочку уха $target.
-  - внезапно кусает $target за ушко.
+  sound:
+    collection: ErpPat
+  messages: ErpBiteEarsHumanMessages
   icon: _Arcane/Interface/ErpPanel/bite_ears_human.png
-  tags:
-  - RequiresERP
 
 - type: panelInteraction
   id: EarsKiss
   category: Ears
+  kind: Erotic
   targetArouse: 5
-  sounds:
-  - /Audio/_Arcane/Interactions/kiss1.ogg
-  - /Audio/_Arcane/Interactions/kiss2.ogg
-  - /Audio/_Arcane/Interactions/kiss3.ogg
-  messages:
-  - нежно целует $target в ушко.
-  - касается губами уха $target.
-  - оставляет нежный поцелуй на ухе $target.
-  - медленно целует мочку уха $target.
-  - прижимается губами к ушку $target.
-  - целует $target за ухом.
+  sound:
+    collection: ErpKiss
+  messages: ErpEarsKissMessages
   icon: _Arcane/Interface/ErpPanel/ears_kiss.png
-  tags:
-  - RequiresERP
 
 - type: panelInteraction
   id: PatEars
   category: Ears
-  sounds:
-  - /Audio/_Arcane/Interactions/friction1.ogg
-  - /Audio/_Arcane/Interactions/friction2.ogg
-  messages:
-  - гладит ушки $target.
-  - нежно чешет за ушком $target.
-  - ласково поглаживает ушки $target.
-  - осторожно трогает пушистые ушки $target.
-  - проводит пальцем по ушку $target.
-  - почёсывает $target за ушком.
+  kind: Safe
+  sound:
+    collection: ErpFriction
+  messages: ErpPatEarsMessages
   icon: _Arcane/Interface/ErpPanel/pat_ears.png
-  tags:
-  - RequiresERP
   targetRequirements:
   - !type:SpeciesRequirement
     species:
@@ -82,27 +47,17 @@
 - type: panelInteraction
   id: PatEarsHuman
   category: Ears
-  sounds:
-  - /Audio/_Arcane/Interactions/friction1.ogg
-  messages:
-  - теребит ухо $target.
-  - аккуратно трогает ушко $target.
-  - лёгонько мнёт ухо $target.
-  - игриво тянет $target за ухо.
-  - нежно трогает мочку уха $target.
+  kind: Safe
+  sound:
+    collection: ErpFriction
+  messages: ErpPatEarsHumanMessages
   icon: _Arcane/Interface/ErpPanel/pat_ears_human.png
-  tags:
-  - RequiresERP
 
 - type: panelInteraction
   id: ScratchingEars
   category: Ears
-  sounds:
-  - /Audio/_Arcane/Interactions/friction1.ogg
-  selfMessages:
-  - чешет за ухом.
-  - слегка почесывает ухо.
-  - почесывает мочку уха.
-  - почесывает за ухом.
-  - трет кожу за ухом.
+  kind: Safe
+  sound:
+    collection: ErpFriction
+  selfMessages: ErpScratchingEarsSelfMessages
   icon: _Arcane/Interface/ErpPanel/pat_ears_human.png

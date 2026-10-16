@@ -304,10 +304,10 @@ public sealed partial class ErpPanelWindow : FancyWindow
 
     private bool IsInteractionAvailable(EntityUid user, EntityUid target, PanelInteractionPrototype interaction)
     {
-        if (user != target && interaction.Messages.Count == 0)
+        if (user != target && interaction.Messages == null)
             return false;
 
-        if (user == target && interaction.SelfMessages.Count == 0)
+        if (user == target && interaction.SelfMessages == null)
             return false;
 
         return CheckRequirements(user, target, interaction);
@@ -413,9 +413,8 @@ public sealed partial class ErpPanelWindow : FancyWindow
     private Button PrepareInteractionButton(PanelInteractionPrototype interaction)
     {
         var interactionName = GetInteractionName(interaction);
-        var isExplicit = IsErpInteraction(interaction);
-
-        var isHostile = interaction.UserArouse < 0 || interaction.TargetArouse < 0;
+        var isExplicit = interaction.Kind == PanelInteractionKind.Erotic;
+        var isHostile = interaction.Kind == PanelInteractionKind.Harmful;
 
         var accentColor = isHostile ? HostileAccentColor : (isExplicit ? ExplicitAccentColor : FriendlyAccentColor);
         var normalStyle = isHostile ? HostileButtonStyle : (isExplicit ? ExplicitButtonStyle : FriendlyButtonStyle);
@@ -631,7 +630,7 @@ public sealed partial class ErpPanelWindow : FancyWindow
 
     private bool CheckRequirements(EntityUid user, EntityUid target, PanelInteractionPrototype interaction)
     {
-        if (IsErpInteraction(interaction) && !CanUseErp(user, target))
+        if (interaction.Kind == PanelInteractionKind.Erotic && !CanUseErp(user, target))
             return false;
 
         if (!_transform.InRange(user, target, interaction.Range))
@@ -656,11 +655,6 @@ public sealed partial class ErpPanelWindow : FancyWindow
         }
 
         return true;
-    }
-
-    private static bool IsErpInteraction(PanelInteractionPrototype interaction)
-    {
-        return interaction.Tags.Contains(ErpPanelConstants.ErpInteractionTag);
     }
 
     private bool CanUseErp(EntityUid user, EntityUid target)
