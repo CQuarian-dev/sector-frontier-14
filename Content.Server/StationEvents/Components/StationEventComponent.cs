@@ -3,7 +3,6 @@ using Content.Shared.Roles; // Frontier
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes; // Frontier
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.StationEvents.Components;
 
