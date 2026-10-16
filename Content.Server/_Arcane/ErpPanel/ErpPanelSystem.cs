@@ -157,7 +157,7 @@ public sealed class ErpPanelSystem : EntitySystem
             ProccessMoan(target, customMoaning);
         }
 
-        userPanel.Cooldowns[interaction.ID] = _ticking.CurTime;
+        userPanel.LastInteraction = _ticking.CurTime;
 
         ProccessMessages(user, target, interaction);
         ProccessSounds(user, interaction);
@@ -332,7 +332,7 @@ public sealed class ErpPanelSystem : EntitySystem
         if (interaction.Kind == PanelInteractionKind.Erotic && !CanUseErp(user, target))
             return false;
 
-        if (userPanel.Cooldowns.TryGetValue(interaction.ID, out var lastUse) && lastUse + interaction.Cooldown > _ticking.CurTime)
+        if (userPanel.LastInteraction + ErpPanelOwnerComponent.Cooldown > _ticking.CurTime)
             return false;
 
         return true;

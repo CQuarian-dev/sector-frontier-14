@@ -503,10 +503,9 @@ public sealed partial class ErpPanelWindow : FancyWindow
                 CustomArousalToggle.Pressed ? ArousalSlider.Value : 100f,
                 CustomMoaningToggle.Pressed ? MoaningSlider.Value : 100f);
 
-            if (interaction.Cooldown <= TimeSpan.Zero)
-                return;
-
-            _cooldownEnds[interaction.ID] = _timing.CurTime + interaction.Cooldown;
+            var cooldownEnd = _timing.CurTime + ErpPanelOwnerComponent.Cooldown;
+            foreach (var interactionId in _interactionButtons.Keys)
+                _cooldownEnds[interactionId] = cooldownEnd;
             UpdateCooldownsImmediately();
         };
 

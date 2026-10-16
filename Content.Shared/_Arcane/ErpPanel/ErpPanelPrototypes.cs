@@ -38,9 +38,6 @@ public sealed partial class PanelInteractionPrototype : IPrototype
     public SoundSpecifier? Sound;
 
     [DataField]
-    public TimeSpan Cooldown = TimeSpan.FromSeconds(3);
-
-    [DataField]
     public float Range = 2f;
 
     [DataField]
