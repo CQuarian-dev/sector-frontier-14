@@ -1,0 +1,9 @@
+# Spoken by Hydrakin. Have fun.
+- type: language
+  id: Hydraspeak
+  obfuscation: # Lua was глифы
+    !type:ReplacementObfuscation
+      replacement: ["кррэ", "трилл", "чиррк", "кьяа", "хрра", "фьюрр", "тэкк", "кррах", "вирр", "клэк", "трр", "кьюи"]
+  speech:
+    color: "#6e6cfedd"
+    allowRadio: true

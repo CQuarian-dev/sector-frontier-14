@@ -1,0 +1,14 @@
+- type: entity
+  save: false
+  name: Urist McHardDrive
+  parent: BaseMobProtogen
+  id: MobProtogen
+  components:
+  - type: LanguageKnowledge
+    speaks:
+    - Intergalactic # Lua was TauCetiBasic
+    - Vulpkanin # Lua was Canilunzt
+    understands:
+    - Intergalactic # Lua was TauCetiBasic
+    - Vulpkanin # Lua was Canilunzt
+#  - type: RetroMonitorView # Lua: нет в билде

@@ -1,0 +1,17 @@
+ent-BaseHydrakinOrgan = орган гидракина
+    .desc = { ent-BaseItem.desc }
+
+ent-OrganHydrakinStomach = желудок гидракина
+    .desc = { ent-BaseHydrakinOrgan.desc }
+
+ent-OrganHydrakinBrain = мозг гидракина
+    .desc = { ent-BaseHydrakinOrgan.desc }
+
+ent-OrganHydrakinLiver = печень гидракина
+    .desc = { ent-BaseHydrakinOrgan.desc }
+
+ent-OrganHydrakinHeart = сердце гидракина
+    .desc = { ent-OrganHumanHeart.desc }
+
+ent-OrganHydrakinLungs = лёгкие гидракина
+    .desc = Лёгкие гидракина, способные перерабатывать любой газ без негативных эффектов.

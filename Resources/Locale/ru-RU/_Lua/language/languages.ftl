@@ -44,3 +44,6 @@ language-Dragon-name = Драконический
 language-Dragon-description = Общий язык ящеров: шипение и треск.
 language-Xeno-name = Ксено
 language-Xeno-description = Шипение и рычание чужих.
+
+language-Hydraspeak-name = Гидракинский
+language-Hydraspeak-description = Язык гидракинов. Из-за птичьей природы гидракинов одно слово может значить множество вещей сразу, поэтому даже другим птицеподобным расам почти невозможно его понять.

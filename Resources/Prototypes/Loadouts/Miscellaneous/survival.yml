@@ -18,6 +18,8 @@
     - Human
     - Moth
     - Reptilian
+    - Protogen # Lua
+    - Hydrakin # Lua
 
 - type: loadoutEffectGroup
   id: EffectSpeciesVox

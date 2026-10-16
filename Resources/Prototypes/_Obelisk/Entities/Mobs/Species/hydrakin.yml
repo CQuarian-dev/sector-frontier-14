@@ -1,0 +1,176 @@
+# SPDX-FileCopyrightText: 2025 sneb
+#
+# SPDX-License-Identifier: MPL-2.0
+
+- type: entity
+  save: false
+  name: Urist McHydra
+  parent: BaseMobSpeciesOrganic
+  id: BaseMobHydrakin
+  abstract: true
+  components:
+  - type: UserInterface # Mono
+    interfaces:
+      enum.HumanoidMarkingModifierKey.Key:
+        type: HumanoidMarkingModifierBoundUserInterface
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
+      enum.SurgeryUIKey.Key: # Shitmed
+        type: SurgeryBui
+  - type: Icon
+    sprite: _Obelisk/Mobs/Species/Hydrakin/parts.rsi
+    state: full
+  - type: BodyEmotes
+    soundsId: ReptilianBodyEmotes
+  - type: Hunger
+  - type: Thirst
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Hydrakin
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeatChicken
+      amount: 5
+  - type: Bloodstream
+    bloodReagent: AmmoniaBlood
+  - type: MeleeWeapon
+    soundHit:
+      collection: AlienClaw
+    angle: 30
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Slash: 5
+  - type: Body
+    prototype: Hydrakin
+    requiredLegs: 2
+  - type: Temperature
+    coldDamageThreshold: 10 # Mono - Absurd cold resistance
+    heatDamageThreshold: 345 # Lua was 332, урон только от горячей среды
+    coldDamage:
+      types:
+        Cold : 0.01 #per second, scales with temperature & other constants
+  - type: TemperatureSpeed
+    thresholds:
+      90: 0.9
+      40: 0.75
+      10: 0.6
+  - type: HumanoidAppearance
+    species: Hydrakin
+  - type: ThermalRegulator #Todo, implement hydrakin thermal movement generation
+    metabolismHeat: 1600
+    radiatedHeat: 100
+    implicitHeatRegulation: 250
+    sweatHeatRegulation: 400
+    shiveringHeatRegulation: 3000
+    normalBodyTemperature: 310.15 # Lua was 210.15
+    thermalRegulationTemperatureThreshold: 30
+    # Goob
+  - type: PassiveHeatGeneration
+    watts: 200 # Lua was 3900, медленный нагрев
+    mobStateModifier:
+      Alive: 1
+      Critical: 0
+      Dead: 0
+    minimumTemperature: 27.15
+    maximumTemperature: 333.15 # Lua: греется сам только до 60°C
+    ignoreHeatResistance: true
+    # Goob end
+  - type: PressureProtection
+    lowPressureMultiplier: 1.2
+  - type: LanguageKnowledge
+    speaks:
+    - Intergalactic # Lua was TauCetiBasic
+    - Hydraspeak
+    understands:
+    - Intergalactic # Lua was TauCetiBasic
+    - Hydraspeak
+  - type: Inventory
+    speciesId: hydrakin
+    templateId: hydrakin
+    displacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: _Obelisk/Mobs/Species/Hydrakin/displacement.rsi
+            state: jumpsuit
+      gloves:
+        sizeMaps:
+          32:
+            sprite: _Obelisk/Mobs/Species/Hydrakin/displacement.rsi
+            state: gloves
+      shoes:
+        sizeMaps:
+          32:
+            sprite: _Obelisk/Mobs/Species/Hydrakin/displacement.rsi
+            state: shoes
+      head:
+        sizeMaps:
+          32:
+            sprite: _Obelisk/Mobs/Species/Hydrakin/displacement.rsi
+            state: head
+      neck: # Goob
+        sizeMaps:
+          32:
+            sprite: _Obelisk/Mobs/Species/Hydrakin/displacement.rsi
+            state: neck
+      outerClothing: # Mono 
+        sizeMaps:
+          32:
+            sprite: _Obelisk/Mobs/Species/Hydrakin/displacement.rsi
+            state: outerClothing
+ # Frontier: Carrying system from nyanotrasen.
+  - type: Carriable
+  - type: Speech
+    speechSounds: Hydrakin
+    speechVerb: Reptilian
+  - type: Vocal
+    sounds:
+      Male: UnisexHydrakin
+      Female: UnisexHydrakin
+      Unsexed: UnisexHydrakin
+  - type: TypingIndicator
+    proto: hydrakin
+  - type: Hydrakin
+
+- type: entity
+  parent: BaseSpeciesDummy
+  id: MobHydrakinDummy
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HumanoidAppearance
+    species: Hydrakin
+  - type: Inventory
+    speciesId: hydrakin
+    displacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: _Obelisk/Mobs/Species/Hydrakin/displacement.rsi
+            state: jumpsuit
+      gloves:
+        sizeMaps:
+          32:
+            sprite: _Obelisk/Mobs/Species/Hydrakin/displacement.rsi
+            state: gloves
+      shoes:
+        sizeMaps:
+          32:
+            sprite: _Obelisk/Mobs/Species/Hydrakin/displacement.rsi
+            state: shoes
+      head:
+        sizeMaps:
+          32:
+            sprite: _Obelisk/Mobs/Species/Hydrakin/displacement.rsi
+            state: head
+      neck: # Goob
+        sizeMaps:
+          32:
+            sprite: _Obelisk/Mobs/Species/Hydrakin/displacement.rsi
+            state: neck
+      outerClothing: # Mono 
+        sizeMaps:
+          32:
+            sprite: _Obelisk/Mobs/Species/Hydrakin/displacement.rsi
+            state: outerClothing
