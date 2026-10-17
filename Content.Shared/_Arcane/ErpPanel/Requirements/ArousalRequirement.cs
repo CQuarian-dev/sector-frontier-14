@@ -11,8 +11,9 @@ public sealed partial class ArousalRequirement : InvertableErpRequirement
 
     public override bool IsAvailable(EntityUid uid, IEntityManager entityManager)
     {
+        // Lua: live value instead of CurrentPhase, which lags up to 5 s on decay
         var hasArousal = entityManager.TryGetComponent<ArousalComponent>(uid, out var arousal)
-            && arousal.CurrentPhase >= Minimum;
+            && arousal.ComputePhase(entityManager.System<ArousalSystem>().GetArousal(arousal)) >= Minimum;
 
         return Inverted ? !hasArousal : hasArousal;
     }

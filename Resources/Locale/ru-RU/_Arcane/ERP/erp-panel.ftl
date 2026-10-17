@@ -28,8 +28,12 @@ erp-panel-empty-search = По вашему запросу ничего не на
 erp-panel-empty-available = Сейчас нет доступных взаимодействий.
 erp-panel-interaction-cooldown-tooltip = Доступно через { $seconds } с.
 
-erp-panel-custom-arousal-button-tooltip = Множитель возбуждения от взаимодействия вашими интеракциями.
-erp-panel-custom-moaning-button-tooltip = Множитель шанса на стон после взаимодействия.
+erp-panel-custom-arousal-button-tooltip = Насколько сильно вас возбуждают взаимодействия, кто бы их ни совершал.
+erp-panel-custom-moaning-button-tooltip = Насколько часто вы стонете от взаимодействий.
+erp-panel-private-mode-label = Приватно
+erp-panel-private-mode-tooltip = Сообщения и звуки взаимодействий видят и слышат только вы и партнёр.
+erp-panel-lunge-label = Анимация рывка
+erp-panel-lunge-tooltip = Показывать анимацию, когда персонаж подаётся к партнёру при взаимодействии.
 
 moan-message = стонет!
 orgasm-popup-self = Вы достигли оргазма. Вам нужно время восстановиться.

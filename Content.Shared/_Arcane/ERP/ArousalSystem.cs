@@ -1,6 +1,9 @@
+using Content.Shared._Arcane.ErpPanel; // Lua
 using Content.Shared.Alert;
 using Content.Shared.ERP;
+using Robust.Shared.GameStates; // Lua
 using Robust.Shared.Network;
+using Robust.Shared.Player; // Lua
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -24,6 +27,7 @@ public sealed class ArousalSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<ArousalComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<ArousalComponent, ComponentGetStateAttemptEvent>(OnGetStateAttempt); // Lua
     }
 
     private void OnInit(Entity<ArousalComponent> ent, ref ComponentInit args)
@@ -31,13 +35,28 @@ public sealed class ArousalSystem : EntitySystem
         SetArousal(ent, 0f);
     }
 
+    // Lua start: only the owner and whoever has the panel open on them
+    private void OnGetStateAttempt(Entity<ArousalComponent> ent, ref ComponentGetStateAttemptEvent args)
+    {
+        if (args.Cancelled)
+            return;
+
+        var viewer = args.Player?.AttachedEntity;
+        if (viewer == ent.Owner)
+            return;
+
+        if (TryComp<ErpPanelOwnerComponent>(viewer, out var panel) && panel.Target == ent.Owner)
+            return;
+
+        args.Cancelled = true;
+    }
+    // Lua end
+
     public float GetArousal(ArousalComponent comp)
     {
         var sinceChange = _timing.CurTime - comp.LastChangeTime;
         var elapsed = (float)sinceChange.TotalSeconds;
-        var passiveRate = IsRefractory(comp) ? 0f : comp.PassiveGainRate;
-        var netRate = passiveRate - comp.DecayRate;
-        return Math.Clamp(comp.LastValue + netRate * elapsed, 0f, comp.MaxArousal);
+        return Math.Clamp(comp.LastValue - comp.DecayRate * elapsed, 0f, comp.MaxArousal); // Lua
     }
 
     public bool IsRefractory(ArousalComponent comp)
@@ -45,41 +64,7 @@ public sealed class ArousalSystem : EntitySystem
         return _timing.CurTime < comp.RefractoryUntil;
     }
 
-    public void SetPassiveSource(EntityUid uid, string sourceId, float rate, ArousalComponent? comp = null)
-    {
-        if (!Resolve(uid, ref comp))
-            return;
-
-        if (IsErpDisabled(uid))
-            return;
-
-        comp.LastValue = GetArousal(comp);
-        comp.LastChangeTime = _timing.CurTime;
-        comp.PassiveSources[sourceId] = rate;
-        Dirty(uid, comp);
-    }
-
-    public void RemovePassiveSource(EntityUid uid, string sourceId, ArousalComponent? comp = null)
-    {
-        if (!Resolve(uid, ref comp))
-            return;
-
-        comp.LastValue = GetArousal(comp);
-        comp.LastChangeTime = _timing.CurTime;
-        comp.PassiveSources.Remove(sourceId);
-        Dirty(uid, comp);
-    }
-
-    public bool CanAddArousal(EntityUid uid, ArousalComponent? comp = null)
-    {
-        if (!Resolve(uid, ref comp, false))
-            return false;
-        if (IsErpDisabled(uid))
-            return false;
-        return !IsRefractory(comp);
-    }
-
-    public void AddArousal(EntityUid uid, float amount, ArousalComponent? comp = null)
+    public void AddArousal(EntityUid uid, float amount, ArousalComponent? comp = null, Filter? privateFilter = null) // Lua
     {
         if (!Resolve(uid, ref comp))
             return;
@@ -90,19 +75,7 @@ public sealed class ArousalSystem : EntitySystem
         if (IsRefractory(comp))
             return;
 
-        var before = GetArousal(comp);
-        var target = Math.Clamp(before + amount, 0f, comp.MaxArousal);
-        SetArousal((uid, comp), target);
-        if (target > before)
-            RaiseLocalEvent(uid, new ArousedEvent(before, target));
-    }
-
-    public void ReduceArousal(EntityUid uid, float amount, ArousalComponent? comp = null)
-    {
-        if (!Resolve(uid, ref comp))
-            return;
-
-        SetArousal((uid, comp), GetArousal(comp) - amount);
+        SetArousal((uid, comp), GetArousal(comp) + amount, privateFilter); // Lua
     }
 
     public override void Update(float frameTime)
@@ -125,7 +98,7 @@ public sealed class ArousalSystem : EntitySystem
         }
     }
 
-    private void SetArousal(Entity<ArousalComponent> entity, float value)
+    private void SetArousal(Entity<ArousalComponent> entity, float value, Filter? privateFilter = null) // Lua
     {
         var comp = entity.Comp;
         value = Math.Clamp(value, 0f, comp.MaxArousal);
@@ -134,23 +107,20 @@ public sealed class ArousalSystem : EntitySystem
         comp.LastChangeTime = _timing.CurTime;
         Dirty(entity.Owner, comp);
 
-        UpdatePhase(entity);
+        UpdatePhase(entity, privateFilter); // Lua
     }
 
-    private void UpdatePhase(Entity<ArousalComponent> entity)
+    private void UpdatePhase(Entity<ArousalComponent> entity, Filter? privateFilter = null) // Lua
     {
         var comp = entity.Comp;
         var newPhase = comp.ComputePhase(GetArousal(comp));
         if (newPhase == comp.CurrentPhase)
             return;
 
-        var previous = comp.CurrentPhase;
         comp.CurrentPhase = newPhase;
 
         if (newPhase == ArousalPhase.Peak)
         {
-
-            comp.LastOrgasmAt = _timing.CurTime;
             comp.RefractoryUntil = _timing.CurTime + comp.RefractoryDuration;
             comp.LastValue = 0f;
             comp.LastChangeTime = _timing.CurTime;
@@ -159,15 +129,13 @@ public sealed class ArousalSystem : EntitySystem
 
             UpdateAlerts(entity.Owner, ArousalPhase.Calm);
             _alerts.ShowAlert(entity.Owner, AlertRefractory);
-            var orgasmEv = new ArousalOrgasmEvent();
+            var orgasmEv = new ArousalOrgasmEvent(privateFilter); // Lua
             RaiseLocalEvent(entity.Owner, ref orgasmEv);
-            RaiseLocalEvent(entity.Owner, new ArousalPhaseChangedEvent(previous, ArousalPhase.Calm));
         }
         else
         {
             Dirty(entity.Owner, comp);
             UpdateAlerts(entity.Owner, newPhase);
-            RaiseLocalEvent(entity.Owner, new ArousalPhaseChangedEvent(previous, newPhase));
         }
     }
 

@@ -11,6 +11,7 @@ public enum PanelInteractionKind : byte
     Safe,
     Erotic,
     Harmful,
+    HarmfulErotic, // Lua
 }
 
 [Prototype]
@@ -51,6 +52,8 @@ public sealed partial class PanelInteractionPrototype : IPrototype
 
     [DataField]
     public List<ErpRequirement>? TargetRequirements;
+
+    public bool IsErotic => Kind is PanelInteractionKind.Erotic or PanelInteractionKind.HarmfulErotic; // Lua
 }
 
 [Prototype]

@@ -15,6 +15,7 @@ public enum ArousalPhase : byte
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(raiseAfterAutoHandleState: true), AutoGenerateComponentPause]
 public sealed partial class ArousalComponent : Component
 {
+    public override bool SessionSpecific => true; // Lua
 
     [AutoNetworkedField]
     public float LastValue;
@@ -28,29 +29,12 @@ public sealed partial class ArousalComponent : Component
     [DataField]
     public float MaxArousal = 100f;
 
-    public Dictionary<string, float> PassiveSources = [];
-
-    public float PassiveGainRate
-    {
-        get
-        {
-            var total = 0f;
-            foreach (var rate in PassiveSources.Values)
-                total += rate;
-            return total;
-        }
-    }
-
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
-    [AutoNetworkedField, AutoPausedField]
+    [AutoPausedField] // Lua: server-only scheduler
     public TimeSpan NextPhaseCheckAt;
 
     [AutoNetworkedField]
     public ArousalPhase CurrentPhase;
-
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
-    [AutoPausedField]
-    public TimeSpan LastOrgasmAt;
 
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     [AutoNetworkedField, AutoPausedField]

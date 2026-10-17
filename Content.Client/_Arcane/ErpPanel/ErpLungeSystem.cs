@@ -1,5 +1,6 @@
 using System.Numerics;
 using Content.Shared._Arcane.ErpPanel;
+using Content.Lua.Shared.CCVar; // Lua
 using Content.Shared.CCVar;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
@@ -38,6 +39,9 @@ public sealed class ErpLungeSystem : EntitySystem
             return;
 
         if (_configuration.GetCVar(CCVars.ReducedMotion))
+            return;
+
+        if (!_configuration.GetCVar(LuaCCVars.ErpLungeEnabled)) // Lua
             return;
 
         _animation.Stop(user, LungeKey);

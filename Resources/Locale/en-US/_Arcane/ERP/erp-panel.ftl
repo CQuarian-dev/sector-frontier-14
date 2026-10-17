@@ -28,8 +28,12 @@ erp-panel-empty-search = No results found for your query.
 erp-panel-empty-available = No interactions available right now.
 erp-panel-interaction-cooldown-tooltip = Available in { $seconds } sec.
 
-erp-panel-custom-arousal-button-tooltip = Arousal multiplier from interacting with your interactions.
-erp-panel-custom-moaning-button-tooltip = Chance multiplier for moaning after interaction.
+erp-panel-custom-arousal-button-tooltip = How strongly interactions arouse you, no matter who performs them.
+erp-panel-custom-moaning-button-tooltip = How often you moan from interactions.
+erp-panel-private-mode-label = Private
+erp-panel-private-mode-tooltip = Interaction messages and sounds are only seen and heard by you and your partner.
+erp-panel-lunge-label = Lunge animation
+erp-panel-lunge-tooltip = Show the animation of a character leaning towards their partner during interactions.
 
 moan-message = moans!
 orgasm-popup-self = You have reached orgasm. You need time to recover.

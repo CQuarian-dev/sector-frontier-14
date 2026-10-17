@@ -124,7 +124,6 @@
                                 HorizontalExpand="True"
                                 MinWidth="240"
                                 MinValue="0"
-                                MaxValue="300"
                                 Value="100"
                                 Disabled="True">
                             <Slider.BackgroundStyleBoxOverride>
@@ -152,7 +151,6 @@
                                 HorizontalExpand="True"
                                 MinWidth="240"
                                 MinValue="0"
-                                MaxValue="300"
                                 Value="100"
                                 Disabled="True">
                             <Slider.BackgroundStyleBoxOverride>
@@ -173,6 +171,13 @@
                                SetWidth="44"
                                HorizontalAlignment="Right"/>
                     </GridContainer>
+                    <!-- Lua -->
+                    <CheckBox Name="PrivateModeToggle"
+                              Text="{Loc erp-panel-private-mode-label}"
+                              ToolTip="{Loc erp-panel-private-mode-tooltip}"/>
+                    <CheckBox Name="LungeToggle"
+                              Text="{Loc erp-panel-lunge-label}"
+                              ToolTip="{Loc erp-panel-lunge-tooltip}"/>
                 </BoxContainer>
             </PanelContainer>
 
