@@ -36,7 +36,7 @@ public sealed partial class ErpPanelWindow : LunaWindow // Lua was FancyWindow
     private static readonly Color ExplicitAccentColor = Color.FromHex("#FF8A1F");
     private static readonly Color FriendlyAccentColor = LunaWindowStyle.Accent;
     private static readonly Color HostileAccentColor = LunaWindowStyle.AccentBad;
-    private static readonly Color DisabledModulate = Color.White.WithAlpha(0.6f); // keeps hue, TextMuted turned amber brown
+    private static readonly Color DisabledModulate = Color.White.WithAlpha(0.6f); // keeps hue, TextMuted shifted warm accents to brown
     private static readonly StyleBoxFlat CategoryStyle = Underlined(LunaWindowStyle.PanelBg, LunaWindowStyle.PanelBorder);
     private static readonly StyleBoxFlat CategoryHoverStyle = Underlined(HoverColor(FriendlyAccentColor), FriendlyAccentColor);
     private static readonly StyleBoxFlat ButtonStyle = LunaWindowStyle.Panel();
