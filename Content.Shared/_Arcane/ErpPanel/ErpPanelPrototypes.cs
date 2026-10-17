@@ -39,7 +39,7 @@ public sealed partial class PanelInteractionPrototype : IPrototype
     public SoundSpecifier? Sound;
 
     [DataField]
-    public float Range = 2f;
+    public float Range = 1f; // Lua was 2f
 
     [DataField]
     public int UserArouse = 0;

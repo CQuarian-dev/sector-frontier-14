@@ -32,17 +32,17 @@ public sealed partial class ErpPanelWindow : LunaWindow // Lua was FancyWindow
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!; // Lua
 
-    // Lua start: LunaWindowStyle palette only
-    private static readonly Color ExplicitAccentColor = LunaWindowStyle.AccentWarn;
+    // Lua start: LunaWindowStyle palette, explicit accent is the only local color
+    private static readonly Color ExplicitAccentColor = Color.FromHex("#FF8A1F");
     private static readonly Color FriendlyAccentColor = LunaWindowStyle.Accent;
     private static readonly Color HostileAccentColor = LunaWindowStyle.AccentBad;
+    private static readonly Color DisabledModulate = Color.White.WithAlpha(0.6f); // keeps hue, TextMuted turned amber brown
     private static readonly StyleBoxFlat CategoryStyle = Underlined(LunaWindowStyle.PanelBg, LunaWindowStyle.PanelBorder);
     private static readonly StyleBoxFlat CategoryHoverStyle = Underlined(HoverColor(FriendlyAccentColor), FriendlyAccentColor);
     private static readonly StyleBoxFlat ButtonStyle = LunaWindowStyle.Panel();
     private static readonly StyleBoxFlat ExplicitButtonHoverStyle = LunaWindowStyle.Box(HoverColor(ExplicitAccentColor), ExplicitAccentColor);
     private static readonly StyleBoxFlat FriendlyButtonHoverStyle = LunaWindowStyle.Box(HoverColor(FriendlyAccentColor), FriendlyAccentColor);
     private static readonly StyleBoxFlat HostileButtonHoverStyle = LunaWindowStyle.Box(HoverColor(HostileAccentColor), HostileAccentColor);
-    private static readonly StyleBoxFlat DisabledButtonStyle = LunaWindowStyle.Box(LunaWindowStyle.Divider, LunaWindowStyle.TextMuted);
     private static readonly StyleBoxFlat ExplicitAccentStyle = LunaWindowStyle.ProgressFill(ExplicitAccentColor);
     private static readonly StyleBoxFlat FriendlyAccentStyle = LunaWindowStyle.ProgressFill(FriendlyAccentColor);
     private static readonly StyleBoxFlat HostileAccentStyle = LunaWindowStyle.ProgressFill(HostileAccentColor);
@@ -63,7 +63,6 @@ public sealed partial class ErpPanelWindow : LunaWindow // Lua was FancyWindow
     private readonly HashSet<string> _openedCategories = new();
     private readonly Dictionary<string, Collapsible> _categoryControls = new();
     private readonly Dictionary<string, Button> _interactionButtons = new();
-    private readonly Dictionary<string, StyleBoxFlat> _interactionButtonStyles = new();
     private readonly Dictionary<string, TimeSpan> _cooldownEnds = new();
     private readonly Dictionary<string, string> _interactionNames = new();
     private readonly Dictionary<string, string> _categoryNames = new();
@@ -221,7 +220,7 @@ public sealed partial class ErpPanelWindow : LunaWindow // Lua was FancyWindow
     private static void SetModifierEnabled(Slider slider, Label valueLabel, bool enabled, Color activeColor)
     {
         slider.Disabled = !enabled;
-        slider.Modulate = enabled ? Color.White : LunaWindowStyle.TextMuted; // Lua
+        slider.Modulate = enabled ? Color.White : DisabledModulate; // Lua
         valueLabel.Modulate = enabled ? activeColor : LunaWindowStyle.TextMuted; // Lua
     }
 
@@ -243,7 +242,6 @@ public sealed partial class ErpPanelWindow : LunaWindow // Lua was FancyWindow
                 if (_interactionButtons.TryGetValue(interactionId, out var readyButton))
                 {
                     readyButton.Disabled = false;
-                    readyButton.StyleBoxOverride = _interactionButtonStyles.GetValueOrDefault(interactionId);
                     readyButton.ToolTip = _interactionNames.GetValueOrDefault(interactionId);
                 }
 
@@ -254,7 +252,6 @@ public sealed partial class ErpPanelWindow : LunaWindow // Lua was FancyWindow
                 continue;
 
             button.Disabled = true;
-            button.StyleBoxOverride = DisabledButtonStyle;
             var seconds = Math.Max(1, (int) Math.Ceiling((cooldownEnd - now).TotalSeconds));
             button.ToolTip = Loc.GetString("erp-panel-interaction-cooldown-tooltip", ("seconds", seconds));
         }
@@ -357,7 +354,6 @@ public sealed partial class ErpPanelWindow : LunaWindow // Lua was FancyWindow
         ButtonsContainer.DisposeAllChildren();
         _categoryControls.Clear();
         _interactionButtons.Clear();
-        _interactionButtonStyles.Clear();
 
         var interactionsByCategory = interactions
             .GroupBy(interaction => interaction.Category.Id)
@@ -456,19 +452,26 @@ public sealed partial class ErpPanelWindow : LunaWindow // Lua was FancyWindow
         var isHostile = interaction.Kind is PanelInteractionKind.Harmful or PanelInteractionKind.HarmfulErotic; // Lua
 
         var accentColor = isHostile ? HostileAccentColor : (isExplicit ? ExplicitAccentColor : FriendlyAccentColor);
-        var normalStyle = ButtonStyle; // Lua
         var hoverStyle = isHostile ? HostileButtonHoverStyle : (isExplicit ? ExplicitButtonHoverStyle : FriendlyButtonHoverStyle);
 
-        var button = new Button
+        // Lua start
+        var arrow = new TextureRect
+        {
+            StyleClasses = { OptionButton.StyleClassOptionTriangle },
+            MinWidth = 12,
+            VerticalAlignment = VAlignment.Center,
+            MouseFilter = MouseFilterMode.Ignore,
+        };
+        var button = new InteractionButton(hoverStyle, arrow, accentColor)
         {
             HorizontalExpand = true,
             MinWidth = 250,
             MinHeight = 56,
             ToolTip = interactionName,
             StyleClasses = { StyleBase.ButtonSquare },
-            StyleBoxOverride = normalStyle,
-            ModulateSelfOverride = Color.White, // Lua: StyleNano tints ButtonSquare by #232323
+            ModulateSelfOverride = Color.White, // StyleNano tints ButtonSquare by #232323
         };
+        // Lua end
 
         var content = new BoxContainer
         {
@@ -511,32 +514,6 @@ public sealed partial class ErpPanelWindow : LunaWindow // Lua was FancyWindow
             ToolTip = interactionName,
             MouseFilter = MouseFilterMode.Ignore,
         };
-        var arrow = new TextureRect
-        {
-            StyleClasses = { OptionButton.StyleClassOptionTriangle },
-            Modulate = accentColor,
-            MinWidth = 12,
-            VerticalAlignment = VAlignment.Center,
-            MouseFilter = MouseFilterMode.Ignore,
-        };
-
-        button.OnMouseEntered += _ =>
-        {
-            if (button.Disabled)
-                return;
-
-            button.StyleBoxOverride = hoverStyle;
-            arrow.Modulate = Color.White;
-        };
-        button.OnMouseExited += _ =>
-        {
-            if (button.Disabled)
-                return;
-
-            button.StyleBoxOverride = normalStyle;
-            arrow.Modulate = accentColor;
-        };
-
         button.OnPressed += _ =>
         {
             OnSendEmote?.Invoke(interaction.ID, PrivateModeToggle.Pressed); // Lua
@@ -554,9 +531,26 @@ public sealed partial class ErpPanelWindow : LunaWindow // Lua was FancyWindow
         content.AddChild(arrow);
         button.AddChild(content);
         _interactionButtons[interaction.ID] = button;
-        _interactionButtonStyles[interaction.ID] = normalStyle;
 
         return button;
+    }
+
+    // Lua: picks the look from DrawMode, so hover survives the cooldown
+    private sealed class InteractionButton(StyleBoxFlat hoverStyle, TextureRect arrow, Color accent) : Button
+    {
+        // field initializers run before the base ctor, which already calls DrawModeChanged
+        private readonly StyleBoxFlat _hoverStyle = hoverStyle;
+        private readonly TextureRect _arrow = arrow;
+        private readonly Color _accent = accent;
+
+        protected override void DrawModeChanged()
+        {
+            base.DrawModeChanged();
+            var hovered = DrawMode is DrawModeEnum.Hover or DrawModeEnum.Pressed;
+            StyleBoxOverride = hovered ? _hoverStyle : ButtonStyle;
+            _arrow.Modulate = hovered ? Color.White : _accent;
+            Modulate = Disabled ? DisabledModulate : Color.White; // dims the whole button, same as disabled sliders
+        }
     }
 
     private void UpdateCatalogSummary(int interactionCount)
