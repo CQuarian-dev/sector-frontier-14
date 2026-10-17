@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Lua.Shared.CCVar; // Lua
+using Content.Lua.UIKit.Styles; // Lua
 using Content.Shared._Arcane.ERP;
 using Content.Shared._Arcane.ErpPanel;
 using Content.Shared.ActionBlocker; // Lua
@@ -24,77 +25,29 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 namespace Content.Client._Arcane.ErpPanel;
 
 [GenerateTypedNameReferences]
-public sealed partial class ErpPanelWindow : FancyWindow
+public sealed partial class ErpPanelWindow : LunaWindow // Lua was FancyWindow
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!; // Lua
 
-    private static readonly Color ExplicitAccentColor = new(208, 100, 134);
-    private static readonly Color FriendlyAccentColor = new(121, 203, 209);
-    private static readonly Color HostileAccentColor = new(196, 79, 55);
-    private static readonly Color DisabledControlColor = Color.FromHex("#FFFFFF66");
-    private static readonly StyleBoxFlat CategoryStyle = CreateStyle(
-        new Color(31, 37, 43),
-        new Color(65, 75, 85),
-        new Thickness(0, 0, 0, 1));
-    private static readonly StyleBoxFlat CategoryHoverStyle = CreateStyle(
-        new Color(42, 51, 59),
-        FriendlyAccentColor,
-        new Thickness(0, 0, 0, 1));
-    private static readonly StyleBoxFlat ExplicitButtonStyle = CreateStyle(
-        new Color(45, 36, 43),
-        new Color(112, 70, 90),
-        new Thickness(1));
-    private static readonly StyleBoxFlat ExplicitButtonHoverStyle = CreateStyle(
-        new Color(61, 43, 52),
-        ExplicitAccentColor,
-        new Thickness(1));
-    private static readonly StyleBoxFlat FriendlyButtonStyle = CreateStyle(
-        new Color(35, 47, 53),
-        new Color(70, 106, 112),
-        new Thickness(1));
-    private static readonly StyleBoxFlat FriendlyButtonHoverStyle = CreateStyle(
-        new Color(39, 58, 62),
-        FriendlyAccentColor,
-        new Thickness(1));
-    private static readonly StyleBoxFlat HostileButtonStyle = CreateStyle(
-        new Color(99, 40, 28),
-        new Color(130, 53, 38),
-        new Thickness(1));
-    private static readonly StyleBoxFlat HostileButtonHoverStyle = CreateStyle(
-        new Color(69, 28, 19),
-        HostileAccentColor,
-        new Thickness(1));
-    private static readonly StyleBoxFlat DisabledButtonStyle = CreateStyle(
-        new Color(28, 31, 35),
-        new Color(54, 57, 61),
-        new Thickness(1));
-    private static readonly StyleBoxFlat ExplicitAccentStyle = CreateStyle(
-        ExplicitAccentColor,
-        ExplicitAccentColor,
-        new Thickness());
-    private static readonly StyleBoxFlat FriendlyAccentStyle = CreateStyle(
-        FriendlyAccentColor,
-        FriendlyAccentColor,
-        new Thickness());
-    private static readonly StyleBoxFlat HostileAccentStyle = CreateStyle(
-        HostileAccentColor,
-        HostileAccentColor,
-        new Thickness());
-    private static readonly StyleBoxFlat ExplicitIconStyle = CreateStyle(
-        new Color(30, 25, 29),
-        new Color(112, 70, 90),
-        new Thickness(1));
-    private static readonly StyleBoxFlat FriendlyIconStyle = CreateStyle(
-        new Color(24, 31, 35),
-        new Color(70, 106, 112),
-        new Thickness(1));
-    private static readonly StyleBoxFlat HostilelyIconStyle = CreateStyle(
-        new Color(46, 19, 13),
-        new Color(120, 49, 34),
-        new Thickness(1));
+    // Lua start: LunaWindowStyle palette only
+    private static readonly Color ExplicitAccentColor = LunaWindowStyle.AccentWarn;
+    private static readonly Color FriendlyAccentColor = LunaWindowStyle.Accent;
+    private static readonly Color HostileAccentColor = LunaWindowStyle.AccentBad;
+    private static readonly StyleBoxFlat CategoryStyle = Underlined(LunaWindowStyle.PanelBg, LunaWindowStyle.PanelBorder);
+    private static readonly StyleBoxFlat CategoryHoverStyle = Underlined(HoverColor(FriendlyAccentColor), FriendlyAccentColor);
+    private static readonly StyleBoxFlat ButtonStyle = LunaWindowStyle.Panel();
+    private static readonly StyleBoxFlat ExplicitButtonHoverStyle = LunaWindowStyle.Box(HoverColor(ExplicitAccentColor), ExplicitAccentColor);
+    private static readonly StyleBoxFlat FriendlyButtonHoverStyle = LunaWindowStyle.Box(HoverColor(FriendlyAccentColor), FriendlyAccentColor);
+    private static readonly StyleBoxFlat HostileButtonHoverStyle = LunaWindowStyle.Box(HoverColor(HostileAccentColor), HostileAccentColor);
+    private static readonly StyleBoxFlat DisabledButtonStyle = LunaWindowStyle.Box(LunaWindowStyle.Divider, LunaWindowStyle.TextMuted);
+    private static readonly StyleBoxFlat ExplicitAccentStyle = LunaWindowStyle.ProgressFill(ExplicitAccentColor);
+    private static readonly StyleBoxFlat FriendlyAccentStyle = LunaWindowStyle.ProgressFill(FriendlyAccentColor);
+    private static readonly StyleBoxFlat HostileAccentStyle = LunaWindowStyle.ProgressFill(HostileAccentColor);
+    private static readonly StyleBoxFlat IconStyle = LunaWindowStyle.Shell();
+    // Lua end
     private static readonly TimeSpan ReloadCooldown = TimeSpan.FromMilliseconds(250); // Lua
     private static readonly TimeSpan ArousalUpdateCooldown = TimeSpan.FromMilliseconds(50);
     private static readonly TimeSpan CooldownUpdateCooldown = TimeSpan.FromMilliseconds(100);
@@ -135,6 +88,8 @@ public sealed partial class ErpPanelWindow : FancyWindow
         _interaction = _entManager.System<SharedInteractionSystem>(); // Lua
         _actionBlocker = _entManager.System<ActionBlockerSystem>(); // Lua
         _mobState = _entManager.System<MobStateSystem>(); // Lua
+        ApplyLunaChrome(); // Lua
+        ApplyLunaInterior(); // Lua
 
         SearchInput.OnTextChanged += _ =>
         {
@@ -205,6 +160,9 @@ public sealed partial class ErpPanelWindow : FancyWindow
     private void InitModifier(CheckBox toggle, Slider slider, Label label, CVarDef<float> cvar, Color color)
     {
         slider.MaxValue = ErpPanelOwnerComponent.MaxMultiplier;
+        slider.BackgroundStyleBoxOverride = LunaWindowStyle.ProgressBackground();
+        slider.FillStyleBoxOverride = LunaWindowStyle.ProgressFill(color);
+        slider.GrabberStyleBoxOverride = LunaWindowStyle.Box(LunaWindowStyle.TextPrimary, color);
 
         var value = _cfg.GetCVar(cvar);
         toggle.Pressed = !MathHelper.CloseTo(value, 100f);
@@ -225,13 +183,46 @@ public sealed partial class ErpPanelWindow : FancyWindow
         _cfg.SetCVar(cvar, value);
         _cfg.SaveToFile();
     }
+
+    private void ApplyLunaInterior()
+    {
+        Shell.PanelOverride = LunaWindowStyle.Shell();
+        AccentStripe.PanelOverride = ExplicitAccentStyle;
+        TargetPanel.PanelOverride = LunaWindowStyle.Panel();
+        ModifiersPanel.PanelOverride = LunaWindowStyle.Panel();
+        SearchPanel.PanelOverride = LunaWindowStyle.Panel();
+        ListPanel.PanelOverride = LunaWindowStyle.Shell();
+
+        var valueBox = LunaWindowStyle.Box(LunaWindowStyle.ContentBg, ExplicitAccentColor);
+        valueBox.SetContentMarginOverride(StyleBox.Margin.Horizontal, 6);
+        valueBox.SetContentMarginOverride(StyleBox.Margin.Vertical, 2);
+        ArousalValuePanel.PanelOverride = valueBox;
+        ArousalValueLabel.FontColorOverride = ExplicitAccentColor;
+        LunaWindowStyle.StyleProgressBar(ArousalProgressBar, ExplicitAccentColor, 18f);
+
+        HeaderLabel.FontColorOverride = LunaWindowStyle.TextPrimary;
+        ModifiersTitle.FontColorOverride = LunaWindowStyle.TextPrimary;
+        InteractionsTitle.FontColorOverride = LunaWindowStyle.TextPrimary;
+        LunaWindowStyle.StyleMuted(TargetCaption);
+        LunaWindowStyle.StyleSecondary(ArousalCaption);
+        LunaWindowStyle.StyleMuted(ResultsLabel);
+        LunaWindowStyle.StyleMuted(EmptyStateLabel);
+        ModifiersIcon.Modulate = LunaWindowStyle.Accent;
+        SearchIcon.Modulate = LunaWindowStyle.Accent;
+        EmptyStateIcon.Modulate = LunaWindowStyle.TextMuted;
+    }
+
+    private static Color HoverColor(Color accent)
+    {
+        return Color.InterpolateBetween(LunaWindowStyle.PanelBg, accent, 0.18f);
+    }
     // Lua end
 
     private static void SetModifierEnabled(Slider slider, Label valueLabel, bool enabled, Color activeColor)
     {
         slider.Disabled = !enabled;
-        slider.Modulate = enabled ? Color.White : DisabledControlColor;
-        valueLabel.Modulate = enabled ? activeColor : DisabledControlColor;
+        slider.Modulate = enabled ? Color.White : LunaWindowStyle.TextMuted; // Lua
+        valueLabel.Modulate = enabled ? activeColor : LunaWindowStyle.TextMuted; // Lua
     }
 
     private void UpdateCooldowns()
@@ -426,7 +417,7 @@ public sealed partial class ErpPanelWindow : FancyWindow
         };
         heading.Label.StyleClasses.Add(StyleBase.StyleClassLabelHeading);
 
-        heading.Label.FontColorOverride = new Color(235, 240, 244);
+        heading.Label.FontColorOverride = LunaWindowStyle.TextPrimary; // Lua
         heading.Label.HorizontalExpand = true;
         heading.Label.ClipText = true;
         heading.OnMouseEntered += _ => heading.StyleBoxOverride = CategoryHoverStyle;
@@ -465,7 +456,7 @@ public sealed partial class ErpPanelWindow : FancyWindow
         var isHostile = interaction.Kind is PanelInteractionKind.Harmful or PanelInteractionKind.HarmfulErotic; // Lua
 
         var accentColor = isHostile ? HostileAccentColor : (isExplicit ? ExplicitAccentColor : FriendlyAccentColor);
-        var normalStyle = isHostile ? HostileButtonStyle : (isExplicit ? ExplicitButtonStyle : FriendlyButtonStyle);
+        var normalStyle = ButtonStyle; // Lua
         var hoverStyle = isHostile ? HostileButtonHoverStyle : (isExplicit ? ExplicitButtonHoverStyle : FriendlyButtonHoverStyle);
 
         var button = new Button
@@ -476,6 +467,7 @@ public sealed partial class ErpPanelWindow : FancyWindow
             ToolTip = interactionName,
             StyleClasses = { StyleBase.ButtonSquare },
             StyleBoxOverride = normalStyle,
+            ModulateSelfOverride = Color.White, // Lua: StyleNano tints ButtonSquare by #232323
         };
 
         var content = new BoxContainer
@@ -497,7 +489,7 @@ public sealed partial class ErpPanelWindow : FancyWindow
         {
             MinWidth = 40,
             MinHeight = 40,
-            PanelOverride = isHostile ? HostilelyIconStyle : (isExplicit ? ExplicitIconStyle : FriendlyIconStyle),
+            PanelOverride = IconStyle, // Lua
             MouseFilter = MouseFilterMode.Ignore,
         };
         var icon = new TextureRect
@@ -512,6 +504,7 @@ public sealed partial class ErpPanelWindow : FancyWindow
         var label = new Label
         {
             Text = interactionName,
+            FontColorOverride = LunaWindowStyle.TextPrimary, // Lua
             ClipText = true,
             HorizontalExpand = true,
             VerticalAlignment = VAlignment.Center,
@@ -639,14 +632,12 @@ public sealed partial class ErpPanelWindow : FancyWindow
         return $"{(int) Math.Round(value)}%";
     }
 
-    private static StyleBoxFlat CreateStyle(Color backgroundColor, Color borderColor, Thickness borderThickness)
+    // Lua
+    private static StyleBoxFlat Underlined(Color background, Color border)
     {
-        return new StyleBoxFlat
-        {
-            BackgroundColor = backgroundColor,
-            BorderColor = borderColor,
-            BorderThickness = borderThickness,
-        };
+        var box = LunaWindowStyle.Box(background, border);
+        box.BorderThickness = new Thickness(0, 0, 0, 1);
+        return box;
     }
 
     private static string ToKebabCase(string value)

@@ -1,34 +1,19 @@
-<controls:FancyWindow xmlns="https://spacestation14.io"
-                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-                      xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
-                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                      x:Class="Content.Client._Arcane.ErpPanel.ErpPanelWindow"
-                      Title="{Loc erp-panel-title}"
-                      Resizable="True"
-                      MinSize="580 620"
-                      SetSize="580 740">
-    <PanelContainer HorizontalExpand="True" VerticalExpand="True">
-        <PanelContainer.PanelOverride>
-            <gfx:StyleBoxFlat BackgroundColor="#14171C"
-                              BorderColor="#84566D"
-                              BorderThickness="2"/>
-        </PanelContainer.PanelOverride>
-
+<!-- Lua: palette comes from LunaWindowStyle, see ApplyLunaInterior -->
+<styles:LunaWindow xmlns="https://spacestation14.io"
+                   xmlns:styles="clr-namespace:Content.Lua.UIKit.Styles;assembly=Content.Lua.UIKit"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   x:Class="Content.Client._Arcane.ErpPanel.ErpPanelWindow"
+                   Title="{Loc erp-panel-title}"
+                   Resizable="True"
+                   MinSize="580 620"
+                   SetSize="580 740">
+    <PanelContainer Name="Shell" HorizontalExpand="True" VerticalExpand="True" Margin="4 2 4 4">
         <BoxContainer Orientation="Vertical"
                       Margin="12"
                       SeparationOverride="10">
-            <PanelContainer HorizontalExpand="True" SetHeight="3">
-                <PanelContainer.PanelOverride>
-                    <gfx:StyleBoxFlat BackgroundColor="#D06486"/>
-                </PanelContainer.PanelOverride>
-            </PanelContainer>
+            <PanelContainer Name="AccentStripe" HorizontalExpand="True" SetHeight="3"/>
 
-            <PanelContainer HorizontalExpand="True">
-                <PanelContainer.PanelOverride>
-                    <gfx:StyleBoxFlat BackgroundColor="#211B21"
-                                      BorderColor="#6C465A"
-                                      BorderThickness="3 1 1 1"/>
-                </PanelContainer.PanelOverride>
+            <PanelContainer Name="TargetPanel" HorizontalExpand="True">
                 <BoxContainer Orientation="Vertical"
                               Margin="12 10"
                               SeparationOverride="8">
@@ -40,9 +25,8 @@
                         <BoxContainer Orientation="Vertical"
                                       HorizontalExpand="True"
                                       SeparationOverride="2">
-                            <Label Text="{Loc erp-panel-target-label}"
-                                   StyleClasses="LabelSubText"
-                                   Modulate="#C6A7B5"/>
+                            <Label Name="TargetCaption"
+                                   Text="{Loc erp-panel-target-label}"/>
                             <Label Name="HeaderLabel"
                                    StyleClasses="LabelHeadingBigger"
                                    ClipText="True"
@@ -51,60 +35,35 @@
                     </BoxContainer>
 
                     <BoxContainer Orientation="Horizontal" SeparationOverride="8">
-                        <Label Text="{Loc erp-panel-arousal-level}"
-                               StyleClasses="LabelSubText"
+                        <Label Name="ArousalCaption"
+                               Text="{Loc erp-panel-arousal-level}"
                                VerticalAlignment="Center"/>
                         <ProgressBar Name="ArousalProgressBar"
                                      HorizontalExpand="True"
                                      MinHeight="18"
                                      MinValue="0"
                                      Value="0"
-                                     MaxValue="1">
-                            <ProgressBar.BackgroundStyleBoxOverride>
-                                <gfx:StyleBoxFlat BackgroundColor="#171419"
-                                                  BorderColor="#4C3943"
-                                                  BorderThickness="1"/>
-                            </ProgressBar.BackgroundStyleBoxOverride>
-                            <ProgressBar.ForegroundStyleBoxOverride>
-                                <gfx:StyleBoxFlat BackgroundColor="#D06486"
-                                                  BorderColor="#F08DAB"
-                                                  BorderThickness="1"/>
-                            </ProgressBar.ForegroundStyleBoxOverride>
-                        </ProgressBar>
-                        <PanelContainer SetWidth="54" VerticalAlignment="Center">
-                            <PanelContainer.PanelOverride>
-                                <gfx:StyleBoxFlat BackgroundColor="#402632"
-                                                  BorderColor="#8F536B"
-                                                  BorderThickness="1"
-                                                  ContentMarginLeftOverride="6"
-                                                  ContentMarginRightOverride="6"
-                                                  ContentMarginTopOverride="2"
-                                                  ContentMarginBottomOverride="2"/>
-                            </PanelContainer.PanelOverride>
+                                     MaxValue="1"/>
+                        <PanelContainer Name="ArousalValuePanel" SetWidth="54" VerticalAlignment="Center">
                             <Label Name="ArousalValueLabel"
-                                   HorizontalAlignment="Center"
-                                   Modulate="#F6B3C8"/>
+                                   HorizontalAlignment="Center"/>
                         </PanelContainer>
                     </BoxContainer>
                 </BoxContainer>
             </PanelContainer>
 
-            <PanelContainer HorizontalExpand="True">
-                <PanelContainer.PanelOverride>
-                    <gfx:StyleBoxFlat BackgroundColor="#1D2329"
-                                      BorderColor="#414B55"
-                                      BorderThickness="1"/>
-                </PanelContainer.PanelOverride>
+            <PanelContainer Name="ModifiersPanel" HorizontalExpand="True">
                 <BoxContainer Orientation="Vertical"
                               Margin="10 8"
                               SeparationOverride="7">
                     <BoxContainer Orientation="Horizontal" SeparationOverride="6">
-                        <TextureRect TexturePath="/Textures/Interface/VerbIcons/settings.svg.192dpi.png"
+                        <TextureRect Name="ModifiersIcon"
+                                     TexturePath="/Textures/Interface/VerbIcons/settings.svg.192dpi.png"
                                      Stretch="KeepAspectCentered"
                                      SetSize="18 18"
-                                     Modulate="#79CBD1"
                                      VerticalAlignment="Center"/>
-                        <Label Text="{Loc erp-panel-settings-title}"
+                        <Label Name="ModifiersTitle"
+                               Text="{Loc erp-panel-settings-title}"
                                StyleClasses="LabelHeading"
                                HorizontalExpand="True"
                                VerticalAlignment="Center"/>
@@ -125,21 +84,7 @@
                                 MinWidth="240"
                                 MinValue="0"
                                 Value="100"
-                                Disabled="True">
-                            <Slider.BackgroundStyleBoxOverride>
-                                <gfx:StyleBoxFlat BackgroundColor="#111519"
-                                                  BorderColor="#493641"
-                                                  BorderThickness="1"/>
-                            </Slider.BackgroundStyleBoxOverride>
-                            <Slider.FillStyleBoxOverride>
-                                <gfx:StyleBoxFlat BackgroundColor="#B95776"/>
-                            </Slider.FillStyleBoxOverride>
-                            <Slider.GrabberStyleBoxOverride>
-                                <gfx:StyleBoxFlat BackgroundColor="#F4A9C0"
-                                                  BorderColor="#FFFFFF"
-                                                  BorderThickness="1"/>
-                            </Slider.GrabberStyleBoxOverride>
-                        </Slider>
+                                Disabled="True"/>
                         <Label Name="ArousalLabel"
                                SetWidth="44"
                                HorizontalAlignment="Right"/>
@@ -152,21 +97,7 @@
                                 MinWidth="240"
                                 MinValue="0"
                                 Value="100"
-                                Disabled="True">
-                            <Slider.BackgroundStyleBoxOverride>
-                                <gfx:StyleBoxFlat BackgroundColor="#111519"
-                                                  BorderColor="#30484D"
-                                                  BorderThickness="1"/>
-                            </Slider.BackgroundStyleBoxOverride>
-                            <Slider.FillStyleBoxOverride>
-                                <gfx:StyleBoxFlat BackgroundColor="#579BA1"/>
-                            </Slider.FillStyleBoxOverride>
-                            <Slider.GrabberStyleBoxOverride>
-                                <gfx:StyleBoxFlat BackgroundColor="#9EE7EC"
-                                                  BorderColor="#FFFFFF"
-                                                  BorderThickness="1"/>
-                            </Slider.GrabberStyleBoxOverride>
-                        </Slider>
+                                Disabled="True"/>
                         <Label Name="MoaningLabel"
                                SetWidth="44"
                                HorizontalAlignment="Right"/>
@@ -181,19 +112,14 @@
                 </BoxContainer>
             </PanelContainer>
 
-            <PanelContainer HorizontalExpand="True">
-                <PanelContainer.PanelOverride>
-                    <gfx:StyleBoxFlat BackgroundColor="#1C2228"
-                                      BorderColor="#3D4852"
-                                      BorderThickness="1"/>
-                </PanelContainer.PanelOverride>
+            <PanelContainer Name="SearchPanel" HorizontalExpand="True">
                 <BoxContainer Orientation="Horizontal"
                               Margin="8 6"
                               SeparationOverride="7">
-                    <TextureRect TexturePath="/Textures/Interface/VerbIcons/examine.svg.192dpi.png"
+                    <TextureRect Name="SearchIcon"
+                                 TexturePath="/Textures/Interface/VerbIcons/examine.svg.192dpi.png"
                                  Stretch="KeepAspectCentered"
                                  SetSize="22 22"
-                                 Modulate="#79CBD1"
                                  VerticalAlignment="Center"/>
                     <LineEdit Name="SearchInput"
                               StyleClasses="LineEditDark"
@@ -213,7 +139,8 @@
 
             <BoxContainer Orientation="Vertical" SeparationOverride="3">
                 <BoxContainer Orientation="Horizontal" SeparationOverride="6">
-                    <Label Text="{Loc erp-panel-interactions-title}"
+                    <Label Name="InteractionsTitle"
+                           Text="{Loc erp-panel-interactions-title}"
                            StyleClasses="LabelHeading"
                            HorizontalExpand="True"
                            VerticalAlignment="Center"/>
@@ -225,16 +152,10 @@
                             Text="{Loc erp-panel-collapse-all}"/>
                 </BoxContainer>
                 <Label Name="ResultsLabel"
-                       StyleClasses="LabelSubText"
                        VerticalAlignment="Center"/>
             </BoxContainer>
 
-            <PanelContainer HorizontalExpand="True" VerticalExpand="True">
-                <PanelContainer.PanelOverride>
-                    <gfx:StyleBoxFlat BackgroundColor="#191D22"
-                                      BorderColor="#343B43"
-                                      BorderThickness="1"/>
-                </PanelContainer.PanelOverride>
+            <PanelContainer Name="ListPanel" HorizontalExpand="True" VerticalExpand="True">
                 <BoxContainer Orientation="Vertical" Margin="8">
                     <ScrollContainer Name="InteractionScroll"
                                      HScrollEnabled="False"
@@ -253,18 +174,16 @@
                                   HorizontalAlignment="Center"
                                   VerticalAlignment="Center"
                                   SeparationOverride="8">
-                        <TextureRect TexturePath="/Textures/Interface/VerbIcons/examine.svg.192dpi.png"
+                        <TextureRect Name="EmptyStateIcon"
+                                     TexturePath="/Textures/Interface/VerbIcons/examine.svg.192dpi.png"
                                      Stretch="KeepAspectCentered"
                                      SetSize="34 34"
-                                     HorizontalAlignment="Center"
-                                     Modulate="#6F7882"/>
+                                     HorizontalAlignment="Center"/>
                         <Label Name="EmptyStateLabel"
-                               StyleClasses="LabelSubText"
-                               HorizontalAlignment="Center"
-                               Modulate="#AEB7C0"/>
+                               HorizontalAlignment="Center"/>
                     </BoxContainer>
                 </BoxContainer>
             </PanelContainer>
         </BoxContainer>
     </PanelContainer>
-</controls:FancyWindow>
+</styles:LunaWindow>
