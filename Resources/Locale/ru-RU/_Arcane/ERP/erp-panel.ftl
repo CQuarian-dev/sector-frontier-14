@@ -32,7 +32,7 @@ erp-panel-custom-arousal-button-tooltip = Насколько сильно вас
 erp-panel-custom-moaning-button-tooltip = Насколько часто вы стонете от взаимодействий.
 erp-panel-private-mode-label = Приватно
 erp-panel-private-mode-tooltip = Сообщения и звуки взаимодействий видят и слышат только вы и партнёр.
-erp-panel-lunge-label = Анимация рывка
+erp-panel-lunge-label = Анимация
 erp-panel-lunge-tooltip = Показывать анимацию, когда персонаж подаётся к партнёру при взаимодействии.
 
 moan-message = стонет!
