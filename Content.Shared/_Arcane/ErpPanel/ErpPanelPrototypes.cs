@@ -8,7 +8,7 @@ namespace Content.Shared._Arcane.ErpPanel;
 
 public enum PanelInteractionKind : byte
 {
-    Safe,
+    Soft, // Lua Safe > Soft
     Erotic,
     Harmful,
     HarmfulErotic, // Lua
@@ -61,4 +61,19 @@ public sealed partial class PanelInteractionCategoryPrototype : IPrototype
 {
     [IdDataField]
     public string ID { get; private set; } = default!;
+
+    [DataField]
+    public SpriteSpecifier Icon = SpriteSpecifier.Invalid; // Lua
 }
+
+// Lua start: sounds a custom emote may pick
+[Prototype]
+public sealed partial class PanelCustomSoundPrototype : IPrototype
+{
+    [IdDataField]
+    public string ID { get; private set; } = default!;
+
+    [DataField(required: true)]
+    public SoundSpecifier Sound = default!;
+}
+// Lua end

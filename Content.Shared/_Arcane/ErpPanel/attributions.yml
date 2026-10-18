@@ -1,0 +1,9 @@
+# Paths are relative to the repository root
+- files:
+  - Content.Client/_Arcane/ErpPanel/
+  - Content.Server/_Arcane/ErpPanel/
+  - Content.Shared/_Arcane/ErpPanel/
+  - Resources/Prototypes/_Arcane/Interactions/ERP/
+  license: "AGPL-3.0-or-later"
+  copyright: "ERP interaction panel taken from the Arcane. Ported and code refactored to Lua by c_quarian (Discord). Any questions exclusively via direct messages on Discord."
+  source: "https://github.com/ArcaneSS14/arcane"

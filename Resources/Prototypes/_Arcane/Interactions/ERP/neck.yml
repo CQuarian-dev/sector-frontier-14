@@ -1,7 +1,7 @@
 - type: panelInteraction
   id: BiteNeck
   category: Neck
-  kind: Safe
+  kind: Soft
   sound:
     collection: ErpPat
   messages: ErpBiteNeckMessages
@@ -75,7 +75,7 @@
 - type: panelInteraction
   id: StretchNeck
   category: Neck
-  kind: Safe
+  kind: Soft
   sound:
     collection: ErpStretchNeck
   selfMessages: ErpStretchNeckSelfMessages

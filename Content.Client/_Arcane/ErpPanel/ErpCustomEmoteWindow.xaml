@@ -1,0 +1,62 @@
+<styles:LunaWindow xmlns="https://spacestation14.io"
+                   xmlns:styles="clr-namespace:Content.Lua.UIKit.Styles;assembly=Content.Lua.UIKit"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   x:Class="Content.Client._Arcane.ErpPanel.ErpCustomEmoteWindow"
+                   Title="{Loc erp-custom-emote-title-new}"
+                   Resizable="False"
+                   SetWidth="460">
+    <PanelContainer Name="Shell" HorizontalExpand="True" VerticalExpand="True" Margin="4 2 4 4">
+        <BoxContainer Orientation="Vertical" Margin="12" SeparationOverride="8">
+            <BoxContainer Orientation="Horizontal" SeparationOverride="10">
+                <PanelContainer Name="IconFrame" SetSize="48 48" VerticalAlignment="Top">
+                    <TextureRect Name="IconPreview"
+                                 Stretch="KeepAspectCentered"
+                                 SetSize="40 40"
+                                 HorizontalAlignment="Center"
+                                 VerticalAlignment="Center"/>
+                </PanelContainer>
+                <GridContainer Columns="2"
+                               HorizontalExpand="True"
+                               HSeparationOverride="6"
+                               VSeparationOverride="6">
+                    <Label Name="NameCaption" Text="{Loc erp-custom-emote-name}" MinWidth="90"/>
+                    <LineEdit Name="NameInput" StyleClasses="LineEditDark" HorizontalExpand="True"/>
+                    <Label Name="CategoryCaption" Text="{Loc erp-custom-emote-body-part}"/>
+                    <OptionButton Name="CategorySelector" HorizontalExpand="True"/>
+                    <Label Name="KindCaption" Text="{Loc erp-custom-emote-kind}"/>
+                    <OptionButton Name="KindSelector"
+                                  HorizontalExpand="True"
+                                  ToolTip="{Loc erp-custom-emote-kind-tooltip}"/>
+                    <Label Name="SoundCaption" Text="{Loc erp-custom-emote-sound}"/>
+                    <OptionButton Name="SoundSelector" HorizontalExpand="True"/>
+                </GridContainer>
+            </BoxContainer>
+
+            <BoxContainer Orientation="Horizontal">
+                <Button Name="TargetModeButton"
+                        ToggleMode="True"
+                        HorizontalExpand="True"
+                        StyleClasses="OpenRight"
+                        Text="{Loc erp-custom-emote-mode-target}"/>
+                <Button Name="SelfModeButton"
+                        ToggleMode="True"
+                        HorizontalExpand="True"
+                        StyleClasses="OpenLeft"
+                        Text="{Loc erp-custom-emote-mode-self}"/>
+            </BoxContainer>
+            <LineEdit Name="MessageInput"
+                      StyleClasses="LineEditDark"
+                      HorizontalExpand="True"/>
+            <Label Name="HintLabel"/>
+
+            <BoxContainer Orientation="Horizontal" SeparationOverride="6">
+                <Button Name="DeleteButton"
+                        StyleClasses="Caution"
+                        Text="{Loc erp-custom-emote-delete}"/>
+                <Control HorizontalExpand="True"/>
+                <Button Name="CancelButton" Text="{Loc erp-custom-emote-cancel}"/>
+                <Button Name="SaveButton" Text="{Loc erp-custom-emote-save}"/>
+            </BoxContainer>
+        </BoxContainer>
+    </PanelContainer>
+</styles:LunaWindow>

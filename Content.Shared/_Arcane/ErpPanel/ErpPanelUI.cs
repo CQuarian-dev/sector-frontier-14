@@ -22,5 +22,14 @@ public sealed partial class ErpPanelSendMessage(string interaction, bool private
     public readonly bool PrivateMode = privateMode; // Lua
 }
 
+// Lua start
+[Serializable, NetSerializable]
+public sealed class ErpPanelCustomEmoteMessage(ErpCustomEmote emote, bool privateMode) : BoundUserInterfaceMessage
+{
+    public readonly ErpCustomEmote Emote = emote;
+    public readonly bool PrivateMode = privateMode;
+}
+// Lua end
+
 [ByRefEvent]
 public readonly record struct ErpPanelOpenEvent(EntityUid Target);

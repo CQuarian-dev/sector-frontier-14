@@ -181,7 +181,7 @@
 - type: panelInteraction
   id: StrikeCoolPose
   category: Chest
-  kind: Safe
+  kind: Soft
   sound:
     collection: ErpClick
   selfMessages: ErpStrikeCoolPoseSelfMessages
@@ -190,7 +190,7 @@
 - type: panelInteraction
   id: HugWings
   category: Chest
-  kind: Safe
+  kind: Soft
   range: 1.5
   sound:
     collection: ErpPat

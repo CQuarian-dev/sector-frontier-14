@@ -1,7 +1,7 @@
 - type: panelInteraction
   id: FlutterWings
   category: Wings
-  kind: Safe
+  kind: Soft
   sound:
     collection: ErpPat
   selfMessages: ErpFlutterWingsSelfMessages
@@ -45,7 +45,7 @@
 - type: panelInteraction
   id: PetWings
   category: Wings
-  kind: Safe
+  kind: Soft
   sound:
     collection: ErpPat
   messages: ErpPetWingsMessages

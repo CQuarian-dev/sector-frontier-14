@@ -1,7 +1,7 @@
 - type: panelInteraction
   id: HornsPat
   category: Head
-  kind: Safe
+  kind: Soft
   sound:
     collection: ErpFriction
   messages: ErpHornsPatMessages
@@ -14,7 +14,7 @@
 - type: panelInteraction
   id: PetHead
   category: Head
-  kind: Safe
+  kind: Soft
   sound:
     collection: ErpFriction
   messages: ErpPetHeadMessages
@@ -70,7 +70,7 @@
 - type: panelInteraction
   id: RuffleHair
   category: Head
-  kind: Safe
+  kind: Soft
   sound:
     collection: ErpFriction
   messages: ErpRuffleHairMessages
@@ -79,7 +79,7 @@
 - type: panelInteraction
   id: TapCrown
   category: Head
-  kind: Safe
+  kind: Soft
   sound:
     collection: ErpFriction
   messages: ErpTapCrownMessages
@@ -88,7 +88,7 @@
 - type: panelInteraction
   id: KissBackOfHead
   category: Head
-  kind: Safe
+  kind: Soft
   sound:
     collection: ErpFriction
   messages: ErpKissBackOfHeadMessages

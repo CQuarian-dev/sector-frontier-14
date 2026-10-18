@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics; // Lua
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Lua.Shared.CCVar; // Lua
@@ -17,6 +18,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Configuration; // Lua
+using Robust.Shared.ContentPack; // Lua
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -31,6 +33,7 @@ public sealed partial class ErpPanelWindow : LunaWindow // Lua was FancyWindow
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!; // Lua
+    [Dependency] private readonly IResourceManager _resources = default!; // Lua
 
     // Lua start: LunaWindowStyle palette, explicit accent is the only local color
     private static readonly Color ExplicitAccentColor = Color.FromHex("#FF8A1F");
@@ -62,7 +65,7 @@ public sealed partial class ErpPanelWindow : LunaWindow // Lua was FancyWindow
     // Lua end
     private readonly HashSet<string> _openedCategories = new();
     private readonly Dictionary<string, Collapsible> _categoryControls = new();
-    private readonly Dictionary<string, Button> _interactionButtons = new();
+    private readonly Dictionary<string, InteractionButton> _interactionButtons = new(); // Lua
     private readonly Dictionary<string, TimeSpan> _cooldownEnds = new();
     private readonly Dictionary<string, string> _interactionNames = new();
     private readonly Dictionary<string, string> _categoryNames = new();
@@ -76,6 +79,21 @@ public sealed partial class ErpPanelWindow : LunaWindow // Lua was FancyWindow
     private bool _hasInitializedCategories;
 
     public Action<string, bool>? OnSendEmote; // Lua
+
+    // Lua start
+    private const string FavoritesCategoryId = "Favorites";
+    private const string CustomCategoryId = "Custom";
+    private const string StarIcon = "/Textures/Interface/NavMap/beveled_star.png";
+    private const string EditIcon = "/Textures/Interface/VerbIcons/settings.svg.192dpi.png";
+
+    private readonly HashSet<string> _favorites = new();
+    private readonly List<ErpCustomEmote> _customEmotes;
+    private readonly List<ErpCustomEmote> _availableCustomEmotes = new();
+    private ErpCustomEmoteWindow? _editor;
+    private bool _reloadQueued;
+
+    public Action<ErpCustomEmote, bool>? OnSendCustomEmote;
+    // Lua end
 
     public ErpPanelWindow()
     {
@@ -117,6 +135,16 @@ public sealed partial class ErpPanelWindow : LunaWindow // Lua was FancyWindow
 
         UpdateMultiplierLabels();
         ArousalValueLabel.Text = FormatPercent(0);
+
+        // Lua start
+        foreach (var id in _cfg.GetCVar(LuaCCVars.ErpFavoriteInteractions).Split(',', StringSplitOptions.RemoveEmptyEntries))
+            _favorites.Add(id);
+
+        _customEmotes = ErpCustomEmoteStorage.Load(_resources, _prototypeManager);
+        CreateEmoteButton.OnPressed += _ => OpenEditor(null);
+        UpdateCreateEmoteButton();
+        OnClose += () => _editor?.Close();
+        // Lua end
     }
 
     public void SetTarget(NetEntity user, NetEntity target)
@@ -205,6 +233,8 @@ public sealed partial class ErpPanelWindow : LunaWindow // Lua was FancyWindow
         LunaWindowStyle.StyleMuted(TargetCaption);
         LunaWindowStyle.StyleSecondary(ArousalCaption);
         LunaWindowStyle.StyleMuted(ResultsLabel);
+        LunaWindowStyle.StyleMuted(PrivateModeHint);
+        LunaWindowStyle.StyleMuted(LungeHint);
         LunaWindowStyle.StyleMuted(EmptyStateLabel);
         ModifiersIcon.Modulate = LunaWindowStyle.Accent;
         SearchIcon.Modulate = LunaWindowStyle.Accent;
@@ -242,7 +272,7 @@ public sealed partial class ErpPanelWindow : LunaWindow // Lua was FancyWindow
                 if (_interactionButtons.TryGetValue(interactionId, out var readyButton))
                 {
                     readyButton.Disabled = false;
-                    readyButton.ToolTip = _interactionNames.GetValueOrDefault(interactionId);
+                    readyButton.ToolTip = readyButton.ReadyTooltip; // Lua
                 }
 
                 continue;
@@ -287,6 +317,11 @@ public sealed partial class ErpPanelWindow : LunaWindow // Lua was FancyWindow
         if (!_currentUser.HasValue || !_currentTarget.HasValue)
             return;
 
+        // Lua start
+        force |= _reloadQueued;
+        _reloadQueued = false;
+        // Lua end
+
         var now = _timing.CurTime;
         if (!force && now < _lastInteractionUpdate + ReloadCooldown)
             return;
@@ -299,6 +334,7 @@ public sealed partial class ErpPanelWindow : LunaWindow // Lua was FancyWindow
             .ToList();
 
         interactionIds.Sort();
+        interactionIds.AddRange(_availableCustomEmotes.Select(GetCustomEmoteKey)); // Lua
 
         if (!force && _currentInteractions.SequenceEqual(interactionIds))
             return;
@@ -314,16 +350,17 @@ public sealed partial class ErpPanelWindow : LunaWindow // Lua was FancyWindow
 
         // Lua start: same rules as the server
         _rangeCache.Clear();
+        _availableCustomEmotes.Clear();
         if (_mobState.IsIncapacitated(user) || _mobState.IsIncapacitated(target))
             return interactions;
 
-        var safeOnly = !_actionBlocker.CanInteract(user, target) ||
+        var softOnly = !_actionBlocker.CanInteract(user, target) ||
                        user != target && !_actionBlocker.CanInteract(target, null);
         // Lua end
 
         foreach (var interaction in _prototypeManager.EnumeratePrototypes<PanelInteractionPrototype>())
         {
-            if (safeOnly && interaction.Kind != PanelInteractionKind.Safe) // Lua
+            if (softOnly && interaction.Kind != PanelInteractionKind.Soft) // Lua
                 continue;
 
             if (!IsInteractionAvailable(user, target, interaction))
@@ -334,6 +371,25 @@ public sealed partial class ErpPanelWindow : LunaWindow // Lua was FancyWindow
 
             interactions.Add(interaction);
         }
+
+        // Lua start
+        foreach (var emote in _customEmotes)
+        {
+            if (emote.Self != (user == target) || emote.Message.Length == 0)
+                continue;
+
+            if (softOnly && emote.Kind != PanelInteractionKind.Soft)
+                continue;
+
+            if (emote.IsErotic && !CanUseErp(user, target) || !IsInRange(user, target, ErpCustomEmote.Range))
+                continue;
+
+            if (searchText.Length > 0 && !emote.Name.Contains(searchText, StringComparison.CurrentCultureIgnoreCase))
+                continue;
+
+            _availableCustomEmotes.Add(emote);
+        }
+        // Lua end
 
         return interactions;
     }
@@ -363,46 +419,80 @@ public sealed partial class ErpPanelWindow : LunaWindow // Lua was FancyWindow
 
         var openFirstCategory = !_hasInitializedCategories && string.IsNullOrWhiteSpace(SearchInput.Text);
 
+        // Lua start
+        var favorites = interactions.Where(interaction => _favorites.Contains(interaction.ID)).OrderBy(GetInteractionName).ToList();
+        var customFavorites = _availableCustomEmotes.Where(emote => emote.Favorite).ToList();
+        if (favorites.Count + customFavorites.Count > 0)
+        {
+            var grid = AddCategory(FavoritesCategoryId, Loc.GetString("erp-panel-favorites-category-name"),
+                favorites.Count + customFavorites.Count, ref openFirstCategory);
+
+            foreach (var interaction in favorites)
+                grid.AddChild(PrepareInteractionButton(interaction, FavoritesCategoryId));
+
+            foreach (var emote in customFavorites)
+                grid.AddChild(PrepareCustomEmoteButton(emote, FavoritesCategoryId));
+        }
+
+        if (_availableCustomEmotes.Count > 0)
+        {
+            var grid = AddCategory(CustomCategoryId, Loc.GetString("erp-panel-custom-category-name"),
+                _availableCustomEmotes.Count, ref openFirstCategory);
+
+            foreach (var emote in _availableCustomEmotes)
+                grid.AddChild(PrepareCustomEmoteButton(emote, CustomCategoryId));
+        }
+        // Lua end
+
         foreach (var category in _prototypeManager.EnumeratePrototypes<PanelInteractionCategoryPrototype>())
         {
             if (!interactionsByCategory.TryGetValue(category.ID, out var categoryInteractions))
                 continue;
 
-            var categoryControl = PrepareInteractionCategory(category, categoryInteractions.Count);
-            var categoryGrid = new GridContainer
-            {
-                Columns = 2,
-                HorizontalExpand = true,
-                HSeparationOverride = 6,
-                VSeparationOverride = 6,
-                Margin = new Thickness(4, 6, 4, 2),
-            };
+            var categoryGrid = AddCategory(category.ID, GetCategoryName(category), categoryInteractions.Count, ref openFirstCategory); // Lua
 
             foreach (var interaction in categoryInteractions)
-                categoryGrid.AddChild(PrepareInteractionButton(interaction));
-
-            ButtonsContainer.AddChild(categoryControl);
-            categoryControl.Body?.AddChild(categoryGrid);
-            _categoryControls[category.ID] = categoryControl;
-
-            if (openFirstCategory)
-            {
-                categoryControl.BodyVisible = true;
-                _openedCategories.Add(category.ID);
-                openFirstCategory = false;
-            }
+                categoryGrid.AddChild(PrepareInteractionButton(interaction, category.ID)); // Lua
         }
 
         _hasInitializedCategories = true;
-        UpdateCatalogSummary(interactions.Count);
+        UpdateCatalogSummary(interactions.Count + _availableCustomEmotes.Count); // Lua
         UpdateCooldownsImmediately();
     }
 
-    private Collapsible PrepareInteractionCategory(PanelInteractionCategoryPrototype categoryPrototype, int count)
+    // Lua start
+    private GridContainer AddCategory(string id, string name, int count, ref bool openFirst)
+    {
+        var categoryControl = PrepareInteractionCategory(id, name, count);
+        var categoryGrid = new GridContainer
+        {
+            Columns = 2,
+            HorizontalExpand = true,
+            HSeparationOverride = 6,
+            VSeparationOverride = 6,
+            Margin = new Thickness(4, 6, 4, 2),
+        };
+
+        ButtonsContainer.AddChild(categoryControl);
+        categoryControl.Body?.AddChild(categoryGrid);
+        _categoryControls[id] = categoryControl;
+
+        if (openFirst)
+        {
+            categoryControl.BodyVisible = true;
+            _openedCategories.Add(id);
+            openFirst = false;
+        }
+
+        return categoryGrid;
+    }
+    // Lua end
+
+    private Collapsible PrepareInteractionCategory(string categoryId, string categoryName, int count) // Lua
     {
         var title = Loc.GetString(
             "erp-panel-category-heading",
-            ("category", GetCategoryName(categoryPrototype)),
+            ("category", categoryName),
             ("count", count));
         var heading = new CollapsibleHeading(title)
         {
@@ -427,13 +517,13 @@ public sealed partial class ErpPanelWindow : LunaWindow // Lua was FancyWindow
         heading.OnToggled += args =>
         {
             if (args.Pressed)
-                _openedCategories.Add(categoryPrototype.ID);
+                _openedCategories.Add(categoryId);
             else
-                _openedCategories.Remove(categoryPrototype.ID);
+                _openedCategories.Remove(categoryId);
         };
 
         category.BodyVisible = !string.IsNullOrWhiteSpace(SearchInput.Text) ||
-                               _openedCategories.Contains(categoryPrototype.ID);
+                               _openedCategories.Contains(categoryId);
 
         return category;
     }
@@ -445,11 +535,50 @@ public sealed partial class ErpPanelWindow : LunaWindow // Lua was FancyWindow
             visible ? "erp-panel-hide-modifiers" : "erp-panel-show-modifiers");
     }
 
-    private Button PrepareInteractionButton(PanelInteractionPrototype interaction)
+    // Lua start
+    private Button PrepareInteractionButton(PanelInteractionPrototype interaction, string section)
     {
-        var interactionName = GetInteractionName(interaction);
-        var isExplicit = interaction.Kind == PanelInteractionKind.Erotic;
-        var isHostile = interaction.Kind is PanelInteractionKind.Harmful or PanelInteractionKind.HarmfulErotic; // Lua
+        return CreateInteractionButton(
+            $"{section}/{interaction.ID}",
+            GetInteractionName(interaction),
+            interaction.Kind,
+            _sprite.Frame0(interaction.Icon),
+            () => OnSendEmote?.Invoke(interaction.ID, PrivateModeToggle.Pressed),
+            _favorites.Contains(interaction.ID),
+            () => ToggleFavorite(interaction.ID),
+            null);
+    }
+
+    private Button PrepareCustomEmoteButton(ErpCustomEmote emote, string section)
+    {
+        var icon = _prototypeManager.TryIndex(emote.Category, out var category)
+            ? _sprite.Frame0(category.Icon)
+            : null;
+
+        return CreateInteractionButton(
+            $"{section}/{GetCustomEmoteKey(emote)}",
+            emote.Name,
+            emote.Kind,
+            icon,
+            () => OnSendCustomEmote?.Invoke(emote, PrivateModeToggle.Pressed),
+            emote.Favorite,
+            () => ToggleFavorite(emote),
+            section == CustomCategoryId ? () => OpenEditor(emote) : null);
+    }
+
+    private Button CreateInteractionButton(
+        string key,
+        string interactionName,
+        PanelInteractionKind kind,
+        Texture? iconTexture,
+        Action send,
+        bool favorite,
+        Action toggleFavorite,
+        Action? edit)
+    {
+        var isExplicit = kind == PanelInteractionKind.Erotic;
+        var isHostile = kind is PanelInteractionKind.Harmful or PanelInteractionKind.HarmfulErotic;
+    // Lua end
 
         var accentColor = isHostile ? HostileAccentColor : (isExplicit ? ExplicitAccentColor : FriendlyAccentColor);
         var hoverStyle = isHostile ? HostileButtonHoverStyle : (isExplicit ? ExplicitButtonHoverStyle : FriendlyButtonHoverStyle);
@@ -464,10 +593,10 @@ public sealed partial class ErpPanelWindow : LunaWindow // Lua was FancyWindow
         };
         var button = new InteractionButton(hoverStyle, arrow, accentColor)
         {
-            HorizontalExpand = true,
-            MinWidth = 250,
+            HorizontalExpand = true, // Lua: no MinWidth, 2x250 overflowed the grid and overlapped the next button
             MinHeight = 56,
             ToolTip = interactionName,
+            ReadyTooltip = interactionName, // Lua
             StyleClasses = { StyleBase.ButtonSquare },
             ModulateSelfOverride = Color.White, // StyleNano tints ButtonSquare by #232323
         };
@@ -497,7 +626,7 @@ public sealed partial class ErpPanelWindow : LunaWindow // Lua was FancyWindow
         };
         var icon = new TextureRect
         {
-            Texture = _sprite.Frame0(interaction.Icon),
+            Texture = iconTexture, // Lua
             MinWidth = 32,
             MinHeight = 32,
             Stretch = TextureRect.StretchMode.KeepAspectCentered,
@@ -516,7 +645,7 @@ public sealed partial class ErpPanelWindow : LunaWindow // Lua was FancyWindow
         };
         button.OnPressed += _ =>
         {
-            OnSendEmote?.Invoke(interaction.ID, PrivateModeToggle.Pressed); // Lua
+            send(); // Lua
 
             var cooldownEnd = _timing.CurTime + ErpPanelOwnerComponent.Cooldown;
             foreach (var interactionId in _interactionButtons.Keys)
@@ -528,16 +657,121 @@ public sealed partial class ErpPanelWindow : LunaWindow // Lua was FancyWindow
         content.AddChild(accent);
         content.AddChild(iconFrame);
         content.AddChild(label);
+        // Lua start
+        if (edit != null)
+            content.AddChild(CreateIconButton(EditIcon, Loc.GetString("erp-panel-custom-edit-tooltip"), LunaWindowStyle.TextSecondary, edit));
+
+        content.AddChild(CreateIconButton(
+            StarIcon,
+            Loc.GetString(favorite ? "erp-panel-favorite-remove-tooltip" : "erp-panel-favorite-add-tooltip"),
+            favorite ? LunaWindowStyle.AccentWarn : LunaWindowStyle.TextMuted.WithAlpha(0.5f),
+            toggleFavorite));
+        // Lua end
         content.AddChild(arrow);
         button.AddChild(content);
-        _interactionButtons[interaction.ID] = button;
+        _interactionButtons[key] = button; // Lua
 
         return button;
     }
 
+    // Lua start
+    private static Button CreateIconButton(string texturePath, string tooltip, Color modulate, Action onPressed)
+    {
+        var button = new Button
+        {
+            SetSize = new Vector2(26, 26),
+            VerticalAlignment = VAlignment.Center,
+            ToolTip = tooltip,
+            StyleClasses = { StyleBase.ButtonSquare },
+        };
+        button.AddChild(new TextureRect
+        {
+            TexturePath = texturePath,
+            Stretch = TextureRect.StretchMode.KeepAspectCentered,
+            SetSize = new Vector2(16, 16),
+            HorizontalAlignment = HAlignment.Center,
+            VerticalAlignment = VAlignment.Center,
+            Modulate = modulate,
+            MouseFilter = MouseFilterMode.Ignore,
+        });
+        button.OnPressed += _ => onPressed();
+        return button;
+    }
+
+    private string GetCustomEmoteKey(ErpCustomEmote emote)
+    {
+        return $"custom:{_customEmotes.IndexOf(emote)}";
+    }
+
+    // the pressed button is rebuilt on reload, so it waits for the next frame
+    private void ToggleFavorite(string interactionId)
+    {
+        if (!_favorites.Remove(interactionId))
+            _favorites.Add(interactionId);
+
+        _cfg.SetCVar(LuaCCVars.ErpFavoriteInteractions, string.Join(',', _favorites.Order()));
+        _cfg.SaveToFile();
+        _reloadQueued = true;
+    }
+
+    private void ToggleFavorite(ErpCustomEmote emote)
+    {
+        emote.Favorite = !emote.Favorite;
+        SaveCustomEmotes();
+    }
+
+    private void OpenEditor(ErpCustomEmote? emote)
+    {
+        if (_editor == null)
+        {
+            _editor = new ErpCustomEmoteWindow();
+            _editor.OnSave += SaveCustomEmote;
+            _editor.OnDelete += DeleteCustomEmote;
+            _editor.OnClose += () => _editor = null;
+        }
+
+        _editor.SetEmote(emote);
+        _editor.OpenCentered();
+    }
+
+    private void SaveCustomEmote(ErpCustomEmote? original, ErpCustomEmote emote)
+    {
+        var index = original == null ? -1 : _customEmotes.IndexOf(original);
+        if (index >= 0)
+            _customEmotes[index] = emote;
+        else if (_customEmotes.Count < ErpCustomEmote.MaxCount)
+            _customEmotes.Add(emote);
+
+        SaveCustomEmotes();
+    }
+
+    private void DeleteCustomEmote(ErpCustomEmote emote)
+    {
+        _customEmotes.Remove(emote);
+        SaveCustomEmotes();
+    }
+
+    private void SaveCustomEmotes()
+    {
+        ErpCustomEmoteStorage.Save(_resources, _customEmotes);
+        UpdateCreateEmoteButton();
+        _reloadQueued = true;
+    }
+
+    private void UpdateCreateEmoteButton()
+    {
+        CreateEmoteButton.Disabled = _customEmotes.Count >= ErpCustomEmote.MaxCount;
+        CreateEmoteButton.ToolTip = Loc.GetString("erp-panel-custom-create-tooltip",
+            ("count", _customEmotes.Count),
+            ("max", ErpCustomEmote.MaxCount));
+    }
+    // Lua end
+
     // Lua: picks the look from DrawMode, so hover survives the cooldown
     private sealed class InteractionButton(StyleBoxFlat hoverStyle, TextureRect arrow, Color accent) : Button
     {
+        public string? ReadyTooltip; // Lua
+
         // field initializers run before the base ctor, which already calls DrawModeChanged
         private readonly StyleBoxFlat _hoverStyle = hoverStyle;
         private readonly TextureRect _arrow = arrow;
@@ -634,7 +868,7 @@ public sealed partial class ErpPanelWindow : LunaWindow // Lua was FancyWindow
         return box;
     }
 
-    private static string ToKebabCase(string value)
+    internal static string ToKebabCase(string value) // Lua
     {
         var builder = new System.Text.StringBuilder(value.Length * 2);
 

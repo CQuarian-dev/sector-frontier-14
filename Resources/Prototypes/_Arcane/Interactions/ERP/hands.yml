@@ -1,7 +1,7 @@
 - type: panelInteraction
   id: Handshake
   category: Hands
-  kind: Safe
+  kind: Soft
   range: 1.5
   sound:
     collection: ErpHandshake
@@ -11,7 +11,7 @@
 - type: panelInteraction
   id: HighFive
   category: Hands
-  kind: Safe
+  kind: Soft
   range: 1.5
   sound:
     collection: ErpBang
@@ -21,7 +21,7 @@
 - type: panelInteraction
   id: KissHand
   category: Hands
-  kind: Safe
+  kind: Soft
   sound:
     collection: ErpKiss
   messages: ErpKissHandMessages
@@ -30,7 +30,7 @@
 - type: panelInteraction
   id: PushUpsFloor
   category: Hands
-  kind: Safe
+  kind: Soft
   sound:
     collection: ErpBang
   selfMessages: ErpPushUpsFloorSelfMessages
@@ -41,7 +41,7 @@
 - type: panelInteraction
   id: PinToWall
   category: Hands
-  kind: Safe
+  kind: Soft
   sound:
     collection: ErpKiss
   messages: ErpPinToWallMessages

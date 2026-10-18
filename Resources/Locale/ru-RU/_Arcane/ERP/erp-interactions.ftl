@@ -785,6 +785,12 @@ erp-interaction-rubbing-face-scrotum-2 = упирается носом в мош
 erp-interaction-rubbing-face-scrotum-3 = трётся щекой об яйца { $target }.
 erp-interaction-rubbing-face-scrotum-4 = трётся лбом об яйца { $target }.
 
+## KissScrotum
+erp-interaction-kiss-scrotum-1 = целует яйца { $target }.
+erp-interaction-kiss-scrotum-2 = оставляет поцелуй на мошонке { $target }.
+erp-interaction-kiss-scrotum-3 = нежно целует мошонку { $target }.
+erp-interaction-kiss-scrotum-4 = осыпает поцелуями яйца { $target }.
+
 ## PatShoulder
 erp-interaction-pat-shoulder-1 = хлопает { $target } по плечу.
 erp-interaction-pat-shoulder-2 = дружески похлопывает { $target } по плечу.

@@ -14,6 +14,7 @@ public sealed class ErpPanelWindowBUI(EntityUid owner, Enum uiKey) : BoundUserIn
 
         _menu = this.CreateWindow<ErpPanelWindow>();
         _menu.OnSendEmote += (interaction, privateMode) => SendMessage(new ErpPanelSendMessage(interaction, privateMode)); // Lua
+        _menu.OnSendCustomEmote += (emote, privateMode) => SendMessage(new ErpPanelCustomEmoteMessage(emote, privateMode)); // Lua
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

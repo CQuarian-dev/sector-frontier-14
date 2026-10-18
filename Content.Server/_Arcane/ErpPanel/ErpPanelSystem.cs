@@ -62,6 +62,7 @@ public sealed class ErpPanelSystem : EntitySystem
         Subs.BuiEvents<ErpPanelOwnerComponent>(ErpPanelKey.Key, subs =>
         {
             subs.Event<ErpPanelSendMessage>(OnSendMessage);
+            subs.Event<ErpPanelCustomEmoteMessage>(OnCustomEmote); // Lua
         });
     }
 
@@ -107,6 +108,17 @@ public sealed class ErpPanelSystem : EntitySystem
         ProcessInteraction(user, target.Value, args.Interaction, args.PrivateMode); // Lua
     }
 
+    // Lua start
+    private void OnCustomEmote(Entity<ErpPanelOwnerComponent> entity, ref ErpPanelCustomEmoteMessage args)
+    {
+        var target = entity.Comp.Target;
+        if (target == null || args.Actor != entity.Owner)
+            return;
+
+        ProcessCustomInteraction(args.Actor, target.Value, args.Emote, args.PrivateMode);
+    }
+    // Lua end
+
     private void OnGetVerbs(
         Entity<ErpPanelOwnerComponent> ent,
         ref GetVerbsEvent<Verb> args) // Lua
@@ -137,16 +149,78 @@ public sealed class ErpPanelSystem : EntitySystem
         if (!_prototype.TryIndex<PanelInteractionPrototype>(interactionId, out var interaction))
             return;
 
-        if (!TryComp<ErpPanelOwnerComponent>(user, out var userPanel))
-            return;
-
-        if (!IsValidInteraction(user, target, interaction, userPanel)) // Lua
-            return;
-
+        // Lua start
         if (!CheckRequirements(user, target, interaction))
             return;
 
-        // Lua start
+        var messagesId = user == target ? interaction.SelfMessages : interaction.Messages;
+        if (!_prototype.TryIndex(messagesId, out var messages))
+            return;
+
+        var message = Loc.GetString(_random.Pick(messages.Values),
+            ("target", Identity.Name(target, EntityManager, user)));
+
+        RunInteraction(user, target, InteractionData.From(interaction), message, privateMode);
+    }
+
+    public void ProcessCustomInteraction(EntityUid user, EntityUid target, ErpCustomEmote emote, bool privateMode)
+    {
+        if (emote.Self != (user == target) || !Enum.IsDefined(emote.Kind) || !_prototype.HasIndex(emote.Category))
+            return;
+
+        var message = ErpCustomEmote.Sanitize(emote.Message, ErpCustomEmote.MaxMessageLength);
+        if (message.Length == 0)
+            return;
+
+        SoundSpecifier? sound = null;
+        if (emote.Sound is { } soundId)
+        {
+            if (!_prototype.TryIndex(soundId, out var soundProto))
+                return;
+
+            sound = soundProto.Sound;
+        }
+
+        var interaction = new InteractionData(emote.Kind, ErpCustomEmote.Range, sound,
+            emote.Kind == PanelInteractionKind.Erotic ? 1 : 0, GetCustomArouse(emote.Kind));
+        message = message.Replace(ErpCustomEmote.TargetPlaceholder, Identity.Name(target, EntityManager, user));
+
+        RunInteraction(user, target, interaction, message, privateMode);
+    }
+
+    private readonly record struct InteractionData(
+        PanelInteractionKind Kind,
+        float Range,
+        SoundSpecifier? Sound,
+        int UserArouse,
+        int TargetArouse)
+    {
+        public bool IsErotic => Kind is PanelInteractionKind.Erotic or PanelInteractionKind.HarmfulErotic;
+
+        public static InteractionData From(PanelInteractionPrototype proto)
+        {
+            return new InteractionData(proto.Kind, proto.Range, proto.Sound, proto.UserArouse, proto.TargetArouse);
+        }
+    }
+
+    private static int GetCustomArouse(PanelInteractionKind kind)
+    {
+        return kind switch
+        {
+            PanelInteractionKind.Erotic => 5,
+            PanelInteractionKind.HarmfulErotic => -5,
+            _ => 0,
+        };
+    }
+
+    private void RunInteraction(EntityUid user, EntityUid target, InteractionData interaction, string message, bool privateMode)
+    {
+        if (!TryComp<ErpPanelOwnerComponent>(user, out var userPanel))
+            return;
+
+        if (!IsValidInteraction(user, target, interaction, userPanel))
+            return;
+
         Filter? privateFilter = privateMode
             ? Filter.Entities(user, target)
             : null;
@@ -170,8 +244,8 @@ public sealed class ErpPanelSystem : EntitySystem
         userPanel.LastInteraction = _ticking.CurTime;
 
         // Lua start
-        ProcessMessages(user, target, interaction, privateFilter);
-        ProcessSounds(user, interaction, privateFilter);
+        SendEmote(user, message, privateFilter, false);
+        ProcessSounds(user, interaction.Sound, privateFilter);
         ProcessLunge(user, target, privateFilter);
         // Lua end
 
@@ -261,18 +335,6 @@ public sealed class ErpPanelSystem : EntitySystem
         // Lua end
     }
 
-    private void ProcessMessages(EntityUid user, EntityUid target, PanelInteractionPrototype interaction, Filter? privateFilter) // Lua
-    {
-        var messagesId = user == target ? interaction.SelfMessages : interaction.Messages;
-        if (!_prototype.TryIndex(messagesId, out var messages))
-            return;
-
-        var message = Loc.GetString(_random.Pick(messages.Values),
-            ("target", Identity.Name(target, EntityManager, user)));
-
-        SendEmote(user, message, privateFilter, false); // Lua
-    }
-
     // Lua start
     public void SendEmote(EntityUid source, string message, Filter? privateFilter, bool hideChat)
     {
@@ -314,13 +376,13 @@ public sealed class ErpPanelSystem : EntitySystem
             privateFilter ?? Filter.Pvs(user, entityManager: EntityManager)); // Lua
     }
 
-    private void ProcessSounds(EntityUid user, PanelInteractionPrototype interaction, Filter? privateFilter) // Lua
+    private void ProcessSounds(EntityUid user, SoundSpecifier? sound, Filter? privateFilter) // Lua
     {
         // Lua start
         if (privateFilter != null)
-            _audio.PlayEntity(interaction.Sound, privateFilter, user, false);
+            _audio.PlayEntity(sound, privateFilter, user, false);
         else
-            _audio.PlayPvs(interaction.Sound, user);
+            _audio.PlayPvs(sound, user);
         // Lua end
     }
 
@@ -356,15 +418,9 @@ public sealed class ErpPanelSystem : EntitySystem
         return true;
     }
 
-    private bool IsValidInteraction(EntityUid user, EntityUid target, PanelInteractionPrototype interaction, ErpPanelOwnerComponent userPanel) // Lua
+    private bool IsValidInteraction(EntityUid user, EntityUid target, InteractionData interaction, ErpPanelOwnerComponent userPanel) // Lua
     {
         if (userPanel.LastInteraction + ErpPanelOwnerComponent.Cooldown > _ticking.CurTime)
-            return false;
-
-        if (user == target && interaction.SelfMessages == null)
-            return false;
-
-        if (user != target && interaction.Messages == null)
             return false;
 
         if (!_interaction.InRangeAndAccessible(user, target, interaction.Range))
@@ -376,8 +432,8 @@ public sealed class ErpPanelSystem : EntitySystem
         if (interaction.IsErotic && !CanUseErp(user, target)) // Lua
             return false;
 
-        // Lua: cuffed, asleep or stunned - Safe only
-        if (interaction.Kind != PanelInteractionKind.Safe && !CanActFreely(user, target))
+        // Lua: cuffed, asleep or stunned - Soft only
+        if (interaction.Kind != PanelInteractionKind.Soft && !CanActFreely(user, target))
             return false;
 
         return true;

@@ -634,6 +634,12 @@
     prefix: erp-interaction-rubbing-face-scrotum-
     count: 4
 
+- type: localizedDataset # Lua
+  id: ErpKissScrotumMessages
+  values:
+    prefix: erp-interaction-kiss-scrotum-
+    count: 4
+
 - type: localizedDataset
   id: ErpPatShoulderMessages
   values:

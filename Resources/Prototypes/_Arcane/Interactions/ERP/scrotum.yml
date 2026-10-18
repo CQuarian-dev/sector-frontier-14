@@ -21,7 +21,6 @@
   kind: Erotic
   userArouse: 5
   targetArouse: 10
-  range: 1.5
   sound:
     collection: ErpBang
   messages: ErpMassageScrotumMessages
@@ -39,7 +38,6 @@
   kind: Erotic
   userArouse: 5
   targetArouse: 15
-  range: 1.5
   sound:
     collection: ErpBang
   messages: ErpSuckScrotumMessages
@@ -57,11 +55,27 @@
   kind: Erotic
   userArouse: 5
   targetArouse: 10
-  range: 1.5
   sound:
     collection: ErpBang
   messages: ErpRubbingFaceScrotumMessages
   icon: _Arcane/Interface/ErpPanel/head-balls.png
+  targetRequirements:
+  - !type:SexRequirement
+    sexes:
+    - Male
+  - !type:ExposedBodyPartRequirement
+    part: Groin
+
+- type: panelInteraction # Lua
+  id: KissScrotum
+  category: Scrotum
+  kind: Erotic
+  userArouse: 5
+  targetArouse: 10
+  sound:
+    collection: ErpKiss
+  messages: ErpKissScrotumMessages
+  icon: _Arcane/Interface/ErpPanel/kiss_balls.png
   targetRequirements:
   - !type:SexRequirement
     sexes:

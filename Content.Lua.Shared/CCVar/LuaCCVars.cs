@@ -28,6 +28,9 @@ public sealed class LuaCCVars
     public static readonly CVarDef<bool> ErpLungeEnabled =
         CVarDef.Create("lua.erp_lunge_enabled", true, CVar.ARCHIVE | CVar.CLIENTONLY);
 
+    public static readonly CVarDef<string> ErpFavoriteInteractions =
+        CVarDef.Create("lua.erp_favorite_interactions", string.Empty, CVar.ARCHIVE | CVar.CLIENTONLY);
+
     public static readonly CVarDef<bool> ErpPanelEnabled =
         CVarDef.Create("lua.erp_panel_enabled", true, CVar.CLIENT | CVar.ARCHIVE | CVar.REPLICATED);
 

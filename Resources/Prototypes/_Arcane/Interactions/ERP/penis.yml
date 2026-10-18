@@ -173,26 +173,3 @@
   userRequirements:
   - !type:MarkingCategoryRequirement
     category: Tail
-
-- type: panelInteraction
-  id: PillowFap
-  category: Penis
-  kind: Erotic
-  userArouse: 10
-  targetArouse: 10
-  range: 1.5
-  sound:
-    collection: ErpOral
-  selfMessages: ErpPillowFapSelfMessages
-  icon: _Arcane/Interface/ErpPanel/fuck_pillow.png
-  userRequirements:
-  - !type:SexRequirement
-    sexes:
-    - Male
-  - !type:ExposedBodyPartRequirement
-    part: Groin
-  - !type:NearbyTargetRequirement
-    range: 0.2
-    tags:
-    - Bed
-

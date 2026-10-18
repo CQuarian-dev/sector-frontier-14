@@ -55,7 +55,7 @@
             <PanelContainer Name="ModifiersPanel" HorizontalExpand="True">
                 <BoxContainer Orientation="Vertical"
                               Margin="10 8"
-                              SeparationOverride="7">
+                              SeparationOverride="6">
                     <BoxContainer Orientation="Horizontal" SeparationOverride="6">
                         <TextureRect Name="ModifiersIcon"
                                      TexturePath="/Textures/Interface/VerbIcons/settings.svg.192dpi.png"
@@ -72,9 +72,10 @@
                                 Text="{Loc erp-panel-hide-modifiers}"/>
                     </BoxContainer>
 
+                    <!-- Lua: equal separations, GridContainer arranges with H/V swapped -->
                     <GridContainer Name="ModifiersContent"
                                    Columns="3"
-                                   HSeparationOverride="10"
+                                   HSeparationOverride="6"
                                    VSeparationOverride="6">
                         <CheckBox Name="CustomArousalToggle"
                                   Text="{Loc erp-panel-arousal-multiplier-label}"
@@ -102,13 +103,29 @@
                                SetWidth="44"
                                HorizontalAlignment="Right"/>
                     </GridContainer>
-                    <!-- Lua -->
-                    <CheckBox Name="PrivateModeToggle"
-                              Text="{Loc erp-panel-private-mode-label}"
-                              ToolTip="{Loc erp-panel-private-mode-tooltip}"/>
-                    <CheckBox Name="LungeToggle"
-                              Text="{Loc erp-panel-lunge-label}"
-                              ToolTip="{Loc erp-panel-lunge-tooltip}"/>
+                    <!-- Lua: MinHeight matches the slider rows so all four rows are evenly spaced -->
+                    <BoxContainer Orientation="Horizontal" SeparationOverride="6">
+                        <CheckBox Name="PrivateModeToggle"
+                                  MinHeight="24"
+                                  Text="{Loc erp-panel-private-mode-label}"
+                                  ToolTip="{Loc erp-panel-private-mode-tooltip}"/>
+                        <Label Name="PrivateModeHint"
+                               Text="{Loc erp-panel-private-mode-hint}"
+                               ClipText="True"
+                               HorizontalExpand="True"
+                               VerticalAlignment="Center"/>
+                    </BoxContainer>
+                    <BoxContainer Orientation="Horizontal" SeparationOverride="6">
+                        <CheckBox Name="LungeToggle"
+                                  MinHeight="24"
+                                  Text="{Loc erp-panel-lunge-label}"
+                                  ToolTip="{Loc erp-panel-lunge-tooltip}"/>
+                        <Label Name="LungeHint"
+                               Text="{Loc erp-panel-lunge-hint}"
+                               ClipText="True"
+                               HorizontalExpand="True"
+                               VerticalAlignment="Center"/>
+                    </BoxContainer>
                 </BoxContainer>
             </PanelContainer>
 
@@ -138,17 +155,22 @@
             </PanelContainer>
 
             <BoxContainer Orientation="Vertical" SeparationOverride="3">
+                <Label Name="InteractionsTitle"
+                       Text="{Loc erp-panel-interactions-title}"
+                       StyleClasses="LabelHeading"/>
+                <!-- Lua: own row with equal widths, so the three buttons always fit -->
                 <BoxContainer Orientation="Horizontal" SeparationOverride="6">
-                    <Label Name="InteractionsTitle"
-                           Text="{Loc erp-panel-interactions-title}"
-                           StyleClasses="LabelHeading"
-                           HorizontalExpand="True"
-                           VerticalAlignment="Center"/>
+                    <Button Name="CreateEmoteButton"
+                            StyleClasses="ButtonSmall"
+                            HorizontalExpand="True"
+                            Text="{Loc erp-panel-custom-create}"/>
                     <Button Name="ExpandAllButton"
                             StyleClasses="ButtonSmall"
+                            HorizontalExpand="True"
                             Text="{Loc erp-panel-expand-all}"/>
                     <Button Name="CollapseAllButton"
                             StyleClasses="ButtonSmall"
+                            HorizontalExpand="True"
                             Text="{Loc erp-panel-collapse-all}"/>
                 </BoxContainer>
                 <Label Name="ResultsLabel"

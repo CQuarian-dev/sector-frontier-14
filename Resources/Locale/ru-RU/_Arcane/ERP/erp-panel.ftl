@@ -34,6 +34,51 @@ erp-panel-private-mode-label = Приватно
 erp-panel-private-mode-tooltip = Сообщения и звуки взаимодействий видят и слышат только вы и партнёр.
 erp-panel-lunge-label = Анимация
 erp-panel-lunge-tooltip = Показывать анимацию, когда персонаж подаётся к партнёру при взаимодействии.
+erp-panel-private-mode-hint = — видите только вы и партнёр
+erp-panel-lunge-hint = — просто анимация рывка
+
+# Lua: favorites and custom emotes
+erp-panel-favorites-category-name = Избранное
+erp-panel-favorite-add-tooltip = Добавить в избранное
+erp-panel-favorite-remove-tooltip = Убрать из избранного
+erp-panel-custom-category-name = Мои эмоуты
+erp-panel-custom-create = Создать эмоут
+erp-panel-custom-create-tooltip = Свои эмоуты: { $count } из { $max }.
+erp-panel-custom-edit-tooltip = Изменить эмоут
+
+erp-panel-kind-soft = Мягкое
+erp-panel-kind-erotic = Эротическое
+erp-panel-kind-harmful = Грубое
+erp-panel-kind-harmful-erotic = Грубое эротическое
+
+erp-panel-custom-sound-kiss-name = Поцелуй
+erp-panel-custom-sound-pat-name = Похлопывание
+erp-panel-custom-sound-slap-name = Шлепок
+erp-panel-custom-sound-friction-name = Трение
+erp-panel-custom-sound-handshake-name = Рукопожатие
+erp-panel-custom-sound-crunch-name = Похрустывание
+erp-panel-custom-sound-neck-crunch-name = Хруст шеи
+erp-panel-custom-sound-click-name = Щелчок
+erp-panel-custom-sound-oral-name = Причмокивание
+erp-panel-custom-sound-bang-name = Толчки
+
+erp-custom-emote-title-new = Новый эмоут
+erp-custom-emote-title-edit = Изменить эмоут
+erp-custom-emote-name = Название
+erp-custom-emote-body-part = Часть тела
+erp-custom-emote-kind = Группа
+erp-custom-emote-kind-tooltip = Мягкое и грубое не меняют возбуждение, эротическое: партнёру +5, вам +1, грубое эротическое: партнёру -5.
+erp-custom-emote-sound = Звук
+erp-custom-emote-sound-none = Без звука
+erp-custom-emote-mode-target = На партнёра
+erp-custom-emote-mode-self = На себя
+erp-custom-emote-message-placeholder = обнимает { "{target}" }.
+erp-custom-emote-self-message-placeholder = потягивается.
+erp-custom-emote-hint = { "{target}" } заменится именем партнёра.
+erp-custom-emote-hint-self = Эмоут будет виден только в панели на себя.
+erp-custom-emote-save = Сохранить
+erp-custom-emote-delete = Удалить
+erp-custom-emote-cancel = Отмена
 
 moan-message = стонет!
 orgasm-popup-self = Вы достигли оргазма. Вам нужно время восстановиться.
@@ -194,6 +239,7 @@ erp-panel-interaction-fondle-scrotum-name = Ласкать яйца
 erp-panel-interaction-massage-scrotum-name = Массаж мошонки
 erp-panel-interaction-suck-scrotum-name = Отлизать яйца
 erp-panel-interaction-rubbing-face-scrotum-name = Тереться лицом
+erp-panel-interaction-kiss-scrotum-name = Поцеловать яйца
 
 # Interaction shoulders
 erp-panel-interaction-pat-shoulder-name = Хлопнуть по плечу

@@ -34,6 +34,51 @@ erp-panel-private-mode-label = Private
 erp-panel-private-mode-tooltip = Interaction messages and sounds are only seen and heard by you and your partner.
 erp-panel-lunge-label = Lunge animation
 erp-panel-lunge-tooltip = Show the animation of a character leaning towards their partner during interactions.
+erp-panel-private-mode-hint = — only you and your partner see it
+erp-panel-lunge-hint = — just a lunge animation
+
+# Lua: favorites and custom emotes
+erp-panel-favorites-category-name = Favorites
+erp-panel-favorite-add-tooltip = Add to favorites
+erp-panel-favorite-remove-tooltip = Remove from favorites
+erp-panel-custom-category-name = My emotes
+erp-panel-custom-create = New emote
+erp-panel-custom-create-tooltip = Custom emotes: { $count } of { $max }.
+erp-panel-custom-edit-tooltip = Edit emote
+
+erp-panel-kind-soft = Soft
+erp-panel-kind-erotic = Erotic
+erp-panel-kind-harmful = Harmful
+erp-panel-kind-harmful-erotic = Harmful erotic
+
+erp-panel-custom-sound-kiss-name = Kiss
+erp-panel-custom-sound-pat-name = Pat
+erp-panel-custom-sound-slap-name = Slap
+erp-panel-custom-sound-friction-name = Friction
+erp-panel-custom-sound-handshake-name = Handshake
+erp-panel-custom-sound-crunch-name = Crunch
+erp-panel-custom-sound-neck-crunch-name = Neck crunch
+erp-panel-custom-sound-click-name = Click
+erp-panel-custom-sound-oral-name = Smacking
+erp-panel-custom-sound-bang-name = Thrusts
+
+erp-custom-emote-title-new = New emote
+erp-custom-emote-title-edit = Edit emote
+erp-custom-emote-name = Name
+erp-custom-emote-body-part = Body part
+erp-custom-emote-kind = Group
+erp-custom-emote-kind-tooltip = Soft and harmful leave arousal alone, erotic: partner +5, you +1, harmful erotic: partner -5.
+erp-custom-emote-sound = Sound
+erp-custom-emote-sound-none = No sound
+erp-custom-emote-mode-target = On partner
+erp-custom-emote-mode-self = On self
+erp-custom-emote-message-placeholder = hugs { "{target}" }.
+erp-custom-emote-self-message-placeholder = stretches.
+erp-custom-emote-hint = { "{target}" } is replaced with your partner's name.
+erp-custom-emote-hint-self = Only shown when the panel is opened on yourself.
+erp-custom-emote-save = Save
+erp-custom-emote-delete = Delete
+erp-custom-emote-cancel = Cancel
 
 moan-message = moans!
 orgasm-popup-self = You have reached orgasm. You need time to recover.
@@ -194,6 +239,7 @@ erp-panel-interaction-fondle-scrotum-name = Fondle balls
 erp-panel-interaction-massage-scrotum-name = Massage scrotum
 erp-panel-interaction-suck-scrotum-name = Suck balls
 erp-panel-interaction-rubbing-face-scrotum-name = Rub face on it
+erp-panel-interaction-kiss-scrotum-name = Kiss balls
 
 # Interaction shoulders
 erp-panel-interaction-pat-shoulder-name = Pat shoulder
