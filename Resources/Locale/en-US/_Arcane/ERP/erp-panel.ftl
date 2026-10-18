@@ -129,7 +129,7 @@ erp-panel-interaction-boobs-paw-name = Stroke chest
 erp-panel-interaction-boobs-fuck-name = Fuck chest
 erp-panel-interaction-boobs-squeeze-name = Squeeze chest
 erp-panel-interaction-boobs-kisses-name = Kiss chest all over
-erp-panel-interaction-boobs-tail-name = Caress with tail
+erp-panel-interaction-boobs-tail-name = Caress breasts with tail
 erp-panel-interaction-boobs-massage-name = Massage chest
 erp-panel-interaction-boobs-suck-name = Suck nipple
 erp-panel-interaction-fondle-boobs-name = Fondle chest
@@ -140,7 +140,7 @@ erp-panel-interaction-hug-wings-name = Hug with wings
 # Interaction butt
 erp-panel-interaction-butt-near-cock-name = Rub with cock
 erp-panel-interaction-butt-massage-name = Knead butt
-erp-panel-interaction-butt-tail-name = Caress with tail
+erp-panel-interaction-butt-tail-name = Caress butt with tail
 erp-panel-interaction-hands-on-butt-name = Grab butt
 erp-panel-interaction-kiss-butt-name = Kiss butt
 erp-panel-interaction-slap-butt-name = Slap butt
@@ -223,7 +223,6 @@ erp-panel-interaction-cock-fap-tail-name = Jerk with tail
 erp-panel-interaction-cock-fuck-legs-name = Thigh job
 erp-panel-interaction-cock-blowjob-name = Give blowjob
 erp-panel-interaction-legs-cock-fuck-tail-name = Fuck thighs with tail
-erp-panel-interaction-pillow-fap-name = Jerk with pillow
 
 # Interaction pussy
 erp-panel-interaction-pussy-fingering-name = Finger pussy

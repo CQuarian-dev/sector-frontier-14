@@ -682,14 +682,6 @@ erp-interaction-legs-cock-fuck-tail-1 = трахает ляжками член {
 erp-interaction-legs-cock-fuck-tail-2 = зажимает член { $target } между ляжками, хвостом помогая.
 erp-interaction-legs-cock-fuck-tail-3 = трётся ляжками о член { $target }, хвостом обхватив.
 
-## PillowFap (self)
-erp-interaction-pillow-fap-self-1 = проталкивает член между подушек.
-erp-interaction-pillow-fap-self-2 = дрочит член подушками.
-erp-interaction-pillow-fap-self-3 = водит подушкой по члену.
-erp-interaction-pillow-fap-self-4 = водит пенисом по подушке.
-erp-interaction-pillow-fap-self-5 = проводит членом по подушкам
-erp-interaction-pillow-fap-self-6 = трётся членом об подушку.
-
 ## PussyFingering
 erp-interaction-pussy-fingering-1 = медленно проводит пальцами по влажным складкам вагины { $target }, слегка надавливая.
 erp-interaction-pussy-fingering-2 = нежно скользит двумя пальцами вдоль влажной щели { $target }, дразня клитор.

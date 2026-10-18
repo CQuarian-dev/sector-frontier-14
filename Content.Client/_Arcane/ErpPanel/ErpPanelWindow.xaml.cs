@@ -175,6 +175,11 @@ public sealed partial class ErpPanelWindow : LunaWindow // Lua was FancyWindow
         UpdateCooldowns();
         UpdateArousal();
         ReloadInteractionsIfNeeded();
+
+        // Lua: clicking the panel raises it, keep the editor above
+        if (_editor is { IsOpen: true } && _editor.Parent == Parent &&
+            _editor.GetPositionInParent() < GetPositionInParent())
+            _editor.MoveToFront();
     }
 
     private void UpdateMultiplierLabels()

@@ -6,6 +6,14 @@
     collection: ErpPat
   messages: ErpBiteEarsMessages
   icon: _Arcane/Interface/ErpPanel/bite_ears.png
+  targetRequirements: # Lua
+  - !type:SpeciesRequirement
+    species:
+    - Demon
+    - Felinid
+    - Vulpkanin
+    - Ariral
+    - Avali
 
 - type: panelInteraction
   id: BiteEarsHuman
@@ -16,6 +24,15 @@
     collection: ErpPat
   messages: ErpBiteEarsHumanMessages
   icon: _Arcane/Interface/ErpPanel/bite_ears_human.png
+  targetRequirements: # Lua
+  - !type:SpeciesRequirement
+    inverted: true
+    species:
+    - Demon
+    - Felinid
+    - Vulpkanin
+    - Ariral
+    - Avali
 
 - type: panelInteraction
   id: EarsKiss

@@ -557,12 +557,6 @@
     count: 3
 
 - type: localizedDataset
-  id: ErpPillowFapSelfMessages
-  values:
-    prefix: erp-interaction-pillow-fap-self-
-    count: 6
-
-- type: localizedDataset
   id: ErpPussyFingeringMessages
   values:
     prefix: erp-interaction-pussy-fingering-

@@ -5,7 +5,7 @@ alerts-arousal-heated-desc = Вы сильно возбуждены.
 alerts-arousal-refractory-name = Восстановление
 alerts-arousal-refractory-desc = Вы восстанавливаетесь после оргазма. Возбуждение пока не накапливается.
 
-erp-contact-damage-ariral-1 = Кожу начинает жечь там, где вы касались.
+erp-contact-damage-ariral-1 = Кожу начинает жечь там, на месте касания.
 erp-contact-damage-ariral-2 = Вы чувствуете неприятное жжение на коже.
 erp-contact-damage-ariral-3 = Место касания покалывает и горит.
 erp-contact-damage-ariral-4 = Кожа зудит и жжётся после прикосновения.

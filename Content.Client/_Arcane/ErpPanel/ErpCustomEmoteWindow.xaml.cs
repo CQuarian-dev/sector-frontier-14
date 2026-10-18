@@ -6,6 +6,7 @@ using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Client._Arcane.ErpPanel;
 
@@ -13,6 +14,7 @@ namespace Content.Client._Arcane.ErpPanel;
 public sealed partial class ErpCustomEmoteWindow : LunaWindow
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     private static readonly PanelInteractionKind[] Kinds = Enum.GetValues<PanelInteractionKind>();
@@ -72,6 +74,10 @@ public sealed partial class ErpCustomEmoteWindow : LunaWindow
         };
         KindSelector.OnItemSelected += args => KindSelector.SelectId(args.Id);
         SoundSelector.OnItemSelected += args => SoundSelector.SelectId(args.Id);
+
+        CloseOnSecondClick(CategorySelector);
+        CloseOnSecondClick(KindSelector);
+        CloseOnSecondClick(SoundSelector);
 
         NameInput.OnTextChanged += _ => UpdateSaveButton();
         MessageInput.OnTextChanged += _ => UpdateSaveButton();
@@ -156,6 +162,30 @@ public sealed partial class ErpCustomEmoteWindow : LunaWindow
     private string GetCategoryName(PanelInteractionCategoryPrototype category)
     {
         return Loc.GetString($"erp-panel-category-{ErpPanelWindow.ToKebabCase(category.ID)}-name");
+    }
+
+    /// <summary>
+    /// The engine closes an open dropdown on mouse down and the release opens it again,
+    /// so a click on its own button only blinks it. Here that click keeps it closed.
+    /// </summary>
+    private void CloseOnSecondClick(OptionButton button)
+    {
+        if (button.OptionsScroll.Parent is not Popup popup)
+            return;
+
+        uint closedFrame = 0;
+        var keepClosed = false;
+
+        popup.OnPopupHide += () => closedFrame = _timing.CurFrame;
+        button.OnButtonDown += _ => keepClosed = closedFrame == _timing.CurFrame;
+        button.OnPressed += _ =>
+        {
+            // runs after the button's own handler that reopened it
+            if (keepClosed)
+                popup.Close();
+
+            keepClosed = false;
+        };
     }
 
     private string GetSoundName(PanelCustomSoundPrototype sound)

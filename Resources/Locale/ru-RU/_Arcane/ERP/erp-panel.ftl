@@ -34,8 +34,8 @@ erp-panel-private-mode-label = Приватно
 erp-panel-private-mode-tooltip = Сообщения и звуки взаимодействий видят и слышат только вы и партнёр.
 erp-panel-lunge-label = Анимация
 erp-panel-lunge-tooltip = Показывать анимацию, когда персонаж подаётся к партнёру при взаимодействии.
-erp-panel-private-mode-hint = — видите только вы и партнёр
-erp-panel-lunge-hint = — просто анимация рывка
+erp-panel-private-mode-hint = - видите только вы и партнёр
+erp-panel-lunge-hint = - просто анимация рывка
 
 # Lua: favorites and custom emotes
 erp-panel-favorites-category-name = Избранное
@@ -129,7 +129,7 @@ erp-panel-interaction-boobs-paw-name = Погладить по груди
 erp-panel-interaction-boobs-fuck-name = Трахать грудь
 erp-panel-interaction-boobs-squeeze-name = Сжать грудь
 erp-panel-interaction-boobs-kisses-name = Расцеловать грудь
-erp-panel-interaction-boobs-tail-name = Ласкать хвостом
+erp-panel-interaction-boobs-tail-name = Ласкать грудь хвостом
 erp-panel-interaction-boobs-massage-name = Мять грудь
 erp-panel-interaction-boobs-suck-name = Сосать сосок
 erp-panel-interaction-fondle-boobs-name = Ласкать грудь
@@ -140,7 +140,7 @@ erp-panel-interaction-hug-wings-name = Обнять крыльями
 # Interaction butt
 erp-panel-interaction-butt-near-cock-name = Тереться членом
 erp-panel-interaction-butt-massage-name = Мять жопу
-erp-panel-interaction-butt-tail-name = Ласкать хвостом
+erp-panel-interaction-butt-tail-name = Ласкать попу хвостом
 erp-panel-interaction-hands-on-butt-name = Схватить за жопу
 erp-panel-interaction-kiss-butt-name = Целовать жопу
 erp-panel-interaction-slap-butt-name = Шлёпнуть по жопе
@@ -223,7 +223,6 @@ erp-panel-interaction-cock-fap-tail-name = Дрочить хвостом
 erp-panel-interaction-cock-fuck-legs-name = Дрочить ляжками
 erp-panel-interaction-cock-blowjob-name = Сделать минет
 erp-panel-interaction-legs-cock-fuck-tail-name = Трахать ляжками с хвостом
-erp-panel-interaction-pillow-fap-name = Дрочить с помощью подушек
 
 # Interaction pussy
 erp-panel-interaction-pussy-fingering-name = Ласкать вагину пальцами
